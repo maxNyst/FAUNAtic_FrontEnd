@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "117288490628",
+    "project_id": "faunatic-cfa37",
+    "storage_bucket": "faunatic-cfa37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117288490628:android:f575db254989e7885c94d1",
+        "android_client_info": {
+          "package_name": "com.faunatic.faunatic_front_end"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117288490628-bosvegj7sv0rkuoff8b1ooiv3cnrd9tn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb5XBBC0zY4TtEN_xiNnHPHUMk9-tUQbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117288490628-bosvegj7sv0rkuoff8b1ooiv3cnrd9tn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "117288490628-s5svcetttcfuk3vh07hmei10d5r6rnmk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.faunatic.faunaticFrontEnd"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
