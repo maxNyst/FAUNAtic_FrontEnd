@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Components/logo.dart';
+
 class Login extends StatelessWidget {
   const Login({
     Key key,
@@ -15,17 +17,11 @@ class Login extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(height: size.height * 0.3,width: size.width * 0.3, color: Colors.blue,),
-            Center(
-              heightFactor: 1,
-              child: Image.asset("assets/images/logo.png",
-              color: Theme.of(context).accentColor,),
-            ),
-          ],
+        child: Logo(
         ),
       ),
     );
   }
 }
+
+

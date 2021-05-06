@@ -1,4 +1,3 @@
-
 import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +16,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.green.shade300,
         primaryColor: Colors.green,
         primarySwatch: Colors.green,
-        accentColor: Colors.orange
+        accentColor: Colors.orangeAccent,
       ),
       home: Login(),
+
     );
   }
 }
