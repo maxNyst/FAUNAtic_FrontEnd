@@ -1,4 +1,5 @@
-import 'package:faunatic_front_end/screens/login_screen.dart';
+
+import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

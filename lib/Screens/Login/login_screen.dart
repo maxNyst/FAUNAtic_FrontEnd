@@ -14,9 +14,17 @@ class Login extends StatelessWidget {
           'Faunatic',
         ),
       ),
-      body: Center(
-        child: Image.asset("assets/images/logo.png",
-        color: Theme.of(context).accentColor,),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(height: size.height * 0.3,width: size.width * 0.3, color: Colors.blue,),
+            Center(
+              heightFactor: 1,
+              child: Image.asset("assets/images/logo.png",
+              color: Theme.of(context).accentColor,),
+            ),
+          ],
+        ),
       ),
     );
   }
