@@ -12,7 +12,6 @@ class Logo extends StatelessWidget {
       children: [
         Center(
           child: Image(
-
             isAntiAlias: true,
             image: AssetImage("assets/images/logo.png"),
             color: Colors.white,

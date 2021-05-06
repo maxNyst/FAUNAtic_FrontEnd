@@ -17,11 +17,8 @@ class Login extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Logo(
-        ),
+        child: Logo(),
       ),
     );
   }
 }
-
-
