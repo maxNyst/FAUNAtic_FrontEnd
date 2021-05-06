@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>117288490628-s5svcetttcfuk3vh07hmei10d5r6rnmk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.117288490628-s5svcetttcfuk3vh07hmei10d5r6rnmk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>117288490628-nu70602o785gaciu5s615k5v4qn4n4tk.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBwFJuOZn50bLooBRl5fLZp8X1W4ClOtZQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>117288490628</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.faunatic.faunaticFrontEnd</string>
+	<key>PROJECT_ID</key>
+	<string>faunatic-cfa37</string>
+	<key>STORAGE_BUCKET</key>
+	<string>faunatic-cfa37.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:117288490628:ios:a22a3f4bd42b0ded5c94d1</string>
+</dict>
+</plist>
