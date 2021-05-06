@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -8,11 +7,16 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Faunatic',
         ),
+      ),
+      body: Center(
+        child: Image.asset("assets/images/logo.png",
+        color: Theme.of(context).accentColor,),
       ),
     );
   }
