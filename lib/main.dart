@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.orangeAccent,
       ),
       home: Login(),
-
     );
   }
 }
-
-
