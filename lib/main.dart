@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.green.shade300,
           primaryColor: Colors.green,
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.orange,
           accentColor: Colors.orangeAccent,
         ),
         home: AuthenticationWrapper(),
