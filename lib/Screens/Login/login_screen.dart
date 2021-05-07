@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Components/logo.dart';
 
 class Login extends StatelessWidget {
@@ -9,7 +8,9 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Use this line if you need access to relative
+    // size parameters independent of screen size:
+    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -17,12 +18,12 @@ class Login extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Logo(
-        ),
+        child: Logo(),
       ),
     );
   }
 }
+
 
 /*class _LogininScreen extends StatelessWidget<MyApp>{
     @override*/
@@ -74,3 +75,4 @@ Widget build(BuildContext context){
       )
   );
 }
+
