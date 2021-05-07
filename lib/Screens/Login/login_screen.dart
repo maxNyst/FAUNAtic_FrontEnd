@@ -1,4 +1,6 @@
+import 'package:faunatic_front_end/Screens/Login/Components/faunatic_rich_text.dart';
 import 'package:flutter/material.dart';
+import 'Components/login_form_fields.dart';
 import 'Components/logo.dart';
 
 class Login extends StatelessWidget {
@@ -13,66 +15,16 @@ class Login extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Faunatic',
-        ),
+        title: FaunaticRichText(),
       ),
       body: SingleChildScrollView(
-        child: Logo(),
+        child: Column(
+          children: [
+            Logo(),
+            LoginFormFields(),
+          ],
+        ),
       ),
     );
   }
 }
-
-
-/*class _LogininScreen extends StatelessWidget<MyApp>{
-    @override*/
-Widget build(BuildContext context){
-  return Scaffold(
-      body: Padding(
-          padding: EdgeInsets.all(25.0
-          ),
-          child: Center(
-            child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-
-                        ),
-                        labelText: "Username or Email"
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 20.0,
-                    ),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Password"),
-
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        /*children: <Widget>[
-      TextField(
-      decoration: InputDecoration(
-      hintText: "Username",
-      labelText: "Your username",
-      labelStyle: TextStyle(
-      fontSize: 24,
-      color: Colors.white
-  ),
-    ),
-    )
-    ],*/
-      )
-  );
-}
-

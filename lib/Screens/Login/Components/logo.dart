@@ -1,9 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-
 import 'faunatic_rich_text.dart';
-
 
 class Logo extends StatelessWidget {
   const Logo({
@@ -15,34 +11,26 @@ class Logo extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-
-        Center(
-          child: Image(
-
-            isAntiAlias: true,
-            image: AssetImage("assets/images/logo.png"),
-            color: Colors.orangeAccent,),),
-
         Padding(
           padding: const EdgeInsets.only(top: 20),
           child: Center(
-            heightFactor: 1.2,
-            child: Image.asset(
-              'assets/images/logo.png',
+              heightFactor: 1.2,
+              child: Image.asset(
+                'assets/images/logo.png',
                 color: Colors.white38,
                 isAntiAlias: true,
                 height: 250,
                 width: 180,
-            scale: 0.1,
-            filterQuality: FilterQuality.high,)
-
-          ),
+                scale: 0.1,
+                filterQuality: FilterQuality.high,
+              )),
         ),
         Center(
-          child: FaunaticRichText(),
+          child: FaunaticRichText(
+            fontSize: 45.0,
+          ),
         ),
       ],
     );
   }
 }
-
