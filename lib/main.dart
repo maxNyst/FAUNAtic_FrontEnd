@@ -1,7 +1,13 @@
+import 'package:faunatic_front_end/authentication_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -12,16 +18,55 @@ class MyApp extends StatelessWidget {
     // Use this line in your build method if you need access
     // to relative size parameters, independent of screen size:
     // Size size = MediaQuery.of(context).size;
-    return MaterialApp(
-      title: 'Faunatic the fabulous',
-      // Here is the color theme and text themes.
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.green.shade300,
-        primaryColor: Colors.green,
-        primarySwatch: Colors.green,
-        accentColor: Colors.orangeAccent,
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Faunatic the fabulous',
+        // Here is the color theme and text themes.
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.green.shade300,
+          primaryColor: Colors.green,
+          primarySwatch: Colors.green,
+          accentColor: Colors.orangeAccent,
+        ),
+        home: AuthenticationWrapper(),
       ),
-      home: Login(),
     );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
+    if (firebaseUser != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('INLOGGAD'),
+        ),
+        body: Center(
+          child: TextButton(
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+            child: Text(
+              'Sign out',
+            ),
+          ),
+        ),
+      );
+    }
+    return Login();
   }
 }

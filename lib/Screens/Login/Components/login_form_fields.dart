@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../authentication_service.dart';
 
 class LoginFormFields extends StatelessWidget {
-  const LoginFormFields({Key key}) : super(key: key);
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  LoginFormFields({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +18,7 @@ class LoginFormFields extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
                 border: OutlineInputBorder(), labelText: "Username or Email"),
           ),
@@ -20,6 +27,7 @@ class LoginFormFields extends StatelessWidget {
               top: 20.0,
             ),
             child: TextFormField(
+              controller: _passwordController,
               validator: _passwordValidator,
               obscureText: true,
               decoration: InputDecoration(
@@ -29,16 +37,21 @@ class LoginFormFields extends StatelessWidget {
             ),
           ),
           TextButton(
-            child: Text('Login'),
-            onPressed: null,
+            child: Text('Sign in'),
+            onPressed: () {
+              context.read<AuthenticationService>().signIn(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+            },
           ),
         ],
       ),
     );
   }
 
-  String _passwordValidator(String value) {
-    if (value.trim().isEmpty) {
+  String _passwordValidator(String password) {
+    if (password.trim().isEmpty) {
       return 'Password is required';
     }
     return null;
