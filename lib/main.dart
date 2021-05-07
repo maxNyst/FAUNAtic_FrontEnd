@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Use this line in your build method if you need access
+    // to relative size parameters, independent of screen size:
+    // Size size = MediaQuery.of(context).size;
     return MaterialApp(
       title: 'Faunatic the fabulous',
       // Here is the color theme and text themes.
@@ -19,9 +22,6 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.orangeAccent,
       ),
       home: Login(),
-
     );
   }
 }
-
-
