@@ -53,7 +53,7 @@ class AuthenticationWrapper extends StatelessWidget {
     if (firebaseUser != null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('INLOGGAD'),
+          title: Text('Logged In! FUCK YEAH'),
         ),
         body: Center(
           child: TextButton(
