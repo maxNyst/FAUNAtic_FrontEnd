@@ -5,7 +5,7 @@ import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -23,7 +23,11 @@ class MyApp extends StatelessWidget {
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
-        StreamProvider(create: (context) => context.read<AuthenticationService>().authStateChanges)
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        ),
       ],
       child: MaterialApp(
         title: 'Faunatic the fabulous',
@@ -47,7 +51,21 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
-      return Text('signed in');
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('INLOGGAD'),
+        ),
+        body: Center(
+          child: TextButton(
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+            child: Text(
+              'Sign out',
+            ),
+          ),
+        ),
+      );
     }
     return Login();
   }
