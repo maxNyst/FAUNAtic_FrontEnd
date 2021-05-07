@@ -5,6 +5,8 @@ import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Screens/Home/home_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -51,22 +53,10 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Logged In! FUCK YEAH'),
-        ),
-        body: Center(
-          child: TextButton(
-            onPressed: () {
-              context.read<AuthenticationService>().signOut();
-            },
-            child: Text(
-              'Sign out',
-            ),
-          ),
-        ),
-      );
+      return Home();
     }
     return Login();
   }
 }
+
+
