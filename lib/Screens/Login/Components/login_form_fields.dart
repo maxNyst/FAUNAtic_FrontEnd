@@ -51,7 +51,14 @@ class LoginFormFields extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return null;
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: Text('Sign up'),
+                      ),
+                      body: Center(
+                        child: Text('Du är på sign up-sidan!!!'),
+                      ),
+                    );
                   },
                 ),
               );
