@@ -1,4 +1,4 @@
-import 'package:faunatic_front_end/Screens/Login/Components/faunatic_rich_text.dart';
+import 'Components/faunatic_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'Components/login_form_fields.dart';
 import 'Components/logo.dart';
