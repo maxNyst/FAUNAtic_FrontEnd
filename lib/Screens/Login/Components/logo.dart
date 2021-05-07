@@ -15,7 +15,7 @@ class Logo extends StatelessWidget {
 
             isAntiAlias: true,
             image: AssetImage("assets/images/logo.png"),
-            color: Colors.white,
+            color: Colors.orangeAccent,
           ),
         ),
         Center(
