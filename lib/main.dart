@@ -1,4 +1,5 @@
 import 'package:faunatic_front_end/authentication_service.dart';
+import 'package:faunatic_front_end/species_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
@@ -30,6 +31,12 @@ class MyApp extends StatelessWidget {
               context.read<AuthenticationService>().authStateChanges,
           initialData: null,
         ),
+        ChangeNotifierProvider<SpeciesList>(
+          create: (context) => SpeciesList(),
+        ),
+        // FutureProvider<List<Specie>>(
+        //     create: (context) => context.watch<SpeciesList>().getFutureSpecies,
+        //     initialData: null)
       ],
       child: MaterialApp(
         title: 'Faunatic the fabulous',
@@ -58,5 +65,3 @@ class AuthenticationWrapper extends StatelessWidget {
     return Login();
   }
 }
-
-
