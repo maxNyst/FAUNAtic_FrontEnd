@@ -36,7 +36,7 @@ class LoginFormFields extends StatelessWidget {
               ),
             ),
           ),
-          TextButton(
+          CupertinoButton(
             child: Text('Sign in'),
             onPressed: () {
               context.read<AuthenticationService>().signIn(
@@ -45,6 +45,26 @@ class LoginFormFields extends StatelessWidget {
                   );
             },
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: Text('Sign up'),
+                      ),
+                      body: Center(
+                        child: Text('Du är på sign up-sidan!!!'),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+            child: Text("Don't have an account? Sign up here"),
+          )
         ],
       ),
     );
