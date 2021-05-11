@@ -13,7 +13,7 @@ class FaunaticRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: 'Fauna',
+        text: 'FAUNA',
         style: GoogleFonts.ralewayDots(
             fontSize: fontSize,
             textStyle: Theme.of(context).textTheme.headline2,
