@@ -30,7 +30,7 @@ class LoginForm extends StatelessWidget {
                   return 'Not a valid email.';
               },
               decoration: InputDecoration(
-                  border: OutlineInputBorder(), labelText: "Username or Email"),
+                  border: OutlineInputBorder(), labelText: "Email"),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -46,7 +46,7 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 45),
             ElevatedButton(
               child: Text(
                 'Sign in',
@@ -65,7 +65,6 @@ class LoginForm extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 20),
             TextButton(
               onPressed: () {
                 Navigator.push(
