@@ -3,6 +3,10 @@
    <application
         android:label="faunatic_front_end"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+                  android:value="AIzaSyDb5XBBC0zY4TtEN_xiNnHPHUMk9-tUQbw"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

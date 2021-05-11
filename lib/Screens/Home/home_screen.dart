@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../authentication_service.dart';
+import 'map.dart';
 
 class Home extends StatelessWidget {
   const Home({
@@ -18,7 +19,20 @@ class Home extends StatelessWidget {
         actions: [
           TextButton(
               child: Text('Sign out'),
-              onPressed: () => context.read<AuthenticationService>().signOut())
+              onPressed: () => context.read<AuthenticationService>().signOut()),
+          TextButton(
+            child: Text('Map'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) {
+                      return Map();
+                    },
+                ),
+              );
+            },
+          ),
         ],
         title: Text('Logged In! Home'),
       ),
