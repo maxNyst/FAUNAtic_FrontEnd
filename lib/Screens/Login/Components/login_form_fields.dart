@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Sign%20Up/signup_form_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,10 +6,13 @@ import 'package:provider/provider.dart';
 import '../../../authentication_service.dart';
 
 class LoginFormFields extends StatelessWidget {
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPassword = TextEditingController();
 
   LoginFormFields({Key key}) : super(key: key);
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,34 +40,38 @@ class LoginFormFields extends StatelessWidget {
               ),
             ),
           ),
-          CupertinoButton(
-            child: Text('Sign in'),
-            onPressed: () {
-              context.read<AuthenticationService>().signIn(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  );
-            },
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        title: Text('Sign up'),
-                      ),
-                      body: Center(
-                        child: Text('Du är på sign up-sidan!!!'),
-                      ),
+          SizedBox(height: 20),
+            ElevatedButton(
+            child: CupertinoButton(
+              child: Text('Sign in',
+                style: TextStyle(color: Colors.orangeAccent, fontSize: 20),
+              ),
+              onPressed: () {
+                context.read<AuthenticationService>().signIn(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
                     );
-                  },
-                ),
-              );
-            },
-            child: Text("Don't have an account? Sign up here"),
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+            ElevatedButton(
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignupFormFields(usernameController: _usernameController, emailController: _emailController, passwordController: _passwordController, confirmPassword: _confirmPassword);
+                    },
+                  ),
+                );
+              },
+              child: Text(
+                  "Don't have an account? Sign up here",
+              style: TextStyle(color: Colors.orangeAccent, fontSize: 16)
+              ),
+            ),
           )
         ],
       ),
@@ -77,3 +85,4 @@ class LoginFormFields extends StatelessWidget {
     return null;
   }
 }
+
