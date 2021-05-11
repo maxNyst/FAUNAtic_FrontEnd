@@ -1,6 +1,6 @@
 import 'Components/faunatic_rich_text.dart';
 import 'package:flutter/material.dart';
-import 'Components/login_form_fields.dart';
+import 'Components/login_form.dart';
 import 'Components/logo.dart';
 
 class Login extends StatelessWidget {
@@ -21,7 +21,7 @@ class Login extends StatelessWidget {
         child: Column(
           children: [
             Logo(),
-            LoginFormFields(),
+            LoginForm(),
           ],
         ),
       ),

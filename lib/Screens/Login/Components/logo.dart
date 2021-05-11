@@ -17,7 +17,7 @@ class Logo extends StatelessWidget {
               heightFactor: 1.2,
               child: Image.asset(
                 'assets/images/logo.png',
-                color: Colors.white38,
+                color: Colors.green,
                 isAntiAlias: true,
                 height: 250,
                 width: 180,

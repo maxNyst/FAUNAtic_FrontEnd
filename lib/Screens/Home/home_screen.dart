@@ -16,8 +16,9 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-              child: Text('Sign out'),
+          IconButton(
+
+              icon: Icon(Icons.outbond_outlined),
               onPressed: () => context.read<AuthenticationService>().signOut())
         ],
         title: Text('Logged In! Home'),
