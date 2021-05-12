@@ -16,6 +16,8 @@ class _MapScreenState extends State<MapScreen> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
+  GoogleMap googleMap;
+  bool addEnabled = false;
 
   final LatLng center = const LatLng(59.334591, 18.063240);
 
@@ -31,8 +33,18 @@ class _MapScreenState extends State<MapScreen> {
         centerTitle: true,
         title: Text('Map'),
       ),
-      body: GoogleMap(
+      body: googleMap = GoogleMap(
         onMapCreated: _onMapCreated,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+        onTap: (LatLng latLng) {
+          if (addEnabled) {
+            _addMarker(latLng);
+            print(latLng.toString());
+          } else {
+            _addMarker(null);
+          }
+        },
         initialCameraPosition: CameraPosition(
           target: center,
           zoom: 11.0,
@@ -45,6 +57,8 @@ class _MapScreenState extends State<MapScreen> {
           children: <Widget>[
             TextButton(
               child: const Text('add'),
+              style: addEnabled ? ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black12))
+                  : ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
               onPressed: _add,
             ),
             TextButton(
@@ -56,30 +70,11 @@ class _MapScreenState extends State<MapScreen> {
               onPressed:
                   selectedId == null ? null : () => _changeInfo(selectedId),
             ),
-            TextButton(
-              child: const Text('toggle draggable'),
-              onPressed: selectedId == null
-                  ? null
-                  : () => _toggleDraggable(selectedId),
-            ),
           ],
         ),
       ),
     );
   }
-
-  /*return Scaffold(
-  appBar: AppBar(
-  title: Text('Map'),
-  ),
-  body: GoogleMap(
-  onMapCreated: _onMapCreated,
-  initialCameraPosition: CameraPosition(
-  target: center,
-  zoom: 11.0,
-  ),
-  ),
-  );*/
 
   void _onMarkerTapped(MarkerId markerId) {
     final Marker tappedMarker = markers[markerId];
@@ -129,11 +124,16 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _add() {
-    final int markerCount = markers.length;
+    setState(() {
+      addEnabled = !addEnabled;
+    });
+  }
 
-    if (markerCount == 12) {
+  void _addMarker(LatLng latLng) {
+    if (latLng == null) {
       return;
     }
+    final int markerCount = markers.length;
 
     final String markerIdVal = 'marker_id_$_markerIdCounter';
     _markerIdCounter++;
@@ -141,10 +141,11 @@ class _MapScreenState extends State<MapScreen> {
 
     final Marker marker = Marker(
       markerId: markerId,
-      position: LatLng(
+      position: latLng,
+      /*LatLng(
         center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
         center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
-      ),
+      ),*/
       infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
       onTap: () {
         _onMarkerTapped(markerId);
@@ -165,15 +166,6 @@ class _MapScreenState extends State<MapScreen> {
       if (markers.containsKey(markerId)) {
         markers.remove(markerId);
       }
-    });
-  }
-
-  Future<void> _toggleDraggable(MarkerId markerId) async {
-    final Marker marker = markers[markerId];
-    setState(() {
-      markers[markerId] = marker.copyWith(
-        draggableParam: !marker.draggable,
-      );
     });
   }
 
