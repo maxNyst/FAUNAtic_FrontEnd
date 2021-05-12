@@ -17,11 +17,8 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-              child: Text('Sign out'),
-              onPressed: () => context.read<AuthenticationService>().signOut()),
-          TextButton(
-            child: Text('Map'),
+          IconButton(
+            icon: Icon(Icons.map),
             onPressed: () {
               Navigator.push(
                 context,
@@ -33,8 +30,13 @@ class Home extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+              icon: Icon(Icons.outbond_outlined),
+              onPressed: () => context.read<AuthenticationService>().signOut()
+          ),
         ],
         title: Text('Logged In! Home'),
+        centerTitle: true,
       ),
       body: Column(
         children: [

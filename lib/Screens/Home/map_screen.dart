@@ -28,6 +28,7 @@ class _MapScreenState extends State<MapScreen> {
     final MarkerId selectedId = selectedMarker;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Map'),
       ),
       body: GoogleMap(
@@ -39,7 +40,7 @@ class _MapScreenState extends State<MapScreen> {
         markers: Set<Marker>.of(markers.values),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.green,
+        //color: Colors.green,
         child: Row(
           children: <Widget>[
             TextButton(

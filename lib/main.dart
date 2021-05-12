@@ -34,18 +34,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SpeciesList>(
           create: (context) => SpeciesList(),
         ),
-        // FutureProvider<List<Specie>>(
-        //     create: (context) => context.watch<SpeciesList>().getFutureSpecies,
-        //     initialData: null)
       ],
       child: MaterialApp(
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.green.shade300,
-          primaryColor: Colors.green,
-          primarySwatch: Colors.orange,
-          accentColor: Colors.orangeAccent,
+          scaffoldBackgroundColor: Colors.green.shade100,
+
+          primarySwatch: Colors.green,
+          accentColor: Colors.green.shade800,
         ),
         home: AuthenticationWrapper(),
       ),
