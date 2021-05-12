@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../authentication_service.dart';
-import 'map.dart';
+import 'map_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({
@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) {
-                      return Map();
+                      return MapScreen();
                     },
                 ),
               );
