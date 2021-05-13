@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
@@ -12,6 +13,9 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  Location location;
+  LocationData _locationData;
+
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
@@ -19,14 +23,44 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMap googleMap;
   bool addEnabled = false;
 
-  final LatLng center = const LatLng(59.334591, 18.063240);
+  static const LatLng STOCKHOLM_COORDINATES = const LatLng(59.334591, 18.063240);
+  LatLng center = STOCKHOLM_COORDINATES;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  void getLocation() async {
+    location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    center = LatLng(_locationData.latitude, _locationData.longitude);
+    mapController.moveCamera(CameraUpdate.newLatLng(center));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (selectedMarker == null) {
+      getLocation();
+    }
     final MarkerId selectedId = selectedMarker;
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +74,6 @@ class _MapScreenState extends State<MapScreen> {
         onTap: (LatLng latLng) {
           if (addEnabled) {
             _addMarker(latLng);
-            print(latLng.toString());
           } else {
             _addMarker(null);
           }

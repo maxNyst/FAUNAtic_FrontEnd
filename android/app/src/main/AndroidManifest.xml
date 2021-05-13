@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.faunatic.faunatic_front_end">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
    <application
         android:label="faunatic_front_end"
         android:icon="@mipmap/ic_launcher">
