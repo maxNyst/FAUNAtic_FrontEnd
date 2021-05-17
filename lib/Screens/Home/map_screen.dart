@@ -1,5 +1,3 @@
-import 'dart:collection';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,7 +21,7 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMap googleMap;
   bool addEnabled = false;
 
-  static const LatLng STOCKHOLM_COORDINATES = const LatLng(59.334591, 18.063240);
+  static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
   LatLng center = STOCKHOLM_COORDINATES;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -31,7 +29,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void getLocation() async {
-    location = new Location();
+    location = Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -53,7 +51,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _locationData = await location.getLocation();
     center = LatLng(_locationData.latitude, _locationData.longitude);
-    mapController.moveCamera(CameraUpdate.newLatLng(center));
+    await mapController.moveCamera(CameraUpdate.newLatLng(center));
   }
 
   @override
@@ -61,7 +59,7 @@ class _MapScreenState extends State<MapScreen> {
     if (selectedMarker == null) {
       getLocation();
     }
-    final MarkerId selectedId = selectedMarker;
+    var selectedId = selectedMarker;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -89,19 +87,19 @@ class _MapScreenState extends State<MapScreen> {
         child: Row(
           children: <Widget>[
             TextButton(
-              child: const Text('add'),
               style: addEnabled ? ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black12))
                   : ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
               onPressed: _add,
+              child: const Text('add'),
             ),
             TextButton(
-              child: const Text('remove'),
               onPressed: selectedId == null ? null : () => _remove(selectedId),
+              child: const Text('remove'),
             ),
             TextButton(
-              child: const Text('change info'),
               onPressed:
                   selectedId == null ? null : () => _changeInfo(selectedId),
+              child: const Text('change info'),
             ),
           ],
         ),
@@ -110,17 +108,17 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onMarkerTapped(MarkerId markerId) {
-    final Marker tappedMarker = markers[markerId];
+    var tappedMarker = markers[markerId];
     if (tappedMarker != null) {
       setState(() {
-        final MarkerId previousMarkerId = selectedMarker;
+        var previousMarkerId = selectedMarker;
         if (previousMarkerId != null && markers.containsKey(previousMarkerId)) {
-          final Marker resetOld = markers[previousMarkerId]
+          var resetOld = markers[previousMarkerId]
               .copyWith(iconParam: BitmapDescriptor.defaultMarker);
           markers[previousMarkerId] = resetOld;
         }
         selectedMarker = markerId;
-        final Marker newMarker = tappedMarker.copyWith(
+        var newMarker = tappedMarker.copyWith(
           iconParam: BitmapDescriptor.defaultMarkerWithHue(
             BitmapDescriptor.hueGreen,
           ),
@@ -131,7 +129,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
-    final Marker tappedMarker = markers[markerId];
+    var tappedMarker = markers[markerId];
     if (tappedMarker != null) {
       await showDialog<void>(
           context: context,
@@ -139,8 +137,8 @@ class _MapScreenState extends State<MapScreen> {
             return AlertDialog(
                 actions: <Widget>[
                   TextButton(
-                    child: const Text('OK'),
                     onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
                   )
                 ],
                 content: Padding(
@@ -166,13 +164,13 @@ class _MapScreenState extends State<MapScreen> {
     if (latLng == null) {
       return;
     }
-    final int markerCount = markers.length;
+    var markerCount = markers.length;
 
-    final String markerIdVal = 'marker_id_$_markerIdCounter';
+    var markerIdVal = 'marker_id_$_markerIdCounter';
     _markerIdCounter++;
-    final MarkerId markerId = MarkerId(markerIdVal);
+    var markerId = MarkerId(markerIdVal);
 
-    final Marker marker = Marker(
+    var marker = Marker(
       markerId: markerId,
       position: latLng,
       /*LatLng(
@@ -203,8 +201,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _changeInfo(MarkerId markerId) async {
-    final Marker marker = markers[markerId];
-    final String newSnippet = marker.infoWindow.snippet + '*';
+    var marker = markers[markerId];
+    var newSnippet = marker.infoWindow.snippet + '*';
     setState(() {
       markers[markerId] = marker.copyWith(
         infoWindowParam: marker.infoWindow.copyWith(
