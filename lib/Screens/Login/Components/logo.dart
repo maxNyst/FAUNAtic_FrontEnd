@@ -10,7 +10,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Center(
-        heightFactor: 1.2,
+
         child: Image.asset(
           'assets/images/logo.png',
           color: Colors.green,
