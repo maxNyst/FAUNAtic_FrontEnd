@@ -16,7 +16,8 @@ class SpeciesList extends ChangeNotifier {
   }
 
   Future<List<Specie>> _speciesSearchResult(String searchTerm) async {
-    final List<Specie> species = [];
+    final species = <Specie>[];
+
     // notifyListeners();
 
     final response = await http.get(
@@ -24,7 +25,7 @@ class SpeciesList extends ChangeNotifier {
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
       for (var s in jsonData) {
-        Specie specie = Specie.fromJson(s);
+        var specie = Specie.fromJson(s);
         species.add(specie);
       }
     }
@@ -33,15 +34,13 @@ class SpeciesList extends ChangeNotifier {
 
   Future<SpeciesDetail> getSpeciesDetail(int taxonId) async {
     SpeciesDetail speciesDetail;
-    final response = await http.get(
-        Uri.https('group7-15.pvt.dsv.su.se', '/texts', {'id': taxonId.toString()}));
+    final response = await http.get(Uri.https(
+        'group7-15.pvt.dsv.su.se', '/texts', {'id': taxonId.toString()}));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
       print(jsonData);
 
       speciesDetail = SpeciesDetail.fromJson(jsonData);
-
-
     }
     print(speciesDetail);
 
@@ -90,19 +89,19 @@ class SpeciesDetail {
     swedishName = json['swedishName'];
     scientificName = json['scientificName'];
     speciesData = json['speciesData'] != null
-        ? new SpeciesData.fromJson(json['speciesData'])
+        ? SpeciesData.fromJson(json['speciesData'])
         : null;
     imageURL = json['imageURL'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['swedishName'] = this.swedishName;
-    data['scientificName'] = this.scientificName;
-    if (this.speciesData != null) {
-      data['speciesData'] = this.speciesData.toJson();
+    final data = <String, dynamic>{};
+    data['swedishName'] = swedishName;
+    data['scientificName'] = scientificName;
+    if (speciesData != null) {
+      data['speciesData'] = speciesData.toJson();
     }
-    data['imageURL'] = this.imageURL;
+    data['imageURL'] = imageURL;
     return data;
   }
 }
@@ -129,23 +128,23 @@ class SpeciesData {
 
   SpeciesData(
       {this.characteristicAsHtml,
-        this.ecologyAsHtml,
-        this.other,
-        this.conservationMeasuresAsHtml,
-        this.characteristicChangedDate,
-        this.characteristic,
-        this.spreadAndStatusAsHtml,
-        this.conservationMeasures,
-        this.otherAsHtml,
-        this.ecology,
-        this.conservationMeasuresChangedDate,
-        this.spreadAndStatus,
-        this.threatAsHtml,
-        this.spreadAndStatusChangedDate,
-        this.ecologyChangedDate,
-        this.threatChangedDate,
-        this.threat,
-        this.otherChangedDate});
+      this.ecologyAsHtml,
+      this.other,
+      this.conservationMeasuresAsHtml,
+      this.characteristicChangedDate,
+      this.characteristic,
+      this.spreadAndStatusAsHtml,
+      this.conservationMeasures,
+      this.otherAsHtml,
+      this.ecology,
+      this.conservationMeasuresChangedDate,
+      this.spreadAndStatus,
+      this.threatAsHtml,
+      this.spreadAndStatusChangedDate,
+      this.ecologyChangedDate,
+      this.threatChangedDate,
+      this.threat,
+      this.otherChangedDate});
 
   SpeciesData.fromJson(Map<String, dynamic> json) {
     characteristicAsHtml = json['characteristicAsHtml'];
@@ -169,27 +168,25 @@ class SpeciesData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['characteristicAsHtml'] = this.characteristicAsHtml;
-    data['ecologyAsHtml'] = this.ecologyAsHtml;
-    data['other'] = this.other;
-    data['conservationMeasuresAsHtml'] = this.conservationMeasuresAsHtml;
-    data['characteristicChangedDate'] = this.characteristicChangedDate;
-    data['characteristic'] = this.characteristic;
-    data['spreadAndStatusAsHtml'] = this.spreadAndStatusAsHtml;
-    data['conservationMeasures'] = this.conservationMeasures;
-    data['otherAsHtml'] = this.otherAsHtml;
-    data['ecology'] = this.ecology;
-    data['conservationMeasuresChangedDate'] =
-        this.conservationMeasuresChangedDate;
-    data['spreadAndStatus'] = this.spreadAndStatus;
-    data['threatAsHtml'] = this.threatAsHtml;
-    data['spreadAndStatusChangedDate'] = this.spreadAndStatusChangedDate;
-    data['ecologyChangedDate'] = this.ecologyChangedDate;
-    data['threatChangedDate'] = this.threatChangedDate;
-    data['threat'] = this.threat;
-    data['otherChangedDate'] = this.otherChangedDate;
+    final data = <String, dynamic>{};
+    data['characteristicAsHtml'] = characteristicAsHtml;
+    data['ecologyAsHtml'] = ecologyAsHtml;
+    data['other'] = other;
+    data['conservationMeasuresAsHtml'] = conservationMeasuresAsHtml;
+    data['characteristicChangedDate'] = characteristicChangedDate;
+    data['characteristic'] = characteristic;
+    data['spreadAndStatusAsHtml'] = spreadAndStatusAsHtml;
+    data['conservationMeasures'] = conservationMeasures;
+    data['otherAsHtml'] = otherAsHtml;
+    data['ecology'] = ecology;
+    data['conservationMeasuresChangedDate'] = conservationMeasuresChangedDate;
+    data['spreadAndStatus'] = spreadAndStatus;
+    data['threatAsHtml'] = threatAsHtml;
+    data['spreadAndStatusChangedDate'] = spreadAndStatusChangedDate;
+    data['ecologyChangedDate'] = ecologyChangedDate;
+    data['threatChangedDate'] = threatChangedDate;
+    data['threat'] = threat;
+    data['otherChangedDate'] = otherChangedDate;
     return data;
   }
 }
-

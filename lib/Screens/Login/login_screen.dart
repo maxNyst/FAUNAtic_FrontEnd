@@ -12,7 +12,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use this line if you need access to relative
     // size parameters independent of screen size:
-    Size size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

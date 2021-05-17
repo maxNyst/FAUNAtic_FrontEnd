@@ -32,13 +32,14 @@ class _SignUpFormState extends State<SignUpForm> {
                 child: TextFormField(
                   controller: _emailController,
                   validator: (email) {
-                    if (email.contains('@') && email.contains('.'))
+                    if (email.contains('@') && email.contains('.')) {
                       return null;
-                    else
+                    } else {
                       return 'Not a valid email.';
+                    }
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Email"),
+                      border: OutlineInputBorder(), labelText: 'Email'),
                 ),
               ),
               Padding(
@@ -47,12 +48,12 @@ class _SignUpFormState extends State<SignUpForm> {
                   controller: _passwordController,
                   validator: (password) {
                     if (password.length < 6) {
-                      return "Password too short. It needs to be a minimum of 6 characters.";
+                      return 'Password too short. It needs to be a minimum of 6 characters.';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Password"),
+                      border: OutlineInputBorder(), labelText: 'Password'),
                 ),
               ),
               Padding(
@@ -67,7 +68,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Confirm Password"),
+                      labelText: 'Confirm Password'),
                 ),
               ),
               SizedBox(height: 25),
@@ -78,27 +79,28 @@ class _SignUpFormState extends State<SignUpForm> {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
 
-                    String email = _emailController.text;
-                    String password = _confirmPassword.text;
-                    Future<String> s = context
+                    var email = _emailController.text;
+                    var password = _confirmPassword.text;
+                    var authResponse = context
                         .read<AuthenticationService>()
                         .signUp(email: email, password: password);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: FutureBuilder(
-                          future: s,
+                          future: authResponse,
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text(snapshot.error);
                             } else if (snapshot.hasData) {
                               return Text(snapshot.data);
-                            } else
+                            } else {
                               return Text('something went wrong');
+                            }
                           },
                         ),
                       ),
                     );
-                    Navigator.pop(context);
+                    authResponse.whenComplete(() => Navigator.pop(context));
                   }
                 },
                 child: Text(
