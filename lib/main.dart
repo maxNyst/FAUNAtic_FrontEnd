@@ -1,3 +1,5 @@
+import 'package:faunatic_front_end/Screens/Sign%20Up/signup_screen.dart';
+import 'package:faunatic_front_end/Screens/SpeciesSearch/search_screen.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Screens/Home/home_screen.dart';
+import 'Screens/Lecture/lecture_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +46,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           accentColor: Colors.green.shade800,
         ),
-        home: AuthenticationWrapper(),
+        initialRoute: '/',
+        routes: {
+          // add all screens here
+          '/': (context) => AuthenticationWrapper(),
+          '/home': (context) => Home(),
+          '/signup':(context) => SignupScreen(),
+          '/search': (context) => SpeciesSearch(),
+          '/lectures': (context) => LecturesScreen()
+        },
       ),
     );
   }

@@ -81,13 +81,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
                     var email = _emailController.text;
                     var password = _confirmPassword.text;
-                    var s = context
+                    var authResponse = context
                         .read<AuthenticationService>()
                         .signUp(email: email, password: password);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: FutureBuilder(
-                          future: s,
+                          future: authResponse,
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text(snapshot.error);
@@ -100,7 +100,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         ),
                       ),
                     );
-                    Navigator.pop(context);
+                    authResponse.whenComplete(() => Navigator.pop(context));
                   }
                 },
                 child: Text(
