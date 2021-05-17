@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
         // Here is the color theme and text themes.
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.green.shade100,
-
           primarySwatch: Colors.green,
           accentColor: Colors.green.shade800,
         ),

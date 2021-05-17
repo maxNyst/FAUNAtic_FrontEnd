@@ -31,13 +31,14 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 controller: _emailController,
                 validator: (email) {
-                  if (email.contains('@') && email.contains('.'))
+                  if (email.contains('@') && email.contains('.')) {
                     return null;
-                  else
+                  } else {
                     return 'Not a valid email.';
+                  }
                 },
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Email"),
+                    border: OutlineInputBorder(), labelText: 'Email'),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -49,28 +50,28 @@ class _LoginFormState extends State<LoginForm> {
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Password",
+                    labelText: 'Password',
                   ),
                 ),
               ),
               SizedBox(height: 45),
               ElevatedButton(
-                child: Text(
-                  'Sign in',
-                ),
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-                    String email = _emailController.text.trim();
-                    String password = _passwordController.text.trim();
+                    var email = _emailController.text.trim();
+                    var password = _passwordController.text.trim();
                     context.read<AuthenticationService>().signIn(
                           email: email,
                           password: password,
                         );
                   }
                 },
+                child: Text(
+                  'Sign in',
+                ),
               ),
               TextButton(
                 onPressed: () {

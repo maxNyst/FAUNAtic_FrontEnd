@@ -17,7 +17,6 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-
               icon: Icon(Icons.outbond_outlined),
               onPressed: () => context.read<AuthenticationService>().signOut())
         ],
@@ -82,8 +81,8 @@ class SpeciesListViewBuilder extends StatelessWidget {
                                 print(snapshot.connectionState);
 
                                 if (snapshot.connectionState ==
-                                    ConnectionState.done && snapshot.hasData) {
-
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
                                   final speciesDetail = snapshot.data;
                                   return DetailsScreen(
                                     speciesDetail: speciesDetail,
@@ -92,10 +91,11 @@ class SpeciesListViewBuilder extends StatelessWidget {
                                   return Center(
                                     child: Text(snapshot.error.toString()),
                                   );
-                                } else
+                                } else {
                                   return Center(
                                     child: CupertinoActivityIndicator(),
                                   );
+                                }
                               },
                             ),
                           );
@@ -125,7 +125,9 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Image(image:  NetworkImage(speciesDetail.imageURL),),
+      child: Image(
+        image: NetworkImage(speciesDetail.imageURL),
+      ),
     );
   }
 }
