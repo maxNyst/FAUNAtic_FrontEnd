@@ -12,15 +12,14 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  Location location;
+  Location location = Location();
   LocationData _locationData;
 
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
-  int _markerIdCounter = 1;
+  //int _markerIdCounter = 1;
   GoogleMap googleMap;
-  bool addEnabled = false;
   bool mapUpdated = false;
 
   static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
@@ -31,7 +30,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void getLocation() async {
-    location = Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -61,22 +59,18 @@ class _MapScreenState extends State<MapScreen> {
     if (!mapUpdated) {
       getLocation();
     }
-    var selectedId = selectedMarker;
+    //var selectedId = selectedMarker;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Map'),
+        title: Text('Välj plats'),
       ),
       body: googleMap = GoogleMap(
         onMapCreated: _onMapCreated,
         myLocationEnabled: true,
         myLocationButtonEnabled: true,
         onTap: (LatLng latLng) {
-          if (addEnabled) {
-            _addMarker(latLng);
-          } else {
-            _addMarker(null);
-          }
+          _addMarker(latLng);
         },
         initialCameraPosition: CameraPosition(
           target: center,
@@ -84,7 +78,7 @@ class _MapScreenState extends State<MapScreen> {
         ),
         markers: Set<Marker>.of(markers.values),
       ),
-      bottomNavigationBar: BottomAppBar(
+      /*bottomNavigationBar: BottomAppBar(
         //color: Colors.green,
         child: Row(
           children: <Widget>[
@@ -100,7 +94,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ],
         ),
-      ),
+      ),*/
     );
   }
 
@@ -125,40 +119,15 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
-    var tappedMarker = markers[markerId];
-    if (tappedMarker != null) {
-      await showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('OK'),
-                  )
-                ],
-                content: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 66),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text('Old position: ${tappedMarker.position}'),
-                        Text('New position: $newPosition'),
-                      ],
-                    )));
-          });
-    }
-  }
-
-  void _add() {
+  /*void _add() {
     setState(() {
       addEnabled = !addEnabled;
       mapUpdated = true;
     });
-  }
+  }*/
 
   void _addMarker(LatLng latLng) async {
+    mapUpdated = true;
     if (latLng == null) {
       return;
     }
@@ -167,34 +136,42 @@ class _MapScreenState extends State<MapScreen> {
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
 
-    var markerIdVal = 'marker_id_$_markerIdCounter';
-    _markerIdCounter++;
+    var markerIdVal;
+    if (first.thoroughfare == null) {
+      markerIdVal = 'marker';
+    } else {
+      markerIdVal = first.thoroughfare;
+    }
+    //_markerIdCounter++;
     var markerId = MarkerId(markerIdVal);
+    print(first.addressLine);
 
     var marker = Marker(
       markerId: markerId,
       position: latLng,
-      infoWindow: InfoWindow(title: first.thoroughfare, snippet: first.addressLine),
+      infoWindow: InfoWindow(title: markerIdVal == 'marker' ? '-' : first.thoroughfare, snippet: first.addressLine),
       onTap: () {
         _onMarkerTapped(markerId);
-      },
-      onDragEnd: (LatLng position) {
-        _onMarkerDragEnd(markerId, position);
       },
       draggable: true,
     );
 
     setState(() {
+      markers.clear();
       markers[markerId] = marker;
     });
+    print(markerId.toString());
+    await mapController.animateCamera(CameraUpdate.newLatLng(latLng));
+    await Future.delayed(Duration(seconds: 1));
+    await mapController.showMarkerInfoWindow(markerId);
   }
 
-  void _remove(MarkerId markerId) {
+  /*void _remove(MarkerId markerId) {
     setState(() {
       if (markers.containsKey(markerId)) {
         markers.remove(markerId);
       }
     });
-  }
+  }*/
 
 }
