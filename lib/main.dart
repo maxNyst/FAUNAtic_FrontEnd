@@ -8,8 +8,13 @@ import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Screens/Excursions Search/excursions_search_screen.dart';
+import 'Screens/Excursions/excursions_screen.dart';
 import 'Screens/Home/home_screen.dart';
 import 'Screens/Lecture/lecture_screen.dart';
+import 'Screens/Moment/moments_screen.dart';
+import 'Screens/Saved Excursions/saved_excursions_screen.dart';
+import 'Screens/Species Detail/species_detail.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +67,12 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           '/signup': (context) => SignupScreen(),
           '/search': (context) => SpeciesSearch(),
-          '/lectures': (context) => LecturesScreen()
+          '/lectures': (context) => LecturesScreen(),
+          '/details': (context) => SpeciesDetailsScreen(),
+          '/moment': (context) => MomentsScreen(),
+          '/excursions': (context) => ExcursionsScreen(),
+          '/saved_excursions': (context) => SavedExcursionsScreen(),
+          '/excursions_search': (context) => ExcursionsSearchScreen()
         },
       ),
     );

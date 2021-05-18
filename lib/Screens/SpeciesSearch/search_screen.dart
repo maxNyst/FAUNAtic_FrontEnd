@@ -61,7 +61,7 @@ class SpeciesListViewBuilder extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return SpeciesDetails(specie: s[index]);
+                          return SpeciesDetailsScreen(specie: s[index]);
                         },
                       ),
                     );

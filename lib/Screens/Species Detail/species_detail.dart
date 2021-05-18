@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../../species_information.dart';
 
-class SpeciesDetails extends StatelessWidget {
+class SpeciesDetailsScreen extends StatelessWidget {
   final Specie specie;
 
-  SpeciesDetails({Key key, this.specie}) : super(key: key);
+  SpeciesDetailsScreen({Key key, this.specie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
