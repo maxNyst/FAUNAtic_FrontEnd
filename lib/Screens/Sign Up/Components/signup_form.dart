@@ -35,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     if (email.contains('@') && email.contains('.')) {
                       return null;
                     } else {
-                      return 'Not a valid email.';
+                      return 'Not a valid email';
                     }
                   },
                   decoration: InputDecoration(
@@ -48,7 +48,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   controller: _passwordController,
                   validator: (password) {
                     if (password.length < 6) {
-                      return 'Password too short. It needs to be a minimum of 6 characters.';
+                      return 'Minimum of 6 characters';
                     }
                     return null;
                   },
@@ -94,7 +94,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             } else if (snapshot.hasData) {
                               return Text(snapshot.data);
                             } else {
-                              return Text('something went wrong');
+                              return Text('waiting');
                             }
                           },
                         ),

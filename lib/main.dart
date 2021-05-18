@@ -42,16 +42,25 @@ class MyApp extends StatelessWidget {
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.green.shade100,
+          scaffoldBackgroundColor: Colors.green.shade50,
+          primaryColor: Colors.green.shade400,
           primarySwatch: Colors.green,
           accentColor: Colors.green.shade800,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0)))
+                // elevation: MaterialStateProperty.all(4.0),
+                ),
+          ),
         ),
         initialRoute: '/',
         routes: {
           // add all screens here
           '/': (context) => AuthenticationWrapper(),
           '/home': (context) => Home(),
-          '/signup':(context) => SignupScreen(),
+          '/signup': (context) => SignupScreen(),
           '/search': (context) => SpeciesSearch(),
           '/lectures': (context) => LecturesScreen()
         },
