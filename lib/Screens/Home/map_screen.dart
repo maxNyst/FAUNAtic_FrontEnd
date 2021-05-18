@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:geocoder/geocoder.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
@@ -20,6 +21,7 @@ class _MapScreenState extends State<MapScreen> {
   int _markerIdCounter = 1;
   GoogleMap googleMap;
   bool addEnabled = false;
+  bool mapUpdated = false;
 
   static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
   LatLng center = STOCKHOLM_COORDINATES;
@@ -56,7 +58,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (selectedMarker == null) {
+    if (!mapUpdated) {
       getLocation();
     }
     var selectedId = selectedMarker;
@@ -95,11 +97,6 @@ class _MapScreenState extends State<MapScreen> {
             TextButton(
               onPressed: selectedId == null ? null : () => _remove(selectedId),
               child: const Text('remove'),
-            ),
-            TextButton(
-              onPressed:
-                  selectedId == null ? null : () => _changeInfo(selectedId),
-              child: const Text('change info'),
             ),
           ],
         ),
@@ -157,14 +154,18 @@ class _MapScreenState extends State<MapScreen> {
   void _add() {
     setState(() {
       addEnabled = !addEnabled;
+      mapUpdated = true;
     });
   }
 
-  void _addMarker(LatLng latLng) {
+  void _addMarker(LatLng latLng) async {
     if (latLng == null) {
       return;
     }
-    var markerCount = markers.length;
+
+    var coordinates = Coordinates(latLng.latitude, latLng.longitude);
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
 
     var markerIdVal = 'marker_id_$_markerIdCounter';
     _markerIdCounter++;
@@ -173,11 +174,7 @@ class _MapScreenState extends State<MapScreen> {
     var marker = Marker(
       markerId: markerId,
       position: latLng,
-      /*LatLng(
-        center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
-        center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
-      ),*/
-      infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
+      infoWindow: InfoWindow(title: first.thoroughfare, snippet: first.addressLine),
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -200,15 +197,4 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  Future<void> _changeInfo(MarkerId markerId) async {
-    var marker = markers[markerId];
-    var newSnippet = marker.infoWindow.snippet + '*';
-    setState(() {
-      markers[markerId] = marker.copyWith(
-        infoWindowParam: marker.infoWindow.copyWith(
-          snippetParam: newSnippet,
-        ),
-      );
-    });
-  }
 }
