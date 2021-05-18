@@ -7,7 +7,7 @@ import '../../species_information.dart';
 class SpeciesDetailsScreen extends StatelessWidget {
   final Specie specie;
 
-  SpeciesDetailsScreen({Key key, this.specie}) : super(key: key);
+  SpeciesDetailsScreen({Key key, @required this.specie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

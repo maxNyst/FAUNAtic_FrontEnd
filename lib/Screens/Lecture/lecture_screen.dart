@@ -89,8 +89,10 @@ class LecturesScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {},
+                            OutlinedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               child: Text('Back'),
                             ),
                             ElevatedButton(
