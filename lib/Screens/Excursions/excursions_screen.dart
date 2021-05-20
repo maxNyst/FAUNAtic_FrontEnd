@@ -46,21 +46,35 @@ class ExcursionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextField(
-          decoration: InputDecoration(hintText: 'detta är en hintText'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            print('knappen funkar');
-          },
-          child: Text('ElevatedButton'),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            print('knappen funkar');
-          },
-          child: Text('OutlinedButton'),
-        ),
+        SizedBox(
+          height: 300, // constrain height
+          child: ListView(
+            itemExtent: 100.0, //control size
+            children: [
+              ListTile(
+                title: Text('Planera Utflykt', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  print('knappen funkar');
+                },
+              ),
+              ListTile(
+                title: Text('Sparade Utflykter', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  print('knappen funkar');
+                },
+              ),
+              ListTile(
+                title: Text('Utforska Utflykter', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  print('knappen funkar');
+                },
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
