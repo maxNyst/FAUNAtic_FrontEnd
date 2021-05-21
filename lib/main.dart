@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'Screens/Home/home_screen.dart';
 import 'Screens/Lecture/lecture_screen.dart';
+import 'Screens/Lecture/saved_lectures_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.green.shade100,
           primarySwatch: Colors.green,
-          accentColor: Colors.green.shade800,
+          accentColor: Colors.green,
         ),
         initialRoute: '/',
         routes: {
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           '/signup':(context) => SignupScreen(),
           '/search': (context) => SpeciesSearch(),
-          '/lectures': (context) => LecturesScreen()
+          '/lectures': (context) => LecturesScreen(),
+          '/savedLectures': (context) => SavedLecturesScreen()
         },
       ),
     );
