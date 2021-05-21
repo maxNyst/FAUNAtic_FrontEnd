@@ -9,27 +9,50 @@ class ExcursionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: Icon(Icons.outbond_outlined),
+          )
+        ],
+        title: Text('Hem'),
+      ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Stack(children: [
-              Image.asset(
-                'assets/Forest-pana.png',
-              ),
-              Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
-                    child: Text(
-                      'Utflykter',
-                      style: TextStyle(color: Colors.black, fontSize: 45),
-                    ),
-                  )),
-            ]),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ExcursionButtons(),
+            Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: Text(
+                    'Utflykter',
+                    style: TextStyle(color: Colors.black, fontSize: 45),
+                  ),
+                )),
+            Image.asset(
+              'assets/images/Forest-panaV2.png',
             ),
+
+            ExcursionButtons(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 35.0),
+              child: SizedBox(
+                  width: 115.0,
+                  height: 45.0,
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.0),
+                          )
+                      ),
+                      onPressed: () {
+                        print('knappen funkar');
+                      },
+                      child: Text('Avbryt', style: TextStyle(fontSize: 16),)
+                  )
+              ),
+            )
           ],
         ),
       ),
@@ -46,115 +69,120 @@ class ExcursionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 300, // constrain height
-          child: ListView(
+        Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Padding(padding: const EdgeInsets.only(bottom: 40.0)),
+            SizedBox(
+            height: 225, // constrain height
+            child: ListView(
 
-            children: [
-              ListTile(
-                leading: Transform.translate(
-                  offset: Offset(-5, 0),
-                  child: Container(
-                    height: 70,
-                    width: 4,
-                    color: Colors.orangeAccent,
+              children: [
+                ListTile(
+                  leading: Transform.translate(
+                    offset: Offset(-5, 0),
+                    child: Container(
+                      height: 70,
+                      width: 4,
+                      color: Colors.orangeAccent,
+                    ),
                   ),
-                ),
-                title: Transform.translate(
-                  offset: Offset(-45, 0),
-                  child: Text(
-                    'Planera Utflykt',
-                    style: TextStyle(fontSize: 18),
+                  title: Transform.translate(
+                    offset: Offset(-45, 0),
+                    child: Text(
+                      'Planera Utflykt',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-                trailing: Transform.translate(
-                  offset: Offset(-20, 0),
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
+                  trailing: Transform.translate(
+                    offset: Offset(-20, 0),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                    ),
                   ),
+                  onTap: () {
+                    print('knappen funkar');
+                  },
                 ),
-                onTap: () {
-                  print('knappen funkar');
-                },
-              ),
 
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-                indent: 20,
-                endIndent: 20,
-              ),
-              ListTile(
-                leading: Transform.translate(
-                  offset: Offset(-5, 0),
-                  child: Container(
-                    height: 100,
-                    width: 4,
-                    color: Colors.greenAccent,
-                  ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.grey,
+                  indent: 20,
+                  endIndent: 20,
                 ),
-                title: Transform.translate(
-                  offset: Offset(-45, 0),
-                  child: Text(
-                    'Sparade Utflykter',
-                    style: TextStyle(fontSize: 18),
+                ListTile(
+                  leading: Transform.translate(
+                    offset: Offset(-5, 0),
+                    child: Container(
+                      height: 100,
+                      width: 4,
+                      color: Colors.greenAccent,
+                    ),
                   ),
-                ),
-                trailing: Transform.translate(
-                  offset: Offset(-20, 0),
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
+                  title: Transform.translate(
+                    offset: Offset(-45, 0),
+                    child: Text(
+                      'Sparade Utflykter',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
+                  trailing: Transform.translate(
+                    offset: Offset(-20, 0),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    print('knappen funkar');
+                  },
                 ),
-                onTap: () {
-                  print('knappen funkar');
-                },
-              ),
 
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-                indent: 20,
-                endIndent: 20,
-              ),
-              ListTile(
-                leading: Transform.translate(
-                  offset: Offset(-5, 0),
-                  child: Container(
-                    height: 100,
-                    width: 4,
-                    color: Colors.redAccent,
-                  ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.grey,
+                  indent: 20,
+                  endIndent: 20,
                 ),
-                title: Transform.translate(
-                  offset: Offset(-45, 0),
-                  child: Text(
-                    'Utforska Utflykter',
-                    style: TextStyle(fontSize: 18),
+                ListTile(
+                  leading: Transform.translate(
+                    offset: Offset(-5, 0),
+                    child: Container(
+                      height: 100,
+                      width: 4,
+                      color: Colors.redAccent,
+                    ),
                   ),
-                ),
-                trailing: Transform.translate(
-                  offset: Offset(-20, 0),
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
+                  title: Transform.translate(
+                    offset: Offset(-45, 0),
+                    child: Text(
+                      'Utforska Utflykter',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
+                  trailing: Transform.translate(
+                    offset: Offset(-20, 0),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    print('knappen funkar');
+                  },
                 ),
-                onTap: () {
-                  print('knappen funkar');
-                },
-              ),
 
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-                indent: 20,
-                endIndent: 20,
-              ),
-            ],
-          ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.grey,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+              ],
+            ),
+          ),]
         ),
       ],
     );
