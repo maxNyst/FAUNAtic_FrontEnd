@@ -22,7 +22,7 @@ class ExcursionsScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 40.0),
                     child: Text(
                       'Utflykter',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: TextStyle(color: Colors.black, fontSize: 45),
                     ),
                   )),
             ]),
@@ -49,32 +49,113 @@ class ExcursionButtons extends StatelessWidget {
         SizedBox(
           height: 300, // constrain height
           child: ListView(
-            itemExtent: 100.0, //control size
+
             children: [
               ListTile(
-                title: Text('Planera Utflykt', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
-                trailing: Icon(Icons.arrow_forward_ios),
+                leading: Transform.translate(
+                  offset: Offset(-5, 0),
+                  child: Container(
+                    height: 70,
+                    width: 4,
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+                title: Transform.translate(
+                  offset: Offset(-45, 0),
+                  child: Text(
+                    'Planera Utflykt',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                trailing: Transform.translate(
+                  offset: Offset(-20, 0),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+                ),
                 onTap: () {
                   print('knappen funkar');
                 },
               ),
+
+              Divider(
+                thickness: 1,
+                color: Colors.grey,
+                indent: 20,
+                endIndent: 20,
+              ),
               ListTile(
-                title: Text('Sparade Utflykter', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
-                trailing: Icon(Icons.arrow_forward_ios),
+                leading: Transform.translate(
+                  offset: Offset(-5, 0),
+                  child: Container(
+                    height: 100,
+                    width: 4,
+                    color: Colors.greenAccent,
+                  ),
+                ),
+                title: Transform.translate(
+                  offset: Offset(-45, 0),
+                  child: Text(
+                    'Sparade Utflykter',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                trailing: Transform.translate(
+                  offset: Offset(-20, 0),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+                ),
                 onTap: () {
                   print('knappen funkar');
                 },
               ),
+
+              Divider(
+                thickness: 1,
+                color: Colors.grey,
+                indent: 20,
+                endIndent: 20,
+              ),
               ListTile(
-                title: Text('Utforska Utflykter', textAlign: TextAlign.left, style: TextStyle(fontSize: 20),),
-                trailing: Icon(Icons.arrow_forward_ios),
+                leading: Transform.translate(
+                  offset: Offset(-5, 0),
+                  child: Container(
+                    height: 100,
+                    width: 4,
+                    color: Colors.redAccent,
+                  ),
+                ),
+                title: Transform.translate(
+                  offset: Offset(-45, 0),
+                  child: Text(
+                    'Utforska Utflykter',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                trailing: Transform.translate(
+                  offset: Offset(-20, 0),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+                ),
                 onTap: () {
                   print('knappen funkar');
                 },
+              ),
+
+              Divider(
+                thickness: 1,
+                color: Colors.grey,
+                indent: 20,
+                endIndent: 20,
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
