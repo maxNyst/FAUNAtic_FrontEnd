@@ -49,6 +49,7 @@ class ExcursionButtons extends StatelessWidget {
         SizedBox(
           height: 300, // constrain height
           child: ListView(
+
             children: [
               ListTile(
                 leading: Transform.translate(
@@ -77,6 +78,7 @@ class ExcursionButtons extends StatelessWidget {
                   print('knappen funkar');
                 },
               ),
+
               Divider(
                 thickness: 1,
                 color: Colors.grey,
@@ -110,6 +112,7 @@ class ExcursionButtons extends StatelessWidget {
                   print('knappen funkar');
                 },
               ),
+
               Divider(
                 thickness: 1,
                 color: Colors.grey,
@@ -143,6 +146,7 @@ class ExcursionButtons extends StatelessWidget {
                   print('knappen funkar');
                 },
               ),
+
               Divider(
                 thickness: 1,
                 color: Colors.grey,
