@@ -171,9 +171,7 @@ class PlanExcursionButtons extends StatelessWidget {
                           size: 22,
                         ),
                       ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
+                        onTap: () => Navigator.pushNamed(context, '/assignments'),
                     ),
 
                     Divider(

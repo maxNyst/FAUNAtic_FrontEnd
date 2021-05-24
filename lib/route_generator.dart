@@ -11,6 +11,8 @@ import 'package:faunatic_front_end/Screens/Species%20Detail/species_detail.dart'
 import 'package:faunatic_front_end/Screens/SpeciesSearch/search_screen.dart';
 import 'package:faunatic_front_end/main.dart';
 
+import 'Screens/Assignments/new_assignment.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -40,6 +42,8 @@ class RouteGenerator {
       //  Make sure to cast args to the
       //  right type with the 'as' keyword like
       //  with 'Specie here for the details screen.
+      case '/assignments':
+        return MaterialPageRoute(builder: (context) => NewAssignmentScreen());
       case '/search/details':
         return MaterialPageRoute(
           builder: (context) => SpeciesDetailsScreen(
