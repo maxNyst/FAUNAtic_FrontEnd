@@ -45,7 +45,6 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-
     - assets/images/Forest-panaV2.png
     - assets/Teacher-panaV2.png
     - assets/Teacher-pana.png
@@ -61,12 +60,6 @@ flutter:
     - assets/Nature-amico.png
     - assets/Notebook-rafiki.png
     - assets/images/logo.png
-    - assets/images/Forest-pana.png
-    - assets/images/Journey-amico.png
-    - assets/images/Bear market-amico.png
-    - assets/images/Directions-amico.png
-    - assets/images/Classroom-amico.png
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
