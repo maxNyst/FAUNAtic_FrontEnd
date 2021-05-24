@@ -11,6 +11,9 @@ class ExcursionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+              icon: Icon(Icons.outbond_outlined),
+          )
         ],
         title: Text('Hem'),
       ),
@@ -73,6 +76,7 @@ class ExcursionButtons extends StatelessWidget {
             SizedBox(
             height: 225, // constrain height
             child: ListView(
+
               children: [
                 ListTile(
                   leading: Transform.translate(
