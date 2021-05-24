@@ -22,7 +22,7 @@ class LecturesScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Image.asset(
-              'assets/Teacher-pana.png',
+              'assets/Teacher-panaV2.png',
               width: size.width,
             ),
             Text(
@@ -53,7 +53,8 @@ class LecturesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 35.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                 children: [
                   SizedBox(
                       width: 115.0,

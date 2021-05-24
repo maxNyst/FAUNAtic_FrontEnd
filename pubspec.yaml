@@ -46,6 +46,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/Forest-panaV2.png
+    - assets/Teacher-panaV2.png
     - assets/Teacher-pana.png
     - assets/Bear market-amico.png
     - assets/Classroom-amico.png
