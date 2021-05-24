@@ -12,6 +12,9 @@ import 'Screens/Lecture/lecture_screen.dart';
 import 'Screens/Lecture/saved_lectures_screen.dart';
 import 'package:faunatic_front_end/Screens/Home/home_screen.dart';
 
+import 'Screens/Sign Up/signup_screen.dart';
+import 'Screens/SpeciesSearch/search_screen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,9 +62,9 @@ class MyApp extends StatelessWidget {
         routes: {
           // add all screens here
           '/': (context) => AuthenticationWrapper(),
-          '/home': (context) => Home(),
+          '/home': (context) => HomeScreen(),
           '/signup':(context) => SignupScreen(),
-          '/search': (context) => SpeciesSearch(),
+          '/search': (context) => SpeciesSearchScreen(),
           '/lectures': (context) => LecturesScreen(),
           '/savedLectures': (context) => SavedLecturesScreen()
         },
