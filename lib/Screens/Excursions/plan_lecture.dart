@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LecturesScreen extends StatelessWidget {
-  const LecturesScreen({Key key}) : super(key: key);
+class PlanLecture extends StatelessWidget {
+  const PlanLecture({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const topPadding = 0.0;
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: null,
@@ -41,7 +42,7 @@ class LecturesScreen extends StatelessWidget {
                           hintText: 'Excursion name',
                           border: InputBorder.none,
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 12),
+                          EdgeInsets.symmetric(horizontal: 12),
                           fillColor: Colors.blueGrey.shade300,
                           filled: true),
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:faunatic_front_end/Screens/Excursions%20Search/excursions_search_screen.dart';
 import 'package:faunatic_front_end/Screens/Excursions/excursions_screen.dart';
 import 'package:faunatic_front_end/Screens/Home/home_screen.dart';
-import 'package:faunatic_front_end/Screens/Lecture/lecture_screen.dart';
+import 'package:faunatic_front_end/Screens/Excursions/plan_lecture.dart';
 import 'package:faunatic_front_end/Screens/Moment/moments_screen.dart';
 import 'package:faunatic_front_end/Screens/Saved%20Excursions/saved_excursions_screen.dart';
 import 'package:faunatic_front_end/Screens/Sign%20Up/signup_screen.dart';
@@ -36,7 +36,7 @@ class RouteGenerator {
       case '/lectures':
         return MaterialPageRoute(
             builder: (context) =>
-                LecturesScreen()); // The example in our code right now
+                PlanLecture()); // The example in our code right now
       //  Make sure to cast args to the
       //  right type with the 'as' keyword like
       //  with 'Specie here for the details screen.
