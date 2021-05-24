@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'Components/login_form.dart';
 import 'Components/logo.dart';
 
-class Login extends StatelessWidget {
-  const Login({
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({
     Key key,
   }) : super(key: key);
 

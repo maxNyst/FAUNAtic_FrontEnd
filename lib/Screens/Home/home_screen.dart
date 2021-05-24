@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../authentication_service.dart';
 
-class Home extends StatelessWidget {
-  const Home({
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
     Key key,
   }) : super(key: key);
 
@@ -30,6 +30,9 @@ class Home extends StatelessWidget {
             ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/search'),
                 child: Text('Search Screen')),
+            ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/excursions'),
+                child: Text('Excursions Screen')),
             ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/lectures'),
                 child: Text('Lectures Screen'))

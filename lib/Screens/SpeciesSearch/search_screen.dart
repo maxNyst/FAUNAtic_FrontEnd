@@ -1,12 +1,12 @@
-import 'package:faunatic_front_end/Screens/Species%20Detail/species_detail.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../species_information.dart';
 
-class SpeciesSearch extends StatelessWidget {
-  const SpeciesSearch({
+class SpeciesSearchScreen extends StatelessWidget {
+  const SpeciesSearchScreen({
     Key key,
   }) : super(key: key);
 
@@ -58,13 +58,14 @@ class SpeciesListViewBuilder extends StatelessWidget {
                   title: Text(s[index].swedishName),
                   subtitle: Text(s[index].scientificName),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SpeciesDetails(specie: s[index]);
-                        },
-                      ),
-                    );
+                    Navigator.pushNamed(context, '/search/details', arguments: s[index]);
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return SpeciesDetailsScreen(specie: s[index]);
+                    //     },
+                    //   ),
+                    // );
                   },
                 );
               },
