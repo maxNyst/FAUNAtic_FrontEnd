@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../authentication_service.dart';
-import 'map_screen.dart';
+import '../Lecture/map_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({

@@ -1,4 +1,5 @@
-
+import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
+import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -14,6 +15,8 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   Location location = Location();
   LocationData _locationData;
+  final placesService = PlacesService();
+  List<PlaceSearch> searchResults = [];
 
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -27,6 +30,10 @@ class _MapScreenState extends State<MapScreen> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  LocationData getLocationData() {
+    return _locationData;
   }
 
   void getLocation() async {
@@ -56,6 +63,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     if (!mapUpdated) {
       getLocation();
     }
@@ -65,18 +73,64 @@ class _MapScreenState extends State<MapScreen> {
         centerTitle: true,
         title: Text('Välj plats'),
       ),
-      body: googleMap = GoogleMap(
-        onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        onTap: (LatLng latLng) {
-          _addMarker(latLng);
-        },
-        initialCameraPosition: CameraPosition(
-          target: center,
-          zoom: 11.0,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Sök plats', suffixIcon: Icon(Icons.search)),
+                  onChanged: (value) => searchPlaces(value),
+                ),
+              ),
+              Stack(
+                children: [
+                  Container(
+                    height: size.height - 150,
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      onTap: (LatLng latLng) {
+                        _addMarker(latLng);
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: center,
+                        zoom: 11.0,
+                      ),
+                      markers: Set<Marker>.of(markers.values),
+                    ),
+                  ),
+                  if (searchResults != null && searchResults.isNotEmpty)
+                    Container(
+                      height: size.height - 150,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.black87.withOpacity(.6),
+                          backgroundBlendMode: BlendMode.darken),
+                    ),
+                  if (searchResults != null && searchResults.isNotEmpty)
+                    Container(
+                      height: size.height - 150,
+                      child: ListView.builder(
+                        itemCount: searchResults.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              searchResults[index].description,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
         ),
-        markers: Set<Marker>.of(markers.values),
       ),
       /*bottomNavigationBar: BottomAppBar(
         //color: Colors.green,
@@ -96,6 +150,13 @@ class _MapScreenState extends State<MapScreen> {
         ),
       ),*/
     );
+  }
+
+  void searchPlaces(String searchTerm) async {
+    searchResults = await placesService.getAutocomplete(searchTerm, ('' + _locationData.latitude.toString() + ',' + _locationData.longitude.toString()));
+    setState(() {
+
+    });
   }
 
   void _onMarkerTapped(MarkerId markerId) {
@@ -133,7 +194,8 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     var coordinates = Coordinates(latLng.latitude, latLng.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
 
     var markerIdVal;
@@ -149,7 +211,9 @@ class _MapScreenState extends State<MapScreen> {
     var marker = Marker(
       markerId: markerId,
       position: latLng,
-      infoWindow: InfoWindow(title: markerIdVal == 'marker' ? '-' : first.thoroughfare, snippet: first.addressLine),
+      infoWindow: InfoWindow(
+          title: markerIdVal == 'marker' ? '-' : first.thoroughfare,
+          snippet: first.addressLine),
       onTap: () {
         _onMarkerTapped(markerId);
       },
