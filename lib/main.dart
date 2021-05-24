@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.green.shade100,
+          scaffoldBackgroundColor: Colors.white,
           primarySwatch: Colors.green,
           accentColor: Colors.green,
         ),

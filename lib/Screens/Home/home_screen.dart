@@ -9,8 +9,6 @@ class Home extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +17,10 @@ class Home extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(decoration: BoxDecoration(
-              color: Colors.green.shade100,
+              color: Colors.white60,
             ),
               child: Text('Meny',
-                style: TextStyle(color: Colors.black.withOpacity(.6), fontSize: 20.0) ,),
+                style: TextStyle(color: Colors.green, fontSize: 20.0) ,),
             ),
             ListTile(
               title: Text('Profil'),
@@ -49,76 +47,150 @@ class Home extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.green.shade100,
+        backgroundColor: Colors.white60,
+        iconTheme: IconThemeData(color: Colors.green),
         actions: [
           IconButton(
-              icon: Icon(Icons.logout, color: Colors.black.withOpacity(.6),),
-              onPressed: () => context.read<AuthenticationService>().signOut()
+              icon: Icon(Icons.info_outline, color: Colors.green, size: 27,),
+              onPressed: (){}
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(30.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          children: <Widget>[
-            Column(
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                  ),
-                  elevation: 5,
-                  margin: EdgeInsets.all(8.0),
-    child: InkWell(
-    onTap: () => Navigator.pushNamed(context, '/lectures'),
-    splashColor: Colors.green,
-      child: Image.asset('assets/images/Journey-amico.png')
+
+      body: SafeArea(
+        child: Column(
+          children: [
+            SafeArea(
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+            Padding(
+    padding: EdgeInsets.all(12.0),
+    child: Image.asset( 'assets/images/logo.png',
+    color: Colors.green,
+    isAntiAlias: true,
+    height: 160,
+    width: 110,
+    scale: 0.1,
+    filterQuality: FilterQuality.high,)
     ),
+Padding(
+    padding: EdgeInsets.all(12.0),
+    child: Text('Välkommen till FAUNAtic',
+    style: TextStyle(
+              color: Colors.black,
+            fontSize: 20.0,
     ),
-                Text('Hello'),
-              ],
             ),
-            Card(
+    ),
+            Padding(padding: EdgeInsets.all(12.0),
+    child: Center(
+    child: Wrap(
+    children: <Widget>[
+            SizedBox(
+    width: 150.0,
+    height: 150.0,
+    child: Container(
+      child: Card(
+              color: Colors.teal.shade100,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)
+                borderRadius: BorderRadius.circular(10.0),
+
               ),
               elevation: 5,
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                  onTap: () {},
-                  splashColor: Colors.green,
-                  child: Image.asset('assets/images/Directions-amico.png')
+                onTap: () => Navigator.pushNamed(context, '/lectures'),
+                splashColor: Colors.green,
+                child: Image.asset('assets/images/Journey-amico.png',),
+              ),
+      ),
+    ),
+            ),
+              SizedBox(
+                width: 150.0,
+              height: 150.0,
+              child: Card(
+                color: Colors.green.shade100,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(8.0),
+                child: InkWell(
+                    onTap: () {},
+                    splashColor: Colors.green,
+                    child: Image.asset('assets/images/Directions-amico.png'),
+                ),
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)
-              ),
-              elevation: 5,
-              margin: EdgeInsets.all(8.0),
-              child: InkWell(
+            SizedBox(
+              width: 150.0,
+              height: 150.0,
+              child: Card(
+                color: Colors.red.shade50,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(8.0),
+                child: InkWell(
                   onTap: () {},
                   splashColor: Colors.green,
                   child: Image.asset('assets/images/Classroom-amico.png'),
+                ),
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              ),
-              elevation: 5,
-              margin: EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(context, '/search'),
-                splashColor: Colors.green,
-                child: Image.asset('assets/images/Bear market-amico.png'),
+            SizedBox(
+              width: 150.0,
+              height: 150.0,
+              child:  Card(
+                color: Colors.orange.shade100,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.pushNamed(context, '/search'),
+                  splashColor: Colors.green,
+                  child: Image.asset('assets/images/Bear market-amico.png'),
+                ),
               ),
             ),
+
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget> [
+                    ElevatedButton(
+                        onPressed: () => context.read<AuthenticationService>().signOut(),
+style: ButtonStyle(
+  backgroundColor: MaterialStateProperty.all(Colors.white60),
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+),
+  ),
+),
+                       child: Text('Logga Ut', style: TextStyle(fontSize: 15.0, color: Colors.green),),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ],
+    ),
+    ),
+    )
     ],
+
+    ),
+    ),
+          ],
         ),
       ),
     );
   }
 }
-
