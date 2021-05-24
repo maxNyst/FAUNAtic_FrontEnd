@@ -6,7 +6,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'Screens/Home/home_screen.dart';
+import 'Screens/Lecture/lecture_screen.dart';
+import 'Screens/Lecture/saved_lectures_screen.dart';
 import 'package:faunatic_front_end/Screens/Home/home_screen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,17 +51,20 @@ class MyApp extends StatelessWidget {
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.green.shade50,
-          primaryColor: Colors.green.shade100,
+          scaffoldBackgroundColor: Colors.white,
           primarySwatch: Colors.green,
-          accentColor: Colors.green.shade800,
-          outlinedButtonTheme:
-              OutlinedButtonThemeData(style: roundedButtonStyle),
-          elevatedButtonTheme:
-              ElevatedButtonThemeData(style: roundedButtonStyle),
+          accentColor: Colors.green,
         ),
         initialRoute: '/',
-        onGenerateRoute: RouteGenerator.generateRoute,
+        routes: {
+          // add all screens here
+          '/': (context) => AuthenticationWrapper(),
+          '/home': (context) => Home(),
+          '/signup':(context) => SignupScreen(),
+          '/search': (context) => SpeciesSearch(),
+          '/lectures': (context) => LecturesScreen(),
+          '/savedLectures': (context) => SavedLecturesScreen()
+        },
       ),
     );
   }
