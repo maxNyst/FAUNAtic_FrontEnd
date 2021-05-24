@@ -1,12 +1,12 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../authentication_service.dart';
 import '../../species_information.dart';
 
-class SpeciesSearch extends StatelessWidget {
-  const SpeciesSearch({
+class SpeciesSearchScreen extends StatelessWidget {
+  const SpeciesSearchScreen({
     Key key,
   }) : super(key: key);
 
@@ -63,42 +63,14 @@ class SpeciesListViewBuilder extends StatelessWidget {
                   title: Text(s[index].swedishName),
                   subtitle: Text(s[index].scientificName),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Scaffold(
-                            appBar: AppBar(
-                              title: Text(s[index].swedishName),
-                            ),
-                            body: FutureBuilder(
-                              future: context
-                                  .read<SpeciesList>()
-                                  .getSpeciesDetail(s[index].taxonId),
-                              builder: (context, snapshot) {
-                                print(snapshot.connectionState);
-
-                                if (snapshot.connectionState ==
-                                        ConnectionState.done &&
-                                    snapshot.hasData) {
-                                  final speciesDetail = snapshot.data;
-                                  return DetailsScreen(
-                                    speciesDetail: speciesDetail,
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Center(
-                                    child: Text(snapshot.error.toString()),
-                                  );
-                                } else {
-                                  return Center(
-                                    child: CupertinoActivityIndicator(),
-                                  );
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                    Navigator.pushNamed(context, '/search/details', arguments: s[index]);
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return SpeciesDetailsScreen(specie: s[index]);
+                    //     },
+                    //   ),
+                    // );
                   },
                 );
               },
@@ -109,21 +81,6 @@ class SpeciesListViewBuilder extends StatelessWidget {
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class DetailsScreen extends StatelessWidget {
-  final SpeciesDetail speciesDetail;
-
-  const DetailsScreen({Key key, this.speciesDetail}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Image(
-        image: NetworkImage(speciesDetail.imageURL),
       ),
     );
   }
