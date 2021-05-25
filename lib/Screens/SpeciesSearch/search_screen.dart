@@ -20,11 +20,6 @@ class SpeciesSearchScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: TextField(
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8.0),
-                      ),
-                    ),
                     prefixIcon: Icon(Icons.style),
                     suffixIcon: Icon(Icons.search)),
                 onSubmitted: (searchTerm) =>
