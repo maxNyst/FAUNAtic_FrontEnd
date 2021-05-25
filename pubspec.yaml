@@ -45,6 +45,8 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+    - assets/images/Forest-panaV2.png
+    - assets/Teacher-panaV2.png
     - assets/Teacher-pana.png
     - assets/Bear market-amico.png
     - assets/Classroom-amico.png
