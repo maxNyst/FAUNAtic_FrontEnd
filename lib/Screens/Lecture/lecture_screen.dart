@@ -95,7 +95,12 @@ class LecturesScreen extends StatelessWidget {
                           onPressed: () {},
                           child: Text('Save'),
                         ),
+
+                      ),
+                      onTap: ()  => Navigator.pushNamed(context, '/moment'),
+
                       ],
+
                     ),
                   )
                 ],
