@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
+import 'package:faunatic_front_end/Screens/Lecture/lecture_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -81,6 +82,7 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             children: [
@@ -148,7 +150,9 @@ class _MapScreenState extends State<MapScreen> {
                         height: 50.0,
                         width: 120.0,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text(
                             'Lägg till',
                             style: TextStyle(fontSize: 20.0),
@@ -225,8 +229,12 @@ class _MapScreenState extends State<MapScreen> {
       return;
     }*/
 
-    placeTitle = place.name.substring(0, place.name.indexOf(','));
-    placeTitle ??= 'marker';
+    if (place.name == null || place.name.isEmpty || place == null) {
+      placeTitle = 'marker';
+    } else {
+      placeTitle = place.name.substring(0, place.name.indexOf(','));
+    }
+    //placeTitle ??= 'marker';
     var markerId = MarkerId(placeTitle);
 
     var latLng =
