@@ -17,19 +17,6 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Icons.map),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) {
-                      return MapScreen();
-                    },
-                ),
-              );
-            },
-          ),
-          IconButton(
               icon: Icon(Icons.outbond_outlined),
               onPressed: () => context.read<AuthenticationService>().signOut()
           ),

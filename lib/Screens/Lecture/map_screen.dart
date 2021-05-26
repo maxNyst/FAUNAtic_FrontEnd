@@ -294,3 +294,12 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 }
+
+/*Navigator.push(
+context,
+MaterialPageRoute(
+builder: (context) {
+return MapScreen();
+},
+),
+);*/
