@@ -101,9 +101,8 @@ class ExcursionButtons extends StatelessWidget {
                           size: 18,
                         ),
                       ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
+                      onTap: () => Navigator.pushNamed(
+                          context, '/lectures'),
                     ),
 
                     Divider(
