@@ -12,7 +12,7 @@ class ExcursionsScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: Icon(Icons.outbond_outlined),
+            icon: Icon(Icons.outbond_outlined),
           )
         ],
         title: Text('Hem'),
@@ -70,119 +70,119 @@ class ExcursionButtons extends StatelessWidget {
     return Column(
       children: [
         Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Padding(padding: const EdgeInsets.only(bottom: 40.0)),
-            SizedBox(
-            height: 225, // constrain height
-            child: ListView(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Padding(padding: const EdgeInsets.only(bottom: 40.0)),
+              SizedBox(
+                height: 225, // constrain height
+                child: ListView(
 
-              children: [
-                ListTile(
-                  leading: Transform.translate(
-                    offset: Offset(-5, 0),
-                    child: Container(
-                      height: 70,
-                      width: 4,
-                      color: Colors.orangeAccent,
+                  children: [
+                    ListTile(
+                      leading: Transform.translate(
+                        offset: Offset(-5, 0),
+                        child: Container(
+                          height: 70,
+                          width: 4,
+                          color: Colors.orangeAccent,
+                        ),
+                      ),
+                      title: Transform.translate(
+                        offset: Offset(-45, 0),
+                        child: Text(
+                          'Planera Utflykt',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      trailing: Transform.translate(
+                        offset: Offset(-20, 0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                        ),
+                      ),
+                      onTap: () {
+                        print('knappen funkar');
+                      },
                     ),
-                  ),
-                  title: Transform.translate(
-                    offset: Offset(-45, 0),
-                    child: Text(
-                      'Planera Utflykt',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  trailing: Transform.translate(
-                    offset: Offset(-20, 0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 18,
-                    ),
-                  ),
-                  onTap: () {
-                    print('knappen funkar');
-                  },
-                ),
 
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: Transform.translate(
-                    offset: Offset(-5, 0),
-                    child: Container(
-                      height: 100,
-                      width: 4,
-                      color: Colors.greenAccent,
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                      indent: 20,
+                      endIndent: 20,
                     ),
-                  ),
-                  title: Transform.translate(
-                    offset: Offset(-45, 0),
-                    child: Text(
-                      'Sparade Utflykter',
-                      style: TextStyle(fontSize: 18),
+                    ListTile(
+                      leading: Transform.translate(
+                        offset: Offset(-5, 0),
+                        child: Container(
+                          height: 100,
+                          width: 4,
+                          color: Colors.greenAccent,
+                        ),
+                      ),
+                      title: Transform.translate(
+                        offset: Offset(-45, 0),
+                        child: Text(
+                          'Sparade Utflykter',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      trailing: Transform.translate(
+                        offset: Offset(-20, 0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                        ),
+                      ),
+                      onTap: () {
+                        print('knappen funkar');
+                      },
                     ),
-                  ),
-                  trailing: Transform.translate(
-                    offset: Offset(-20, 0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 18,
-                    ),
-                  ),
-                  onTap: () {
-                    print('knappen funkar');
-                  },
-                ),
 
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: Transform.translate(
-                    offset: Offset(-5, 0),
-                    child: Container(
-                      height: 100,
-                      width: 4,
-                      color: Colors.redAccent,
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                      indent: 20,
+                      endIndent: 20,
                     ),
-                  ),
-                  title: Transform.translate(
-                    offset: Offset(-45, 0),
-                    child: Text(
-                      'Utforska Utflykter',
-                      style: TextStyle(fontSize: 18),
+                    ListTile(
+                      leading: Transform.translate(
+                        offset: Offset(-5, 0),
+                        child: Container(
+                          height: 100,
+                          width: 4,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      title: Transform.translate(
+                        offset: Offset(-45, 0),
+                        child: Text(
+                          'Utforska Utflykter',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      trailing: Transform.translate(
+                        offset: Offset(-20, 0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                        ),
+                      ),
+                      onTap: () {
+                        print('knappen funkar');
+                      },
                     ),
-                  ),
-                  trailing: Transform.translate(
-                    offset: Offset(-20, 0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 18,
-                    ),
-                  ),
-                  onTap: () {
-                    print('knappen funkar');
-                  },
-                ),
 
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey,
-                  indent: 20,
-                  endIndent: 20,
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),]
+              ),]
         ),
       ],
     );
