@@ -1,9 +1,12 @@
+import 'dart:async';
+
+import 'package:faunatic_front_end/Screens/Lecture/Components/place.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:geocoder/geocoder.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
@@ -17,13 +20,16 @@ class _MapScreenState extends State<MapScreen> {
   LocationData _locationData;
   final placesService = PlacesService();
   List<PlaceSearch> searchResults = [];
+  Place selectedLocation;
+  String placeTitle;
 
   GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
-  //int _markerIdCounter = 1;
   GoogleMap googleMap;
   bool mapUpdated = false;
+  TextField searchField;
+  final fieldText = TextEditingController();
 
   static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
   LatLng center = STOCKHOLM_COORDINATES;
@@ -75,14 +81,20 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: searchField = TextField(
                   decoration: InputDecoration(
                       hintText: 'Sök plats', suffixIcon: Icon(Icons.search)),
                   onChanged: (value) => searchPlaces(value),
+                  controller: fieldText,
+                  focusNode: FocusNode(
+                      skipTraversal: false,
+                      canRequestFocus: true,
+                      descendantsAreFocusable: true),
                 ),
               ),
               Stack(
@@ -122,8 +134,26 @@ class _MapScreenState extends State<MapScreen> {
                               searchResults[index].description,
                               style: TextStyle(color: Colors.white),
                             ),
+                            onTap: () {
+                              setSelectedLocation(searchResults[index].placeId);
+                            },
                           );
                         },
+                      ),
+                    ),
+                  if (selectedLocation != null)
+                    Center(
+                      heightFactor: size.height - (size.height * 0.9715),
+                      child: SizedBox(
+                        height: 50.0,
+                        width: 120.0,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Lägg till',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        ),
                       ),
                     ),
                 ],
@@ -136,15 +166,10 @@ class _MapScreenState extends State<MapScreen> {
         //color: Colors.green,
         child: Row(
           children: <Widget>[
-            TextButton(
-              style: addEnabled ? ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black12))
-                  : ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-              onPressed: _add,
-              child: const Text('add'),
-            ),
-            TextButton(
-              onPressed: selectedId == null ? null : () => _remove(selectedId),
-              child: const Text('remove'),
+            Text(placeTitle),
+            ElevatedButton(
+                onPressed: (){},
+                child: Text('Lägg till')
             ),
           ],
         ),
@@ -153,10 +178,13 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void searchPlaces(String searchTerm) async {
-    searchResults = await placesService.getAutocomplete(searchTerm, ('' + _locationData.latitude.toString() + ',' + _locationData.longitude.toString()));
-    setState(() {
-
-    });
+    searchResults = await placesService.getAutocomplete(
+        searchTerm,
+        ('' +
+            _locationData.latitude.toString() +
+            ',' +
+            _locationData.longitude.toString()));
+    setState(() {});
   }
 
   void _onMarkerTapped(MarkerId markerId) {
@@ -180,40 +208,36 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  /*void _add() {
-    setState(() {
-      addEnabled = !addEnabled;
-      mapUpdated = true;
-    });
-  }*/
-
   void _addMarker(LatLng latLng) async {
+    var newLatLng =
+        ('' + latLng.latitude.toString() + ',' + latLng.longitude.toString());
+    selectedLocation = await placesService.getPlaceFromCoor(newLatLng);
+    var markerId = newMarker(selectedLocation);
+
+    await mapController.animateCamera(CameraUpdate.newLatLng(latLng));
+    await Future.delayed(Duration(seconds: 1));
+    await mapController.showMarkerInfoWindow(markerId);
+  }
+
+  MarkerId newMarker(Place place) {
     mapUpdated = true;
-    if (latLng == null) {
+    /*if (place == null) {
       return;
-    }
+    }*/
 
-    var coordinates = Coordinates(latLng.latitude, latLng.longitude);
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
+    placeTitle = place.name.substring(0, place.name.indexOf(','));
+    placeTitle ??= 'marker';
+    var markerId = MarkerId(placeTitle);
 
-    var markerIdVal;
-    if (first.thoroughfare == null) {
-      markerIdVal = 'marker';
-    } else {
-      markerIdVal = first.thoroughfare;
-    }
-    //_markerIdCounter++;
-    var markerId = MarkerId(markerIdVal);
-    print(first.addressLine);
+    var latLng =
+        LatLng(place.geometry.location.lat, place.geometry.location.lng);
 
     var marker = Marker(
       markerId: markerId,
       position: latLng,
       infoWindow: InfoWindow(
-          title: markerIdVal == 'marker' ? '-' : first.thoroughfare,
-          snippet: first.addressLine),
+          title: placeTitle == 'marker' ? '-' : placeTitle,
+          snippet: place.name),
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -224,18 +248,49 @@ class _MapScreenState extends State<MapScreen> {
       markers.clear();
       markers[markerId] = marker;
     });
-    print(markerId.toString());
-    await mapController.animateCamera(CameraUpdate.newLatLng(latLng));
-    await Future.delayed(Duration(seconds: 1));
-    await mapController.showMarkerInfoWindow(markerId);
+    return markerId;
   }
 
-  /*void _remove(MarkerId markerId) {
-    setState(() {
-      if (markers.containsKey(markerId)) {
-        markers.remove(markerId);
-      }
-    });
-  }*/
+  Future<void> _goToPlace(Place place) async {
+    /*await mapController.animateCamera(
+        CameraUpdate.newLatLng(
+            LatLng(place.geometry.location.lat, place.geometry.location.lng)
+        )
+    );*/
+    await mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+            target: LatLng(
+                place.geometry.location.lat, place.geometry.location.lng),
+            zoom: 14.0)));
+  }
 
+  void setSelectedLocation(String placeId) async {
+    selectedLocation = await placesService.getPlace(placeId);
+    searchResults = null;
+    setState(() {
+      fieldText.clear();
+      //var curr = FocusScope.of(context);
+      //curr.focusedChild.unfocus();
+      //searchField.focusNode.unfocus();
+      //FocusManager.instance.primaryFocus.unfocus();
+      //WidgetsBinding.instance.focusManager.primaryFocus.unfocus();
+    });
+    await Future.delayed(Duration(milliseconds: 500));
+    if (selectedLocation == null) {
+      return;
+    }
+    await _goToPlace(selectedLocation);
+    await Future.delayed(Duration(seconds: 1));
+    createMarker(selectedLocation);
+  }
+
+  void createMarker(Place place) async {
+    var markerId = newMarker(place);
+
+    await Future.delayed(Duration(seconds: 1));
+    await mapController.showMarkerInfoWindow(markerId);
+    setState(() {
+      searchField.focusNode.unfocus();
+    });
+  }
 }
