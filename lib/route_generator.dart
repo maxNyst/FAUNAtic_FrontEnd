@@ -41,6 +41,8 @@ class RouteGenerator {
                 LecturesScreen()); // The example in our code right now
       case '/excursions/assignment':
         return MaterialPageRoute(builder: (context) => NewAssignmentScreen());
+      case '/excursions/moment':
+        return MaterialPageRoute(builder: (context) => MomentsScreen());
       //  Make sure to cast args to the
       //  right type with the 'as' keyword like
       //  with 'Specie here for the details screen.
@@ -50,8 +52,6 @@ class RouteGenerator {
             specie: args as Specie,
           ),
         );
-      case '/moment':
-        return MaterialPageRoute(builder: (context) => MomentsScreen());
       case '/excursions':
         return MaterialPageRoute(builder: (context) => ExcursionsScreen());
       case '/excursions/saved':
