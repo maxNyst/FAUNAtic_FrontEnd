@@ -7,6 +7,7 @@ import 'package:faunatic_front_end/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Screens/Excursions/excursions_screen.dart';
 import 'Screens/Home/home_screen.dart';
 import 'Screens/Lecture/lecture_screen.dart';
 import 'Screens/Lecture/saved_lectures_screen.dart';
@@ -66,7 +67,8 @@ class MyApp extends StatelessWidget {
           '/signup':(context) => SignupScreen(),
           '/search': (context) => SpeciesSearchScreen(),
           '/lectures': (context) => LecturesScreen(),
-          '/savedLectures': (context) => SavedLecturesScreen()
+          '/savedLectures': (context) => SavedLecturesScreen(),
+          '/excursions': (context) => ExcursionsScreen()
         },
       ),
     );

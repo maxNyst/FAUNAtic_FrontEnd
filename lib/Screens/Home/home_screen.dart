@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                                     margin: EdgeInsets.all(8.0),
                                     child: InkWell(
                                       onTap: () => Navigator.pushNamed(
-                                          context, '/lectures'),
+                                          context, '/excursions'),
                                       splashColor: Colors.green,
                                       child: Image.asset(
                                         'assets/images/Journey-amico.png',
