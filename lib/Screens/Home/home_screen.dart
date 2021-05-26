@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -72,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: EdgeInsets.all(size.height*0.008),
                       child: Image.asset(
                         'assets/images/logo.png',
                         color: Colors.green,
@@ -83,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         filterQuality: FilterQuality.high,
                       )),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(0.0),
                     child: Text(
                       'Välkommen till FAUNAtic',
                       style: TextStyle(
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(size.height*0.008),
                     child: Center(
                       child: Wrap(
                         children: <Widget>[

@@ -36,7 +36,7 @@ class ExcursionsScreen extends StatelessWidget {
 
             ExcursionButtons(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 35.0),
+              padding: EdgeInsets.only(bottom: size.height*0.01),
               child: SizedBox(
                   width: 115.0,
                   height: 45.0,
