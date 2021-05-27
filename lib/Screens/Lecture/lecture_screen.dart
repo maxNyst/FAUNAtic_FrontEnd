@@ -1,10 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faunatic_front_end/firestore_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'map_screen.dart';
 
-class LecturesScreen extends StatelessWidget {
+class LecturesScreen extends StatefulWidget {
   const LecturesScreen({Key key}) : super(key: key);
 
+  @override
+  _LecturesScreenState createState() => _LecturesScreenState();
+}
+
+class _LecturesScreenState extends State<LecturesScreen> {
   @override
   Widget build(BuildContext context) {
     const topPadding = 0.0;
@@ -96,13 +105,40 @@ class LecturesScreen extends StatelessWidget {
   }
 }
 
-class PlanExcursionButtons extends StatelessWidget {
+class PlanExcursionButtons extends StatefulWidget {
   const PlanExcursionButtons({
     Key key,
   }) : super(key: key);
 
   @override
+  _PlanExcursionButtonsState createState() => _PlanExcursionButtonsState();
+}
+
+class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
+  String place;
+
+  void state() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    DocumentSnapshot<Map<String, dynamic>> ref;
+    Provider.of<FirestoreService>(context).userRef.get().then((value) => {
+          ref = value,
+          if (ref == null || ref.data().isEmpty)
+            {
+              place = null,
+            }
+          else if (ref.data().containsKey('Place'))
+            {
+              place = ref.data()['Place'],
+              state(),
+            }
+        });
+
     return Column(
       children: [
         Stack(alignment: Alignment.bottomCenter, children: [
@@ -120,12 +156,26 @@ class PlanExcursionButtons extends StatelessWidget {
                       color: Colors.orangeAccent,
                     ),
                   ),
-                  title: Transform.translate(
-                    offset: Offset(-45, 0),
-                    child: Text(
-                      'Plats',
-                      style: TextStyle(fontSize: 18),
-                    ),
+                  title: Row(
+                    children: [
+                      Transform.translate(
+                        offset: Offset(-45, 0),
+                        child: Text(
+                          'Plats',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      place == null
+                          ? Text('')
+                          : SizedBox(
+                              width: 230.0,
+                              child: Text(
+                                '$place',
+                                style: TextStyle(color: Colors.green),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                    ],
                   ),
                   trailing: Transform.translate(
                     offset: Offset(-20, 0),
@@ -140,7 +190,7 @@ class PlanExcursionButtons extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return MapScreen();
+                          return MapScreen(peb: widget);
                         },
                       ),
                     );

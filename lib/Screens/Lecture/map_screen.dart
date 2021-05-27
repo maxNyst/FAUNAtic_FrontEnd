@@ -4,19 +4,28 @@ import 'package:faunatic_front_end/Screens/Lecture/Components/place.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
 import 'package:faunatic_front_end/Screens/Lecture/lecture_screen.dart';
+import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key key}) : super(key: key);
+  final PlanExcursionButtons peb;
+  const MapScreen({Key key, PlanExcursionButtons peb}) :
+        peb = peb,
+        super(key: key);
 
   @override
-  _MapScreenState createState() => _MapScreenState();
+  _MapScreenState createState() => _MapScreenState(peb);
+
 }
 
 class _MapScreenState extends State<MapScreen> {
+  _MapScreenState(PlanExcursionButtons peb) {this.peb = peb;}
+
+  PlanExcursionButtons peb;
   Location location = Location();
   LocationData _locationData;
   final placesService = PlacesService();
@@ -151,6 +160,13 @@ class _MapScreenState extends State<MapScreen> {
                         width: 120.0,
                         child: ElevatedButton(
                           onPressed: () {
+                            Provider.of<FirestoreService>(context, listen: false).userRef.set({
+                              'Place': '$placeTitle',
+                              'Address': '${selectedLocation.name}',
+                              'Lat': '${selectedLocation.geometry.location.lat}',
+                              'Lng': '${selectedLocation.geometry.location.lng}'
+                            });
+                            peb.createState();
                             Navigator.pop(context);
                           },
                           child: Text(
