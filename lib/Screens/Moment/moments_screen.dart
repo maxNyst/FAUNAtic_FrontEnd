@@ -12,7 +12,7 @@ class MomentsScreen extends StatefulWidget {
 
 class _MomentsScreenState extends State<MomentsScreen> {
   var _visibleFAB = true;
-  var list = [];
+  final list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +27,35 @@ class _MomentsScreenState extends State<MomentsScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: list.length,
+              itemCount: list.length + 1,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                if (index == 0) {
+                  return Container(
+                    color: Colors.blue,
+                    height: 40,
+                    alignment: Alignment.center,
+                    child: Text('Detta är listan !'),
+                  );
+                } else {
+                  var s = list[index - 1];
+                  return Container(
+                    padding: const EdgeInsets.all(8.0),
                     color: Colors.orangeAccent,
-                    width: size.width,
-                    height: 20,
-                    child: Text(list[index]),
-                  ),
-                );
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(s.title),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(s.body),
+                        Divider(
+                          height: 2,
+                        )
+                      ],
+                    ),
+                  );
+                }
               },
             ),
           ),
@@ -108,8 +126,16 @@ class _MomentsScreenState extends State<MomentsScreen> {
             SpeedDialChild(
               child: Icon(Icons.subtitles, color: Colors.white),
               backgroundColor: Colors.green,
-              onTap: () {
-                  var data = Navigator.push(context, MaterialPageRoute(builder: (context) => CustomNote(),));},
+              onTap: () async {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomNote(),
+                    ));
+                setState(() {
+                  list.add(result);
+                });
+              },
               label: 'Notering',
               labelStyle:
                   TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
@@ -138,7 +164,6 @@ class _MomentsScreenState extends State<MomentsScreen> {
         }));
   }
 }
-
 
 class _CustomBottomSheet extends StatelessWidget {
   final String title;
