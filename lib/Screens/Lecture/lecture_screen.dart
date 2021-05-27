@@ -24,7 +24,7 @@ class LecturesScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/Teacher-panaV2.png',
-              width: size.width*0.8,
+              width: size.width * 0.8,
             ),
             Text(
               'Planera din exkursion',

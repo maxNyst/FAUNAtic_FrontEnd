@@ -62,18 +62,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green,
         ),
         initialRoute: '/',
-        routes: {
-          // add all screens here
-          '/': (context) => AuthenticationWrapper(),
-          '/home': (context) => HomeScreen(),
-          '/signup':(context) => SignupScreen(),
-          '/search': (context) => SpeciesSearchScreen(),
-          '/lectures': (context) => LecturesScreen(),
-          '/savedLectures': (context) => SavedLecturesScreen(),
-          '/excursions': (context) => ExcursionsScreen(),
-          '/excursions/assignment' : (context) => NewAssignmentScreen(),
-          '/excursions/moment' : (context) => MomentsScreen(),
-        },
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }

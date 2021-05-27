@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class MomentsScreen extends StatelessWidget {
   const MomentsScreen({Key key}) : super(key: key);
@@ -46,36 +47,71 @@ class MomentsScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
-                )),
-            onPressed: () {
-              print('knappen funkar');
-            },
-            child: Text(
-              'Avbryt',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25.0),
-            child: FloatingActionButton(
-              backgroundColor: const Color(0xFF5ECD9E),
-              foregroundColor: Colors.white,
-              onPressed: () {},
-              child: Icon(
-                Icons.add,
-                size: 40.0,
-              ),
-            ),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: CustomSpeedDial(),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.menu),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.person),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomSpeedDial extends StatelessWidget {
+  const CustomSpeedDial({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.add_event,
+      animatedIconTheme: IconThemeData(size: 28.0, color: Colors.white),
+      backgroundColor: Theme.of(context).accentColor,
+      visible: true,
+      curve: Curves.bounceInOut,
+      children: [
+        SpeedDialChild(
+          child: Icon(Icons.location_on, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('Pressed Read Later'),
+          label: 'Plats',
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.yard, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('Pressed Write'),
+          label: 'Art',
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.subtitles, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () {},
+          label: 'Notering',
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+      ],
     );
   }
 }
