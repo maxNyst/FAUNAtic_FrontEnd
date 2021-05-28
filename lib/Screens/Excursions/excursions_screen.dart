@@ -135,7 +135,7 @@ class ExcursionButtons extends StatelessWidget {
                         ),
                       ),
                       onTap: () => Navigator.pushNamed(
-                          context, '/savedExcursions'),
+                          context, '/excursions/saved'),
                     ),
 
                     Divider(
