@@ -12,7 +12,7 @@ class ExcursionsScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Icons.outbond_outlined),
+            icon: Icon(Icons.outbond_outlined), onPressed: () {  },
           )
         ],
         title: Text('Hem'),
@@ -134,9 +134,8 @@ class ExcursionButtons extends StatelessWidget {
                           size: 18,
                         ),
                       ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
+                      onTap: () => Navigator.pushNamed(
+                          context, '/savedExcursions'),
                     ),
 
                     Divider(

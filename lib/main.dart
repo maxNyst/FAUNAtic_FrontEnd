@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Saved%20Excursions/saved_excursions_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green,
         ),
         initialRoute: '/',
+
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
