@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import '../../widgets.dart';
 
 class ExcursionsScreen extends StatelessWidget {
   const ExcursionsScreen({Key key}) : super(key: key);
@@ -19,7 +20,7 @@ class ExcursionsScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Align(
                 alignment: Alignment.topCenter,
@@ -34,25 +35,11 @@ class ExcursionsScreen extends StatelessWidget {
               'assets/images/Forest-panaV2.png',
             ),
 
-            ExcursionButtons(),
             Padding(
-              padding: EdgeInsets.only(bottom: size.height*0.01),
-              child: SizedBox(
-                  width: 115.0,
-                  height: 45.0,
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.0),
-                          )
-                      ),
-                      onPressed: () {
-                        print('knappen funkar');
-                      },
-                      child: Text('Avbryt', style: TextStyle(fontSize: 16),)
-                  )
-              ),
-            )
+              padding: const EdgeInsets.all(8.0),
+              child: ExcursionButtons(),
+            ),
+
           ],
         ),
       ),
@@ -69,118 +56,32 @@ class ExcursionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-            alignment: Alignment.bottomCenter,
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
             children: [
-              Padding(padding: const EdgeInsets.only(bottom: 40.0)),
-              SizedBox(
-                height: 225, // constrain height
-                child: ListView(
-
-                  children: [
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 70,
-                          width: 4,
-                          color: Colors.orangeAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Planera Utflykt',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () => Navigator.pushNamed(
-                          context, '/lectures'),
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 100,
-                          width: 4,
-                          color: Colors.greenAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Sparade Utflykter',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () => Navigator.pushNamed(
-                          context, '/excursions/saved'),
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 100,
-                          width: 4,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Utforska Utflykter',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                  ],
+              FaunaticListTile(
+                text: 'Planera Utflykt',
+                color: Colors.orangeAccent,
+                onTap: () => Navigator.pushNamed(
+                    context, '/lectures'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: FaunaticListTile(
+                  text: 'Sparade Utflykter',
+                  color: Colors.greenAccent,
+                  onTap: () => Navigator.pushNamed(
+                      context, '/excursions/saved'),
                 ),
-              ),]
+              ),
+              FaunaticListTile(
+                text: 'Utforska Utflykter',
+                color: Colors.redAccent,
+                onTap: () => print('knappen funkar'),
+              ),
+            ],
+          ),
         ),
       ],
     );
