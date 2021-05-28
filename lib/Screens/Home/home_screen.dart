@@ -187,7 +187,7 @@ class HomeScreen extends StatelessWidget {
                                   margin: EdgeInsets.all(8.0),
                                   child: InkWell(
                                     onTap: () =>
-                                        Navigator.pushNamed(context, '/search'),
+                                        Navigator.pushNamed(context, '/species/intersection'),
                                     splashColor: Colors.green,
                                     child: Image.asset(
                                         'assets/images/Bear market-amico.png'),

@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/SpeciesSearch/species_intersection_screen.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:faunatic_front_end/Screens/Excursions%20Search/excursions_search_screen.dart';
@@ -33,6 +34,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => HomeScreen());
       case '/signup':
         return MaterialPageRoute(builder: (context) => SignupScreen());
+      case '/species/intersection':
+        return MaterialPageRoute(builder: (context) => IntersectionScreen());
       case '/search':
         return MaterialPageRoute(builder: (context) => SpeciesSearchScreen());
       case '/lectures':
