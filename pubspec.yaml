@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+#  simple_url_preview: ^0.1.10
+  url_launcher: ^5.4.0
+
   flutter:
     sdk: flutter
 
@@ -74,6 +77,7 @@ flutter:
     - assets/images/Bear market-amico.png
     - assets/images/Directions-amico.png
     - assets/images/Classroom-amico.png
+    - assets/images/googleclassroom_logo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

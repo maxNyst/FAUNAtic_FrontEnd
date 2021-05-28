@@ -152,7 +152,8 @@ class HomeScreen extends StatelessWidget {
                                   elevation: 5,
                                   margin: EdgeInsets.all(8.0),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () =>
+                                        Navigator.pushNamed(context, '/googleClassroom'),
                                     splashColor: Colors.green,
                                     child: Image.asset(
                                         'assets/images/Classroom-amico.png'),

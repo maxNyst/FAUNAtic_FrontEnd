@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import 'Screens/Assignments/new_assignment.dart';
 import 'Screens/Excursions/excursions_screen.dart';
+import 'Screens/Google Classroom/googleclassroom.dart';
 import 'Screens/Home/home_screen.dart';
 import 'Screens/Lecture/lecture_screen.dart';
 import 'Screens/Lecture/saved_lectures_screen.dart';
@@ -75,6 +76,16 @@ class MyApp extends StatelessWidget {
             iconTheme: IconThemeData(color: Colors.green)),
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
+        routes: {
+          // add all screens here
+          '/': (context) => AuthenticationWrapper(),
+          '/home': (context) => HomeScreen(),
+          '/signup':(context) => SignupScreen(),
+          '/search': (context) => SpeciesSearchScreen(),
+          '/lectures': (context) => LecturesScreen(),
+          '/savedLectures': (context) => SavedLecturesScreen(),
+          '/googleClassroom': (context) => GoogleClassroomScreen()
+        },
       ),
     );
   }
