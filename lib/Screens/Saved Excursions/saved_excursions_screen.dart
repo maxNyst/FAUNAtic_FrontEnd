@@ -11,6 +11,7 @@ class SavedExcursionsScreen extends StatelessWidget {
         .of(context)
         .size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           IconButton(
@@ -39,12 +40,48 @@ class SavedExcursionsScreen extends StatelessWidget {
 
             RadioButtons(),
 
-            Divider(
-              thickness: 1,
-              color: Colors.grey,
-              indent: 10,
-              endIndent: 10,
+              Row(
+                children: [
+                  Transform.translate(
+                    offset: Offset(50, -10),
+                    child: Container(
+                      width: 75,
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  Transform.translate(
+                    offset: Offset(183, -10),
+                    child: Container(
+                      width: 75,
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: SizedBox(
+                width: 350,
+                height: 50,
+                child: TextField(
+                  decoration: InputDecoration(
+                      fillColor: Colors.grey.shade300,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(50.0),
+                        ),
+                      ),
+                      hintText: 'Sök bland utflykter',
+                      suffixIcon: Icon(Icons.search)),
+                ),
+              ),
             ),
+
 
             ExcursionButtons(),
 
