@@ -59,23 +59,10 @@ class _MomentsScreenState extends State<MomentsScreen> {
               },
             ),
           ),
+          Container(height: 44, color: Colors.purple)
         ],
       ),
       floatingActionButton: _buildSpeedDial(_visibleFAB),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.person),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -96,6 +83,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                   _modalBottomSheet('Lägg till kartmarkör', Icons.location_on, [
                 ListTile(
                   title: Text('Placera på karta'),
+                  onTap: () => print('placera på kartan'),
                 ),
                 ListTile(
                   title: Text('Placera på nuvarande plats'),
@@ -113,6 +101,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                   _modalBottomSheet('Lägg till art', Icons.yard_outlined, [
                 ListTile(
                   title: Text('Sök i artfakta'),
+                  onTap: _searchSpeciesInformation,
                 ),
                 ListTile(
                   title: Text('Bläddra bland sparade arter'),
@@ -126,16 +115,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
             SpeedDialChild(
               child: Icon(Icons.subtitles, color: Colors.white),
               backgroundColor: Colors.green,
-              onTap: () async {
-                final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CustomNote(),
-                    ));
-                setState(() {
-                  list.add(result);
-                });
-              },
+              onTap: _getCustomNote,
               label: 'Notering',
               labelStyle:
                   TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
@@ -147,6 +127,20 @@ class _MomentsScreenState extends State<MomentsScreen> {
     );
   }
 
+  void _getCustomNote() async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomNote(),
+        ));
+    if (result != null) {
+      setState(() {
+        list.add(result);
+      });
+    }
+  }
+
+  // Show a modalbottomsheet and hides the speedDial while open.
   void _modalBottomSheet(String title, IconData icon, List listTiles) {
     setState(() {
       _visibleFAB = false;
@@ -162,6 +156,15 @@ class _MomentsScreenState extends State<MomentsScreen> {
     modalResponse.whenComplete(() => setState(() {
           _visibleFAB = true;
         }));
+  }
+
+  void _searchSpeciesInformation() async{
+    final result = await Navigator.pushNamed(context, '/search');
+    if (result != null) {
+      setState(() {
+        list.add(result);
+      });
+    }
   }
 }
 
