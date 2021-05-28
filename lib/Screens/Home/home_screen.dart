@@ -52,8 +52,6 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.white60,
-        iconTheme: IconThemeData(color: Colors.green),
         actions: [
           IconButton(
               icon: Icon(
@@ -73,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.all(size.height*0.008),
+                      padding: EdgeInsets.all(size.height * 0.008),
                       child: Image.asset(
                         'assets/images/logo.png',
                         color: Colors.green,
@@ -94,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(size.height*0.008),
+                    padding: EdgeInsets.all(size.height * 0.008),
                     child: Center(
                       child: Wrap(
                         children: <Widget>[
@@ -186,8 +184,8 @@ class HomeScreen extends StatelessWidget {
                                   elevation: 5,
                                   margin: EdgeInsets.all(8.0),
                                   child: InkWell(
-                                    onTap: () =>
-                                        Navigator.pushNamed(context, '/species/intersection'),
+                                    onTap: () => Navigator.pushNamed(
+                                        context, '/species/intersection'),
                                     splashColor: Colors.green,
                                     child: Image.asset(
                                         'assets/images/Bear market-amico.png'),
@@ -197,7 +195,6 @@ class HomeScreen extends StatelessWidget {
                               Text('Artdatabanken')
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -211,25 +208,21 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: () => context
-                          .read<AuthenticationService>()
-                          .signOut(),
+                      onPressed: () =>
+                          context.read<AuthenticationService>().signOut(),
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all(
-                            Colors.white60),
-                        shape: MaterialStateProperty.all<
-                            RoundedRectangleBorder>(
+                            MaterialStateProperty.all(Colors.white60),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
                       ),
                       child: Text(
                         'Logga Ut',
-                        style: TextStyle(
-                            fontSize: 15.0, color: Colors.green),
+                        style: TextStyle(fontSize: 15.0, color: Colors.green),
                       ),
                     ),
                   ],

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class SavedExcursionsScreen extends StatelessWidget {
@@ -7,18 +5,10 @@ class SavedExcursionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.outbond_outlined), onPressed: () {},
-          )
-        ],
-        title: Text('Hem'),
       ),
       body: Center(
         child: Column(
@@ -34,34 +24,33 @@ class SavedExcursionsScreen extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 15.0),
-                child: Text('Skapade av', style: TextStyle(fontSize: 22),),
+                child: Text(
+                  'Skapade av',
+                  style: TextStyle(fontSize: 22),
+                ),
               ),
             ),
-
             RadioButtons(),
-
-              Row(
-                children: [
-                  Transform.translate(
-                    offset: Offset(50, -10),
-                    child: Container(
-                      width: 75,
-                      height: 1,
-                      color: Colors.grey,
-                    ),
+            Row(
+              children: [
+                Transform.translate(
+                  offset: Offset(50, -10),
+                  child: Container(
+                    width: 75,
+                    height: 1,
+                    color: Colors.grey,
                   ),
-
-                  Transform.translate(
-                    offset: Offset(183, -10),
-                    child: Container(
-                      width: 75,
-                      height: 1,
-                      color: Colors.grey,
-                    ),
+                ),
+                Transform.translate(
+                  offset: Offset(183, -10),
+                  child: Container(
+                    width: 75,
+                    height: 1,
+                    color: Colors.grey,
                   ),
-                ],
-              ),
-
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: SizedBox(
@@ -81,161 +70,9 @@ class SavedExcursionsScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-
-            ExcursionButtons(),
-
-            Padding(
-              padding: EdgeInsets.only(bottom: size.height * 0.01),
-              child: SizedBox(
-                  width: 115.0,
-                  height: 45.0,
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.0),
-                          )
-                      ),
-                      onPressed: () {
-                        print('knappen funkar');
-                      },
-                      child: Text('Avbryt', style: TextStyle(fontSize: 16),)
-                  )
-              ),
-            )
           ],
         ),
       ),
-    );
-  }
-}
-
-class ExcursionButtons extends StatelessWidget {
-  const ExcursionButtons({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Padding(padding: const EdgeInsets.only(bottom: 40.0)),
-              SizedBox(
-                height: 225, // constrain height
-                child: ListView(
-
-                  children: [
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 70,
-                          width: 4,
-                          color: Colors.orangeAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Planera Utflykt',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () =>
-                          Navigator.pushNamed(
-                              context, '/lectures'),
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 100,
-                          width: 4,
-                          color: Colors.greenAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Sparade Utflykter',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    ListTile(
-                      leading: Transform.translate(
-                        offset: Offset(-5, 0),
-                        child: Container(
-                          height: 100,
-                          width: 4,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      title: Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: Text(
-                          'Utforska Utflykter',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      trailing: Transform.translate(
-                        offset: Offset(-20, 0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                      ),
-                      onTap: () {
-                        print('knappen funkar');
-                      },
-                    ),
-
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ]
-        ),
-      ],
     );
   }
 }
@@ -286,6 +123,3 @@ class _RadioButtonsState extends State<RadioButtons> {
     );
   }
 }
-
-
-

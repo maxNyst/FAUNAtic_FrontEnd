@@ -66,7 +66,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           primarySwatch: Colors.green,
+          primaryColor: Colors.grey[100],
           accentColor: Colors.green,
+          primaryIconTheme: IconThemeData(color: Colors.green),
+          iconTheme: IconThemeData(color: Colors.green)
         ),
         initialRoute: '/',
 
