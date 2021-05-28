@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Saved%20Excursions/saved_excursions_screen.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
 import 'package:faunatic_front_end/route_generator.dart';
 import 'package:faunatic_front_end/species_information.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           '/lectures': (context) => LecturesScreen(),
           '/savedLectures': (context) => SavedLecturesScreen(),
           '/excursions': (context) => ExcursionsScreen(),
+          '/savedExcursions': (context) => SavedExcursionsScreen(),
           '/excursions/assignment' : (context) => NewAssignmentScreen(),
           '/excursions/moment' : (context) => MomentsScreen(),
         },
