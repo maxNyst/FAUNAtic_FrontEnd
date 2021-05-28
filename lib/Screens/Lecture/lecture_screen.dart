@@ -160,21 +160,18 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
                     children: [
                       Transform.translate(
                         offset: Offset(-45, 0),
-                        child: Text(
-                          'Plats',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      place == null
-                          ? Text('')
-                          : SizedBox(
-                              width: 230.0,
-                              child: Text(
+                        child: place == null
+                            ? Text(
+                                'Plats',
+                                style: TextStyle(fontSize: 18),
+                              )
+                            : Text(
                                 '$place',
-                                style: TextStyle(color: Colors.green),
-                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.green),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
+                      )
                     ],
                   ),
                   trailing: Transform.translate(
