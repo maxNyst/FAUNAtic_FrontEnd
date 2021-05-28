@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
+import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:faunatic_front_end/route_generator.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,6 +54,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SpeciesList>(
           create: (context) => SpeciesList(),
         ),
+        Provider<FirestoreService>(
+          create: (_) => FirestoreService(FirebaseFirestore.instance),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -76,6 +81,8 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
+      context.read<FirestoreService>().setUser(firebaseUser);
+      context.read<FirestoreService>().addPlaceToExcursion('Hellas', 'Hellasgården, Stockholm', '12.56', '21.88');
       return HomeScreen();
     }
     return LoginScreen();
