@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
