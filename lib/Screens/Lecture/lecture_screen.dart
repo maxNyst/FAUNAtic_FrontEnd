@@ -160,7 +160,7 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
                     children: [
                       Transform.translate(
                         offset: Offset(-45, 0),
-                        child: place == null
+                        child: place == null || place.trim().isEmpty
                             ? Text(
                                 'Plats',
                                 style: TextStyle(fontSize: 18),
