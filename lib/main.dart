@@ -1,5 +1,7 @@
 import 'package:faunatic_front_end/Screens/Saved%20Excursions/saved_excursions_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
+import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:faunatic_front_end/route_generator.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,8 +55,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SpeciesList>(
           create: (context) => SpeciesList(),
         ),
+        Provider<FirestoreService>(
+          create: (_) => FirestoreService(FirebaseFirestore.instance),
+        ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
@@ -63,19 +69,8 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green,
         ),
         initialRoute: '/',
-        routes: {
-          // add all screens here
-          '/': (context) => AuthenticationWrapper(),
-          '/home': (context) => HomeScreen(),
-          '/signup':(context) => SignupScreen(),
-          '/search': (context) => SpeciesSearchScreen(),
-          '/lectures': (context) => LecturesScreen(),
-          '/savedLectures': (context) => SavedLecturesScreen(),
-          '/excursions': (context) => ExcursionsScreen(),
-          '/savedExcursions': (context) => SavedExcursionsScreen(),
-          '/excursions/assignment' : (context) => NewAssignmentScreen(),
-          '/excursions/moment' : (context) => MomentsScreen(),
-        },
+
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }
@@ -88,6 +83,8 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
+      context.read<FirestoreService>().setUser(firebaseUser);
+      context.read<FirestoreService>().addPlaceToExcursion('Hellas', 'Hellasgården, Stockholm', '12.56', '21.88');
       return HomeScreen();
     }
     return LoginScreen();

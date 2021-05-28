@@ -45,6 +45,7 @@ class _SignUpFormState extends State<SignUpForm> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: TextFormField(
+                  obscureText: true,
                   controller: _passwordController,
                   validator: (password) {
                     if (password.length < 6) {
@@ -59,6 +60,7 @@ class _SignUpFormState extends State<SignUpForm> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: TextFormField(
+                  obscureText: true,
                   controller: _confirmPassword,
                   validator: (password) {
                     if (password != _passwordController.text) {

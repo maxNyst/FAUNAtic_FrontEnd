@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-class MomentsScreen extends StatelessWidget {
-  const MomentsScreen({Key key}) : super(key: key);
+import 'custom_note.dart';
+
+class MomentsScreen extends StatefulWidget {
+  MomentsScreen({Key key}) : super(key: key);
+
+  @override
+  _MomentsScreenState createState() => _MomentsScreenState();
+}
+
+class _MomentsScreenState extends State<MomentsScreen> {
+  var _visibleFAB = true;
+  final list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -11,100 +22,180 @@ class MomentsScreen extends StatelessWidget {
         actions: [],
         title: Text('Hem'),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Planera moment',
-                style: TextStyle(color: Colors.black, fontSize: 25),
-              )),
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'ÄNDRA TILL DET NAMN SOM STÄLLS IN', //Placeholder namn
-                style: TextStyle(color: Colors.black, fontSize: 15),
-              )),
-          Divider(
-            thickness: 1,
-            color: Colors.grey,
-            indent: 10,
-            endIndent: 10,
-          ),
-          TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(5.0),
-                  ),
-                ),
-                hintText: 'Momentnamn...',
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                fillColor: Colors.grey.shade200,
-                filled: true),
-          ),
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Lägg till innehåll',
-                style: TextStyle(color: Colors.black, fontSize: 15),
-              )),
-          Divider(
-            thickness: 1,
-            color: Colors.grey,
-            indent: 10,
-            endIndent: 200,
-          ),
-          Container(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 250),
-              child: TextField(
-                maxLines: null,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: list.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Container(
+                    color: Colors.blue,
+                    height: 40,
+                    alignment: Alignment.center,
+                    child: Text('Detta är listan !'),
+                  );
+                } else {
+                  var s = list[index - 1];
+                  return Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.orangeAccent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(s.title),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(s.body),
+                        Divider(
+                          height: 2,
+                        )
+                      ],
                     ),
-                    hintText: 'Text...',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                    fillColor: Colors.grey.shade100,
-                    filled: true),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 115.0,
-            height: 45.0,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40.0),
-                  )),
-              onPressed: () {
-                print('knappen funkar');
+                  );
+                }
               },
-              child: Text(
-                'Avbryt',
-                style: TextStyle(fontSize: 16),
-              ),
             ),
           ),
-
-          Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                backgroundColor: const Color(0xFF5ECD9E),
-                foregroundColor: Colors.white,
-                onPressed: () {},
-                child: Icon(
-                  Icons.add,
-                  size: 40.0,
-                ),
-              )),
+          Container(height: 44, color: Colors.purple)
         ],
       ),
+      floatingActionButton: _buildSpeedDial(_visibleFAB),
     );
+  }
+
+  Builder _buildSpeedDial(bool visible) {
+    return Builder(
+      builder: (BuildContext context) {
+        return SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
+          animatedIconTheme: IconThemeData(size: 28.0, color: Colors.white),
+          backgroundColor: Theme.of(context).accentColor,
+          visible: visible,
+          curve: Curves.bounceInOut,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.location_on, color: Colors.white),
+              backgroundColor: Colors.green,
+              onTap: () =>
+                  _modalBottomSheet('Lägg till kartmarkör', Icons.location_on, [
+                ListTile(
+                  title: Text('Placera på karta'),
+                  onTap: () => print('placera på kartan'),
+                ),
+                ListTile(
+                  title: Text('Placera på nuvarande plats'),
+                )
+              ]),
+              label: 'Plats',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.yard, color: Colors.white),
+              backgroundColor: Colors.green,
+              onTap: () =>
+                  _modalBottomSheet('Lägg till art', Icons.yard_outlined, [
+                ListTile(
+                  title: Text('Sök i artfakta'),
+                  onTap: _searchSpeciesInformation,
+                ),
+                ListTile(
+                  title: Text('Bläddra bland sparade arter'),
+                )
+              ]),
+              label: 'Art',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.subtitles, color: Colors.white),
+              backgroundColor: Colors.green,
+              onTap: _getCustomNote,
+              label: 'Notering',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _getCustomNote() async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomNote(),
+        ));
+    if (result != null) {
+      setState(() {
+        list.add(result);
+      });
+    }
+  }
+
+  // Show a modalbottomsheet and hides the speedDial while open.
+  void _modalBottomSheet(String title, IconData icon, List listTiles) {
+    setState(() {
+      _visibleFAB = false;
+    });
+    var modalResponse = showModalBottomSheet(
+      context: context,
+      builder: (context) => _CustomBottomSheet(
+        title: title,
+        icon: icon,
+        listTiles: listTiles,
+      ),
+    );
+    modalResponse.whenComplete(() => setState(() {
+          _visibleFAB = true;
+        }));
+  }
+
+  void _searchSpeciesInformation() async{
+    final result = await Navigator.pushNamed(context, '/search');
+    if (result != null) {
+      setState(() {
+        list.add(result);
+      });
+    }
+  }
+}
+
+class _CustomBottomSheet extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final List listTiles;
+
+  const _CustomBottomSheet({
+    Key key,
+    @required this.title,
+    @required this.icon,
+    this.listTiles,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(children: [
+      ListTile(
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        trailing: Icon(
+          icon,
+          size: 29,
+          color: Colors.black,
+        ),
+      ),
+      Divider(),
+      ...listTiles
+    ]);
   }
 }
