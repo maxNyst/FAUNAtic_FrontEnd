@@ -1,7 +1,14 @@
+import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'custom_note.dart';
+
+extension StringExtension on String {
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+}
 
 class MomentsScreen extends StatefulWidget {
   MomentsScreen({Key key}) : super(key: key);
@@ -37,24 +44,40 @@ class _MomentsScreenState extends State<MomentsScreen> {
                     child: Text('Detta är listan !'),
                   );
                 } else {
-                  var s = list[index - 1];
-                  return Container(
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.orangeAccent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(s.title),
-                        SizedBox(
-                          height: 10,
+                  var noteOrSpecieOrCoordinate = list[index - 1];
+
+                  if (noteOrSpecieOrCoordinate is NoteModel) {
+                    final note = noteOrSpecieOrCoordinate;
+                    return Card(
+                      child: Column(
+                        children: [
+                          ListTile(title: Text(note.title)),
+                          ListTile(title: Text(note.body)),
+                        ],
+                      ),
+                    );
+                  } else if (noteOrSpecieOrCoordinate is SpeciesDetail) {
+                    final specie = noteOrSpecieOrCoordinate;
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          specie.swedishName.capitalize(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(),
                         ),
-                        Text(s.body),
-                        Divider(
-                          height: 2,
-                        )
-                      ],
-                    ),
-                  );
+                        subtitle: Text(specie.scientificName),
+                        leading: SizedBox(
+                          width: 60,
+                          child: specie.imageURL.isEmpty
+                              ? SizedBox.shrink()
+                              : Image(
+                                  image: NetworkImage(specie.imageURL),
+                                ),
+                        ),
+                      ),
+                    );
+                  }
+                  return SizedBox.shrink();
                 }
               },
             ),
@@ -158,7 +181,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
         }));
   }
 
-  void _searchSpeciesInformation() async{
+  void _searchSpeciesInformation() async {
     final result = await Navigator.pushNamed(context, '/search');
     if (result != null) {
       setState(() {

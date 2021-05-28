@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,11 @@ class SpeciesSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => Navigator.pop(context, null),
+        ),
+      ),
       body: Column(
         children: [
           Padding(
@@ -55,22 +58,28 @@ class SpeciesListViewBuilder extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasData) {
-            List<Specie> s = snapshot.data;
+            List<Specie> speciesList = snapshot.data;
             return ListView.builder(
-              itemCount: s.length,
+              itemCount: speciesList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(s[index].swedishName),
-                  subtitle: Text(s[index].scientificName),
+                  title: Text(speciesList[index].swedishName),
+                  subtitle: Text(speciesList[index].scientificName),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      final futureSpeciesDetail = await context
+                          .read<SpeciesList>()
+                          .getSpeciesDetail(speciesList[index].taxonId);
+                      Navigator.pop(context, futureSpeciesDetail);
+                    },
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                  ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/search/details', arguments: s[index]);
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return SpeciesDetailsScreen(specie: s[index]);
-                    //     },
-                    //   ),
-                    // );
+                    Navigator.pushNamed(context, '/search/details',
+                        arguments: speciesList[index]);
                   },
                 );
               },
