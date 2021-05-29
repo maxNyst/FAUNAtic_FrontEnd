@@ -34,11 +34,11 @@ class _LoginFormState extends State<LoginForm> {
                   if (email.contains('@') && email.contains('.')) {
                     return null;
                   } else {
-                    return 'Not a valid email.';
+                    return 'Epostadressen har felaktigt format.';
                   }
                 },
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Email'),
+                    border: OutlineInputBorder(), labelText: 'Epost'),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
+                    labelText: 'Lösenord',
                   ),
                 ),
               ),
@@ -70,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
                   }
                 },
                 child: Text(
-                  'Sign in',
+                  'Logga in',
                 ),
               ),
               TextButton(
@@ -78,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.pushNamed(context, '/signup');
                 },
                 child: Text(
-                  "Don't have an account? Sign up here",
+                  "Har du inget konto? Skapa ett här.",
                 ),
               )
             ],
@@ -90,7 +90,7 @@ class _LoginFormState extends State<LoginForm> {
 
   String _passwordValidator(String password) {
     if (password.trim().isEmpty) {
-      return 'Password is required';
+      return 'Lösenord krävs.';
     }
     return null;
   }

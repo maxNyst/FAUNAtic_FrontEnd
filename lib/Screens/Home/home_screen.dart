@@ -52,15 +52,6 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.info_outline,
-                color: Colors.green,
-                size: 27,
-              ),
-              onPressed: () {}),
-        ],
       ),
       body: SafeArea(
         child: Column(
