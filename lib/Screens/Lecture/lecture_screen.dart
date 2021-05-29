@@ -89,16 +89,17 @@ class _LecturesScreenState extends State<LecturesScreen> {
 }
 
 class PlanExcursionButtons extends StatefulWidget {
-  const PlanExcursionButtons({
-    Key key,
-  }) : super(key: key);
+  const PlanExcursionButtons({Key key}) :
+        super(key: key);
 
   @override
   _PlanExcursionButtonsState createState() => _PlanExcursionButtonsState();
 }
 
 class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
+
   String place;
+  MaterialPageRoute mpr;
 
   void state() {
     if (mounted) {
@@ -108,19 +109,26 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
 
   @override
   Widget build(BuildContext context) {
-    DocumentSnapshot<Map<String, dynamic>> ref;
+
+    /*DocumentSnapshot<Map<String, dynamic>> ref;
     Provider.of<FirestoreService>(context).userRef.get().then((value) => {
           ref = value,
-          if (ref == null || ref.data().isEmpty)
+          print(ref.data().toString()),
+          if (ref == null ||
+              ref.data().isEmpty ||
+              ref.data()['Place'].toString().isEmpty)
             {
-              place = null,
+              place = '',
+              print('1 ' + place),
             }
-          else if (ref.data().containsKey('Place'))
+          else if (ref.data().containsKey('Place') &&
+              ref.data()['Place'] != place)
             {
               place = ref.data()['Place'],
+              print('2 ' + place),
               state(),
             }
-        });
+        });*/
 
     return Column(
       children: [
@@ -135,12 +143,16 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
                     print('knappen funkar');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      mpr = MaterialPageRoute(
                         builder: (context) {
-                          return MapScreen(peb: widget);
+                          return MapScreen();
                         },
                       ),
                     );
+                    mpr.popped.then((value) => {
+                      place = value.toString().substring(1, value.toString().indexOf(']')),
+                      state(),
+                    });
                   },
                   color: Colors.orangeAccent,
                   icon: Icon(

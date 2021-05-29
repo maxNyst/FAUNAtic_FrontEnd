@@ -12,20 +12,16 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
-  final PlanExcursionButtons peb;
-  const MapScreen({Key key, PlanExcursionButtons peb}) :
-        peb = peb,
+  const MapScreen({Key key}) :
         super(key: key);
 
   @override
-  _MapScreenState createState() => _MapScreenState(peb);
+  _MapScreenState createState() => _MapScreenState();
 
 }
 
 class _MapScreenState extends State<MapScreen> {
-  _MapScreenState(PlanExcursionButtons peb) {this.peb = peb;}
 
-  PlanExcursionButtons peb;
   Location location = Location();
   LocationData _locationData;
   final placesService = PlacesService();
@@ -166,8 +162,7 @@ class _MapScreenState extends State<MapScreen> {
                               'Lat': '${selectedLocation.geometry.location.lat}',
                               'Lng': '${selectedLocation.geometry.location.lng}'
                             });
-                            peb.createState();
-                            Navigator.pop(context);
+                            Navigator.pop(context, [placeTitle]);
                           },
                           child: Text(
                             'Lägg till',
