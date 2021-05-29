@@ -8,16 +8,8 @@ class ExcursionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.outbond_outlined), onPressed: () {  },
-          )
-        ],
-        title: Text('Hem'),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -34,12 +26,10 @@ class ExcursionsScreen extends StatelessWidget {
             Image.asset(
               'assets/images/Forest-panaV2.png',
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ExcursionButtons(),
             ),
-
           ],
         ),
       ),
@@ -63,16 +53,15 @@ class ExcursionButtons extends StatelessWidget {
               FaunaticListTile(
                 text: 'Planera Utflykt',
                 color: Colors.orangeAccent,
-                onTap: () => Navigator.pushNamed(
-                    context, '/lectures'),
+                onTap: () => Navigator.pushNamed(context, '/lectures'),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: FaunaticListTile(
                   text: 'Sparade Utflykter',
                   color: Colors.greenAccent,
-                  onTap: () => Navigator.pushNamed(
-                      context, '/excursions/saved'),
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/excursions/saved'),
                 ),
               ),
               FaunaticListTile(

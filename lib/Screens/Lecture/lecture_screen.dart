@@ -17,18 +17,10 @@ class LecturesScreen extends StatefulWidget {
 class _LecturesScreenState extends State<LecturesScreen> {
   @override
   Widget build(BuildContext context) {
-    const topPadding = 0.0;
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: null,
-      //   label: Text('Save'),
-      // ),
-      appBar: AppBar(
-        actions: [],
-        title: Text('Hem'),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +56,6 @@ class _LecturesScreenState extends State<LecturesScreen> {
               padding: const EdgeInsets.all(8.0),
               child: PlanExcursionButtons(),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -147,42 +138,9 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
           Padding(padding: const EdgeInsets.only(bottom: 40.0)),
           SizedBox(
             height: 225, // constrain height
-            child: ListView(
+            child: Column(
               children: [
-                ListTile(
-                  leading: Transform.translate(
-                    offset: Offset(-5, 0),
-                    child: Container(
-                      height: 70,
-                      width: 4,
-                      color: Colors.orangeAccent,
-                    ),
-                  ),
-                  title: Row(
-                    children: [
-                      Transform.translate(
-                        offset: Offset(-45, 0),
-                        child: place == null || place.trim().isEmpty
-                            ? Text(
-                                'Område',
-                                style: TextStyle(fontSize: 18),
-                              )
-                            : Text(
-                                '$place',
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.green),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                      )
-                    ],
-                  ),
-                  trailing: Transform.translate(
-                    offset: Offset(-20, 0),
-                    child: Icon(
-                      Icons.add_location,
-                      size: 22,
-                    ),
-                  ),
+                FaunaticListTile(
                   onTap: () {
                     print('knappen funkar');
                     Navigator.push(
@@ -194,6 +152,21 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
                       ),
                     );
                   },
+                  color: Colors.orangeAccent,
+                  icon: Icon(
+                    Icons.add_location,
+                    size: 22,
+                  ),
+                  child: place == null || place.trim().isEmpty
+                      ? Text(
+                          'Område',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      : Text(
+                          '$place',
+                          style: TextStyle(fontSize: 18, color: Colors.green),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
