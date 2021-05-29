@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Home/storyset_add_license.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,18 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({
     Key key,
   }) : super(key: key);
+
+  Future<void> showAboutDialog(BuildContext context) async {
+    return showDialog<void>(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return AboutDialog(
+              applicationVersion: 'version 0.69.420',
+              applicationLegalese: 'Glad sommar från Grupp 7!'
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +54,16 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
+              title: Text('Om appen'),
+              trailing: Icon(Icons.help),
+              onTap: () {showAboutDialog(context);
+              },
+            ),
+            ListTile(
               title: Text('Logga Ut'),
               trailing: Icon(Icons.logout),
-              onTap: () {
-                Navigator.pop(context,
-                    true); // Implementera att användaren får upp ett fönster de måste trycka ok på för att logga ut
-              },
+              onTap: () =>
+                context.read<AuthenticationService>().signOut() // TODO Implementera att användaren får upp ett fönster de måste trycka ok på för att logga ut
             )
           ],
         ),
