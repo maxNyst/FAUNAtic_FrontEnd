@@ -13,12 +13,8 @@ class FirestoreService {
     firebaseUser = user;
     userId = user.uid;
     userRef = firestore.collection('users').doc(userId);
+    userRef.collection('Temp').add({'Name': '', 'Place': '', 'Address': '', 'Lat': '', 'Lng': ''});
     userRef.set({'Place': '', 'Address': '', 'Lat': '', 'Lng': ''});
-  }
-
-  void addNewUser() async {
-    await firestore.collection('users').doc(userId).collection('excursions').doc('hellas').set(
-        {'title': 'Hellas'});
   }
 
   void addPlaceToExcursion(String excursion, String place, String lat, String lng) async {

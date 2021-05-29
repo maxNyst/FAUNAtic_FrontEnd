@@ -87,7 +87,6 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
       context.read<FirestoreService>().setUser(firebaseUser);
-      context.read<FirestoreService>().addPlaceToExcursion('Hellas', 'Hellasgården, Stockholm', '12.56', '21.88');
       return HomeScreen();
     }
     return LoginScreen();

@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Moment/moment_map_screen.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -20,6 +21,7 @@ class MomentsScreen extends StatefulWidget {
 class _MomentsScreenState extends State<MomentsScreen> {
   var _visibleFAB = true;
   final list = [];
+  int markerCounter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +108,25 @@ class _MomentsScreenState extends State<MomentsScreen> {
                   _modalBottomSheet('Lägg till kartmarkör', Icons.location_on, [
                 ListTile(
                   title: Text('Placera på karta'),
-                  onTap: () => print('placera på kartan'),
+                  onTap: () => {
+                    print('placera på kartan'),
+                    markerCounter++,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return MomentMapScreen(markerCounter: markerCounter);
+                        },
+                      ),
+                    ),
+                  },
                 ),
                 ListTile(
                   title: Text('Placera på nuvarande plats'),
-                )
+                  onTap: () => {
+                    markerCounter++,
+                  },
+                ),
               ]),
               label: 'Plats',
               labelStyle:

@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
-import 'package:faunatic_front_end/Screens/Lecture/lecture_screen.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +11,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({Key key}) :
+class MomentMapScreen extends StatefulWidget {
+  final int markerCounter;
+  const MomentMapScreen({Key key, int markerCounter}) :
+      markerCounter = markerCounter,
         super(key: key);
 
   @override
-  _MapScreenState createState() => _MapScreenState();
+  _MomentMapScreenState createState() => _MomentMapScreenState(markerCounter);
 
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MomentMapScreenState extends State<MomentMapScreen> {
+  int markerCounter;
 
   Location location = Location();
   LocationData _locationData;
@@ -36,6 +39,10 @@ class _MapScreenState extends State<MapScreen> {
   bool mapUpdated = false;
   TextField searchField;
   final fieldText = TextEditingController();
+
+  _MomentMapScreenState(int markerCounter) {
+    this.markerCounter = markerCounter;
+  }
 
   static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
   LatLng center = STOCKHOLM_COORDINATES;
@@ -69,7 +76,15 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     _locationData = await location.getLocation();
-    center = LatLng(_locationData.latitude, _locationData.longitude);
+  }
+
+  void getCoordinates() async {
+    double lat;
+    double lng;
+    DocumentSnapshot<Map<String, dynamic>> ref = await Provider.of<FirestoreService>(context, listen: false).userRef.get();
+    lat = ref.data()['Lat'];
+    lng = ref.data()['Lng'];
+    center = LatLng(lat, lng);
     await mapController.moveCamera(CameraUpdate.newLatLng(center));
   }
 
@@ -78,12 +93,13 @@ class _MapScreenState extends State<MapScreen> {
     var size = MediaQuery.of(context).size;
     if (!mapUpdated) {
       getLocation();
+      getCoordinates();
     }
     //var selectedId = selectedMarker;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Välj område'),
+        title: Text('Välj plats'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -95,7 +111,7 @@ class _MapScreenState extends State<MapScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: searchField = TextField(
                   decoration: InputDecoration(
-                      hintText: 'Sök', suffixIcon: Icon(Icons.search)),
+                      hintText: 'Sök plats', suffixIcon: Icon(Icons.search)),
                   onChanged: (value) => searchPlaces(value),
                   controller: fieldText,
                   focusNode: FocusNode(
@@ -117,7 +133,7 @@ class _MapScreenState extends State<MapScreen> {
                       },
                       initialCameraPosition: CameraPosition(
                         target: center,
-                        zoom: 11.0,
+                        zoom: 14.0,
                       ),
                       markers: Set<Marker>.of(markers.values),
                     ),
@@ -156,7 +172,7 @@ class _MapScreenState extends State<MapScreen> {
                         width: 120.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('About').set({
+                            Provider.of<FirestoreService>(context, listen: false).userRef.set({
                               'Place': '$placeTitle',
                               'Address': '${selectedLocation.name}',
                               'Lat': '${selectedLocation.geometry.location.lat}',
@@ -225,7 +241,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _addMarker(LatLng latLng) async {
     var newLatLng =
-        ('' + latLng.latitude.toString() + ',' + latLng.longitude.toString());
+    ('' + latLng.latitude.toString() + ',' + latLng.longitude.toString());
     selectedLocation = await placesService.getPlaceFromCoor(newLatLng);
     var markerId = newMarker(selectedLocation);
 
@@ -249,7 +265,7 @@ class _MapScreenState extends State<MapScreen> {
     var markerId = MarkerId(placeTitle);
 
     var latLng =
-        LatLng(place.geometry.location.lat, place.geometry.location.lng);
+    LatLng(place.geometry.location.lat, place.geometry.location.lng);
 
     var marker = Marker(
       markerId: markerId,
@@ -313,12 +329,3 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 }
-
-/*Navigator.push(
-context,
-MaterialPageRoute(
-builder: (context) {
-return MapScreen();
-},
-),
-);*/
