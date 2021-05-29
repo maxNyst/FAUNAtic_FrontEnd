@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faunatic_front_end/alert_dialog.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _LecturesScreenState extends State<LecturesScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     child: TextField(
                       decoration: InputDecoration(
-                          hintText: 'Excursions namn',
+                          hintText: 'Namnge din exkursion',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 12),
                           fillColor: Colors.blueGrey.shade100,
@@ -62,18 +63,7 @@ class _LecturesScreenState extends State<LecturesScreen> {
                 SizedBox(
                     width: 115.0,
                     height: 45.0,
-                    child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        )),
-                        onPressed: () {
-                          print('knappen funkar');
-                        },
-                        child: Text(
-                          'Avbryt',
-                          style: TextStyle(fontSize: 16),
-                        ))),
+                    child: FaunaticAlert()),
                 SizedBox(
                     width: 115.0,
                     height: 45.0,
