@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FaunaticAlert extends StatelessWidget {
+  //final Function onPressed;
+
   const FaunaticAlert({Key key}) : super(key: key);
+
+
 
 @override
 Widget build(BuildContext context) {
