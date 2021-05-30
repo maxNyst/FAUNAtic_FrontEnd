@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/place_search.dart';
 import 'package:faunatic_front_end/Screens/Lecture/Components/places_service.dart';
+import 'package:faunatic_front_end/Screens/Moment/marker_description.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,13 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
 
   static const LatLng STOCKHOLM_COORDINATES = LatLng(59.334591, 18.063240);
   LatLng center = STOCKHOLM_COORDINATES;
+  LatLng newCenter;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    if (newCenter != null) {
+      mapController.moveCamera(CameraUpdate.newLatLng(newCenter));
+    }
   }
 
   LocationData getLocationData() {
@@ -79,13 +84,17 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
   }
 
   void getCoordinates() async {
-    double lat;
-    double lng;
-    DocumentSnapshot<Map<String, dynamic>> ref = await Provider.of<FirestoreService>(context, listen: false).userRef.get();
-    lat = ref.data()['Lat'];
-    lng = ref.data()['Lng'];
-    center = LatLng(lat, lng);
-    await mapController.moveCamera(CameraUpdate.newLatLng(center));
+    //DocumentSnapshot<Map<String, dynamic>>
+    var ref = await Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('About').get();
+    var lat = ref.data()['Lat'];
+    var lng = ref.data()['Lng'];
+    if (lat.toString().isNotEmpty) {
+      lat = double.parse(lat);
+      lng = double.parse(lng);
+      print('$lat, $lng');
+      newCenter = LatLng(lat, lng);
+      //await mapController.moveCamera(CameraUpdate.newLatLng(newCenter));
+    }
   }
 
   @override
@@ -99,7 +108,7 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Välj plats'),
+        title: Text('Lägg till markör'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -111,7 +120,7 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: searchField = TextField(
                   decoration: InputDecoration(
-                      hintText: 'Sök plats', suffixIcon: Icon(Icons.search)),
+                      hintText: 'Sök', suffixIcon: Icon(Icons.search)),
                   onChanged: (value) => searchPlaces(value),
                   controller: fieldText,
                   focusNode: FocusNode(
@@ -132,8 +141,8 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                         _addMarker(latLng);
                       },
                       initialCameraPosition: CameraPosition(
-                        target: center,
-                        zoom: 14.0,
+                        target: newCenter ?? center,
+                        zoom: 12.0,
                       ),
                       markers: Set<Marker>.of(markers.values),
                     ),
@@ -172,13 +181,20 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                         width: 120.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            Provider.of<FirestoreService>(context, listen: false).userRef.set({
+                            Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').set({
                               'Place': '$placeTitle',
                               'Address': '${selectedLocation.name}',
                               'Lat': '${selectedLocation.geometry.location.lat}',
                               'Lng': '${selectedLocation.geometry.location.lng}'
                             });
-                            Navigator.pop(context, [placeTitle]);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return MarkerDescription(placeTitle: placeTitle);
+                                },
+                              ),
+                            );
                           },
                           child: Text(
                             'Lägg till',
