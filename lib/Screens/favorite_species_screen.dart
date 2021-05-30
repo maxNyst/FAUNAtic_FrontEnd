@@ -19,7 +19,7 @@ class FavoriteSpeciesScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Favorites',
+                    'Mina Favoriter',
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   SizedBox(width: 10),

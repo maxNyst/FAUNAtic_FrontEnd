@@ -80,6 +80,19 @@ class Specie {
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Specie &&
+          runtimeType == other.runtimeType &&
+          taxonId == other.taxonId &&
+          swedishName == other.swedishName &&
+          scientificName == other.scientificName;
+
+  @override
+  int get hashCode =>
+      taxonId.hashCode ^ swedishName.hashCode ^ scientificName.hashCode;
+
+  @override
   String toString() {
     return '$swedishName - på latin: $scientificName';
   }

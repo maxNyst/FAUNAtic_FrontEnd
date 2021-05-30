@@ -75,7 +75,7 @@ class SpeciesListViewBuilder extends StatelessWidget {
                         //     .getSpeciesDetail(speciesList[index].taxonId);
                         favorites.favorSpecie(speciesList[index]);
                       },
-                      icon: favorites.getFavoriteSpecies.contains(speciesList[index])
+                      icon: favorites.getFavoriteSpecies.contains(speciesList[index]) //
                           ? Icon(
                         Icons.favorite,
                         color: Colors.red,
