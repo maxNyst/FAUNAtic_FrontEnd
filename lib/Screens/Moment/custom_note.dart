@@ -20,20 +20,6 @@ class _CustomNoteState extends State<CustomNote> {
           icon: Icon(Icons.clear),
           onPressed: () => Navigator.pop(context, null),
         ),
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(primary: Colors.white),
-            onPressed: () {
-              var formState = _formKey.currentState;
-              if (formState.validate()) {
-                formState.save();
-                Navigator.pop(context,
-                    NoteModel(title: _title, body: _body, image: _image));
-              }
-            },
-            child: Text('SPARA'),
-          )
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -52,9 +38,6 @@ class _CustomNoteState extends State<CustomNote> {
                   vertical: 10,
                 ),
               ),
-            ),
-            Divider(
-              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -80,11 +63,33 @@ class _CustomNoteState extends State<CustomNote> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Theme.of(context).accentColor, width: 1),
-
                   ),
                 ),
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 115.0,
+                height: 45.0,
+                child: ElevatedButton(
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40.0),
+                      )),
+                  onPressed: () {
+                    var formState = _formKey.currentState;
+                    if (formState.validate()) {
+                      formState.save();
+                      Navigator.pop(context,
+                          NoteModel(title: _title, body: _body, image: _image));
+                    }
+                  },
+                  child: Text('Spara', style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

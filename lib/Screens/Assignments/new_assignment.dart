@@ -13,7 +13,7 @@ class NewAssignmentScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
         ],
-        title: Text('Hem'),
+        title: Text('Lägg till uppgifter'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -60,7 +60,7 @@ class NewAssignmentScreen extends StatelessWidget {
             onPressed: () {
               print('knappen funkar');
             },
-            label: Text('Spara'),
+            label: Text('Spara', style: TextStyle(fontFamily: 'Montserrat'),),
           ),
         ),
       ),

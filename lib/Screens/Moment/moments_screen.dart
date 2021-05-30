@@ -27,7 +27,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [],
-        title: Text('Hem'),
+        title: Text('Planera ett moment'),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
