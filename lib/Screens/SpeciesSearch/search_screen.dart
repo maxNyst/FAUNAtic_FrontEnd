@@ -20,18 +20,30 @@ class SpeciesSearchScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 15),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                  child: TextField(
+                      decoration: InputDecoration(
+                          fillColor: Colors.grey.shade300,
+                          filled: true,
+                          hintText: "Sök efter arter",
+                          border: InputBorder.none,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Icon(
+                            Icons.search,
+                          ),
+                        ),
                       ),
-                    ),
-                    prefixIcon: Icon(Icons.style),
-                    suffixIcon: Icon(Icons.search)),
-                onSubmitted: (searchTerm) =>
-                    context.read<SpeciesList>().searchForSpecie(searchTerm)),
+                      onSubmitted: (searchTerm) => context
+                          .read<SpeciesList>()
+                          .searchForSpecie(searchTerm)),
+                ),
+              ],
+            ),
           ),
           SpeciesListViewBuilder()
         ],
@@ -95,7 +107,7 @@ class SpeciesListViewBuilder extends StatelessWidget {
             );
           } else {
             return ListTile(
-              title: Text('Here you search'),
+              title: Text('Dina sökresultat'),
             );
           }
         },

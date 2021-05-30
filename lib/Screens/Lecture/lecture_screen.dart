@@ -40,13 +40,13 @@ class _LecturesScreenState extends State<LecturesScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: 'Namnge din exkursion',
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                          fillColor: Colors.blueGrey.shade100,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                          fillColor: Colors.grey.shade300,
                           filled: true),
                     ),
                   ),
