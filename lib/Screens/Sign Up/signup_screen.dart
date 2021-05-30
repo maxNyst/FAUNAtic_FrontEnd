@@ -15,7 +15,7 @@ class SignupScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign up'),
+        title: Text('Skapa konto'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -55,7 +55,7 @@ class SignupScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(25),
                 child: Text(
-                  'Teaching has never been more easy',
+                  'Naturlig planering, var du än är.',
                   style: TextStyle(
                       color: Theme.of(context).accentColor, fontSize: 17),
                 ),

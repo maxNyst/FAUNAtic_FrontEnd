@@ -35,11 +35,11 @@ class _SignUpFormState extends State<SignUpForm> {
                     if (email.contains('@') && email.contains('.')) {
                       return null;
                     } else {
-                      return 'Not a valid email';
+                      return 'Epostadressen har felaktigt format';
                     }
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Email'),
+                      border: OutlineInputBorder(), labelText: 'Epost'),
                 ),
               ),
               Padding(
@@ -49,12 +49,12 @@ class _SignUpFormState extends State<SignUpForm> {
                   controller: _passwordController,
                   validator: (password) {
                     if (password.length < 6) {
-                      return 'Minimum of 6 characters';
+                      return 'Måste innehålla minst 6 symboler';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Password'),
+                      border: OutlineInputBorder(), labelText: 'Lösenord'),
                 ),
               ),
               Padding(
@@ -64,13 +64,13 @@ class _SignUpFormState extends State<SignUpForm> {
                   controller: _confirmPassword,
                   validator: (password) {
                     if (password != _passwordController.text) {
-                      return "Passwords don't match";
+                      return "Lösenorden måste matcha";
                     }
                     return null;
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Confirm Password'),
+                      labelText: 'Bekräfta lösenord'),
                 ),
               ),
               SizedBox(height: 25),
@@ -96,7 +96,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             } else if (snapshot.hasData) {
                               return Text(snapshot.data);
                             } else {
-                              return Text('waiting');
+                              return Text('Laddar...');
                             }
                           },
                         ),
@@ -106,7 +106,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   }
                 },
                 child: Text(
-                  'Create Account',
+                  'Skapa konto',
                 ),
                 /* onPressed: () => onPressed {
                   if(!_formKey.currentState.validate()){

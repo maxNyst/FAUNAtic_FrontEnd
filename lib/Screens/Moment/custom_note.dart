@@ -22,7 +22,7 @@ class _CustomNoteState extends State<CustomNote> {
         ),
         actions: [
           TextButton(
-            style: TextButton.styleFrom(primary: Colors.white),
+            style: TextButton.styleFrom(primary: Colors.green),
             onPressed: () {
               var formState = _formKey.currentState;
               if (formState.validate()) {
