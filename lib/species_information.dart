@@ -3,6 +3,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+class FavoriteSpecies extends ChangeNotifier {
+  final List<Specie> _list = [];
+
+  List<Specie> get getFavoriteSpecies => _list;
+
+  void favorSpecie(Specie specie) {
+    if (_list.contains(specie)) {
+      _list.remove(specie);
+    } else {
+      _list.add(specie);
+    }
+    notifyListeners();
+  }
+}
+
 class SpeciesList extends ChangeNotifier {
   // Another solution if this one gives us trouble:
   // StreamController https://ericwindmill.com/articles/async_dart_flutter/
@@ -17,8 +32,6 @@ class SpeciesList extends ChangeNotifier {
 
   Future<List<Specie>> _speciesSearchResult(String searchTerm) async {
     final species = <Specie>[];
-
-    // notifyListeners();
 
     final response = await http.get(
         Uri.https('group7-15.pvt.dsv.su.se', '/search', {'term': searchTerm}));
@@ -77,6 +90,7 @@ class Specie {
 //     final speciesDetail = speciesDetailFromJson(jsonString);
 
 class SpeciesDetail {
+
   String swedishName;
   String scientificName;
   SpeciesData speciesData;
@@ -104,6 +118,17 @@ class SpeciesDetail {
     data['imageURL'] = imageURL;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SpeciesDetail &&
+          runtimeType == other.runtimeType &&
+          swedishName == other.swedishName &&
+          scientificName == other.scientificName;
+
+  @override
+  int get hashCode => swedishName.hashCode ^ scientificName.hashCode;
 }
 
 class SpeciesData {

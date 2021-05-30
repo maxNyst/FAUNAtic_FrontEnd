@@ -55,6 +55,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SpeciesList>(
           create: (context) => SpeciesList(),
         ),
+        ChangeNotifierProvider<FavoriteSpecies>(
+          create: (context) => FavoriteSpecies(),
+        ),
         Provider<FirestoreService>(
           create: (_) => FirestoreService(FirebaseFirestore.instance),
         ),

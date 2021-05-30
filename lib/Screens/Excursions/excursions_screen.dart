@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import '../../widgets.dart';
 
@@ -10,28 +8,24 @@ class ExcursionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Text(
-                    'Utflykter',
-                    style: TextStyle(color: Colors.black, fontSize: 45),
-                  ),
-                )),
-            Image.asset(
-              'assets/images/Forest-panaV2.png',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Text(
+              'Utflykter',
+              style: TextStyle(color: Colors.black, fontSize: 45),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ExcursionButtons(),
-            ),
-          ],
-        ),
+          ),
+          Image.asset(
+            'assets/images/Forest-panaV2.png',
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ExcursionButtons(),
+          ),
+        ],
       ),
     );
   }
@@ -60,8 +54,7 @@ class ExcursionButtons extends StatelessWidget {
                 child: FaunaticListTile(
                   text: 'Sparade Utflykter',
                   color: Colors.greenAccent,
-                  onTap: () =>
-                      Navigator.pushNamed(context, '/excursions/saved'),
+                  onTap: () => Navigator.pushNamed(context, '/excursions/saved'),
                 ),
               ),
               FaunaticListTile(

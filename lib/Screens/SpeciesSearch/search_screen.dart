@@ -49,7 +49,9 @@ class SpeciesListViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder(
-        future: context.watch<SpeciesList>().getFutureSpecies,
+        future: context
+            .watch<SpeciesList>()
+            .getFutureSpecies,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -62,20 +64,27 @@ class SpeciesListViewBuilder extends StatelessWidget {
             return ListView.builder(
               itemCount: speciesList.length,
               itemBuilder: (context, index) {
+                var favorites = Provider.of<FavoriteSpecies>(context, listen: true);
                 return ListTile(
                   title: Text(speciesList[index].swedishName),
                   subtitle: Text(speciesList[index].scientificName),
                   trailing: IconButton(
-                    onPressed: () async {
-                      final futureSpeciesDetail = await context
-                          .read<SpeciesList>()
-                          .getSpeciesDetail(speciesList[index].taxonId);
-                      Navigator.pop(context, futureSpeciesDetail);
-                    },
-                    icon: Icon(
-                      Icons.favorite_border,
-                      color: Colors.red,
-                    ),
+                      onPressed: () async {
+                        // final futureSpeciesDetail = await context
+                        //     .read<SpeciesList>()
+                        //     .getSpeciesDetail(speciesList[index].taxonId);
+                        favorites.favorSpecie(speciesList[index]);
+                      },
+                      icon: favorites.getFavoriteSpecies.contains(speciesList[index])
+                          ? Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                          : Icon(
+                        Icons.favorite_border,
+                        color: Colors.grey,
+                      )
+
                   ),
                   onTap: () {
                     Navigator.pushNamed(context, '/search/details',
