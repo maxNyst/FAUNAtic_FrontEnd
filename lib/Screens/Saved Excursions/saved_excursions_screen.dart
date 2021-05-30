@@ -50,22 +50,29 @@ class SavedExcursionsScreen extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: SizedBox(
-                width: 350,
-                height: 50,
-                child: TextField(
-                  decoration: InputDecoration(
-                      fillColor: Colors.grey.shade300,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(50.0),
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Sök bland utflykter',
+                        border: InputBorder.none,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Icon(
+                            Icons.search,
+                          ),
                         ),
+                        fillColor: Colors.grey.shade300,
+                        filled: true,
                       ),
-                      hintText: 'Sök bland utflykter',
-                      suffixIcon: Icon(Icons.search)),
-                ),
+
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
