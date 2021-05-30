@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FaunaticAlert extends StatelessWidget {
+  final Function onPressed;
 
-  //test
-  const FaunaticAlert({Key key}) : super(key: key);
+  const FaunaticAlert(
+      {Key key,
+      @required this.onPressed,
+      }) : super(key: key);
 
 @override
 Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ Widget build(BuildContext context) {
             child: const Text('Nej'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Ja'),
+            onPressed: onPressed,
             child: const Text('Ja'),
           ),
         ],

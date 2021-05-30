@@ -63,7 +63,7 @@ class _LecturesScreenState extends State<LecturesScreen> {
                 SizedBox(
                     width: 115.0,
                     height: 45.0,
-                    child: FaunaticAlert()),
+                    child: FaunaticAlert(onPressed: () => Navigator.pushNamed(context, '/home'),)),
                 SizedBox(
                     width: 115.0,
                     height: 45.0,
