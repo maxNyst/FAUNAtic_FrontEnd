@@ -85,15 +85,17 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
 
   void getCoordinates() async {
     //DocumentSnapshot<Map<String, dynamic>>
-    var ref = await Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('About').get();
-    var lat = ref.data()['Lat'];
-    var lng = ref.data()['Lng'];
-    if (lat.toString().isNotEmpty) {
-      lat = double.parse(lat);
-      lng = double.parse(lng);
-      print('$lat, $lng');
-      newCenter = LatLng(lat, lng);
-      //await mapController.moveCamera(CameraUpdate.newLatLng(newCenter));
+    DocumentSnapshot<Map<String, dynamic>> ref = await Provider.of<FirestoreService>(context, listen: false).userRef.get();
+    if (ref.data().containsKey('lat')) {
+      var lat = ref.data()['lat'];
+      var lng = ref.data()['lng'];
+      if (lat.toString().isNotEmpty) {
+        lat = double.parse(lat);
+        lng = double.parse(lng);
+        print('$lat, $lng');
+        newCenter = LatLng(lat, lng);
+        //await mapController.moveCamera(CameraUpdate.newLatLng(newCenter));
+      }
     }
   }
 
@@ -181,18 +183,24 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                         width: 120.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').set({
+                            /*Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').set({
                               'Place': '$placeTitle',
                               'Address': '${selectedLocation.name}',
                               'Lat': '${selectedLocation.geometry.location.lat}',
                               'Lng': '${selectedLocation.geometry.location.lng}'
-                            });
-                            var markerMap = {};
+                            });*/
+                            var markerMap = {
+                              'place': '$placeTitle',
+                              'address': '${selectedLocation.name}',
+                              'lat': '${selectedLocation.geometry.location.lat}',
+                              'lng': '${selectedLocation.geometry.location.lng}',
+                              'markerCounter': '$markerCounter'
+                            };
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return MarkerDescription(markerCounter: markerCounter);
+                                  return MarkerDescription(markerMap: markerMap);
                                 },
                               ),
                             );

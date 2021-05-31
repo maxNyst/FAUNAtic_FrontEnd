@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MarkerDescription extends StatefulWidget {
-  final int markerCounter;
-  MarkerDescription({Key key, int markerCounter}) :
-        markerCounter = markerCounter,
+  final Map markerMap;
+  MarkerDescription({Key key, Map markerMap}) :
+        markerMap = markerMap,
         super(key: key);
 
   @override
-  _MarkerDescriptionState createState() => _MarkerDescriptionState(markerCounter);
+  _MarkerDescriptionState createState() => _MarkerDescriptionState(markerMap);
 }
 
 class _MarkerDescriptionState extends State<MarkerDescription> {
-  int markerCounter;
+  Map markerMap;
   final _formKey = GlobalKey<FormState>();
-  var _title, _body, _image;
+  var _title, _body;
 
-  _MarkerDescriptionState(int markerCounter) {
-    this.markerCounter = markerCounter;
+  _MarkerDescriptionState(Map markerMap) {
+    this.markerMap = markerMap;
   }
 
   @override
@@ -38,12 +38,12 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
               var formState = _formKey.currentState;
               if (formState.validate()) {
                 formState.save();
-                Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').update({
+                /*Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').update({
                   'Name': '$_title',
                   'Description': '$_body',
-                });
+                });*/
                 Navigator.pop(context,
-                    NoteModel(title: _title, body: _body, image: _image));
+                    NoteModel(title: _title, body: _body));
               }
             },
             child: Text('SPARA'),
@@ -111,7 +111,6 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
 class NoteModel {
   String title;
   String body;
-  Image image;
 
-  NoteModel({this.title, this.body, this.image});
+  NoteModel({this.title, this.body});
 }
