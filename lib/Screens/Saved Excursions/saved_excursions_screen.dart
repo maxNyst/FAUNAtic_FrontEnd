@@ -1,10 +1,21 @@
+import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../firestore_service.dart';
 
-class SavedExcursionsScreen extends StatelessWidget {
+class SavedExcursionsScreen extends StatefulWidget {
   const SavedExcursionsScreen({Key key}) : super(key: key);
 
   @override
+  _SavedExcursionsScreenState createState() => _SavedExcursionsScreenState();
+}
+
+class _SavedExcursionsScreenState extends State<SavedExcursionsScreen> {
+  CreatedBy _person = CreatedBy.Mig;
+
+  @override
   Widget build(BuildContext context) {
+    var excursions = Provider.of<List<Excursion>>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -28,7 +39,34 @@ class SavedExcursionsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            RadioButtons(),
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile<CreatedBy>(
+                    title: const Text('Mig'),
+                    value: CreatedBy.Mig,
+                    groupValue: _person,
+                    onChanged: (CreatedBy value) {
+                      setState(() {
+                        _person = value;
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile<CreatedBy>(
+                    title: const Text(' Andra '),
+                    value: CreatedBy.Andra,
+                    groupValue: _person,
+                    onChanged: (CreatedBy value) {
+                      setState(() {
+                        _person = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
             Row(
               children: [
                 Transform.translate(
@@ -69,12 +107,21 @@ class SavedExcursionsScreen extends StatelessWidget {
                         fillColor: Colors.grey.shade300,
                         filled: true,
                       ),
-
                     ),
                   ),
                 ],
               ),
             ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: excursions.length,
+                  itemBuilder: (context, index) {
+
+                    return ListTile(
+                      title: Text(excursions[index].toString()),
+                    );
+                  }),
+            )
           ],
         ),
       ),
@@ -83,48 +130,3 @@ class SavedExcursionsScreen extends StatelessWidget {
 }
 
 enum CreatedBy { Mig, Andra }
-
-/// This is the stateful widget that the main application instantiates.
-class RadioButtons extends StatefulWidget {
-  const RadioButtons({Key key}) : super(key: key);
-
-  @override
-  State<RadioButtons> createState() => _RadioButtonsState();
-}
-
-/// This is the private State class that goes with MyStatefulWidget.
-class _RadioButtonsState extends State<RadioButtons> {
-  CreatedBy _person = CreatedBy.Mig;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: RadioListTile<CreatedBy>(
-            title: const Text('Mig'),
-            value: CreatedBy.Mig,
-            groupValue: _person,
-            onChanged: (CreatedBy value) {
-              setState(() {
-                _person = value;
-              });
-            },
-          ),
-        ),
-        Expanded(
-          child: RadioListTile<CreatedBy>(
-            title: const Text(' Andra '),
-            value: CreatedBy.Andra,
-            groupValue: _person,
-            onChanged: (CreatedBy value) {
-              setState(() {
-                _person = value;
-              });
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}

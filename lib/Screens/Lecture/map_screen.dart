@@ -157,10 +157,10 @@ class _MapScreenState extends State<MapScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             Provider.of<FirestoreService>(context, listen: false).userRef.set({
-                              'Place': '$placeTitle',
-                              'Address': '${selectedLocation.name}',
-                              'Lat': '${selectedLocation.geometry.location.lat}',
-                              'Lng': '${selectedLocation.geometry.location.lng}'
+                              'place': '$placeTitle',
+                              'address': '${selectedLocation.name}',
+                              'lat': '${selectedLocation.geometry.location.lat}',
+                              'lng': '${selectedLocation.geometry.location.lng}'
                             });
                             Navigator.pop(context, [placeTitle]);
                           },

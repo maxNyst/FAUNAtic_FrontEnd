@@ -1,6 +1,7 @@
 import 'package:faunatic_front_end/Screens/Saved%20Excursions/saved_excursions_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/authentication_service.dart';
+import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:faunatic_front_end/route_generator.dart';
 import 'package:faunatic_front_end/species_information.dart';
@@ -20,7 +21,6 @@ import 'package:faunatic_front_end/Screens/Home/home_screen.dart';
 import 'Screens/Moment/moments_screen.dart';
 import 'Screens/Sign Up/signup_screen.dart';
 import 'Screens/SpeciesSearch/search_screen.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,23 +56,25 @@ class MyApp extends StatelessWidget {
           create: (context) => SpeciesList(),
         ),
         Provider<FirestoreService>(
-          create: (_) => FirestoreService(FirebaseFirestore.instance),
+          create: (context) => FirestoreService(FirebaseFirestore.instance),
         ),
+        Provider<List>(
+          create: (context) => [],
+        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.green,
-          primaryColor: Colors.grey[100],
-          accentColor: Colors.green,
-          primaryIconTheme: IconThemeData(color: Colors.green),
-          iconTheme: IconThemeData(color: Colors.green)
-        ),
+            scaffoldBackgroundColor: Colors.white,
+            primarySwatch: Colors.green,
+            primaryColor: Colors.grey[100],
+            accentColor: Colors.green,
+            primaryIconTheme: IconThemeData(color: Colors.green),
+            iconTheme: IconThemeData(color: Colors.green)),
         initialRoute: '/',
-
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
@@ -87,7 +89,6 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
       context.read<FirestoreService>().setUser(firebaseUser);
-      context.read<FirestoreService>().addPlaceToExcursion('Hellas', 'Hellasgården, Stockholm', '12.56', '21.88');
       return HomeScreen();
     }
     return LoginScreen();

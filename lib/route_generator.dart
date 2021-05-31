@@ -13,20 +13,24 @@ import 'package:faunatic_front_end/Screens/SpeciesSearch/search_screen.dart';
 import 'package:faunatic_front_end/main.dart';
 
 import 'package:faunatic_front_end/Screens/Assignments/new_assignment.dart';
+import 'package:provider/provider.dart';
+
+import 'excursion_model.dart';
+import 'firestore_service.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
-     // To send arguments from one page
-     // to another, use this syntax:
-     //
-     // case '/search/details':
-     //   return MaterialPageRoute(
-     //     builder: (context) => SpeciesDetailsScreen(
-     //       specie: args as Specie,
-     //     ),
-     //   );
+    // To send arguments from one page
+    // to another, use this syntax:
+    //
+    // case '/search/details':
+    //   return MaterialPageRoute(
+    //     builder: (context) => SpeciesDetailsScreen(
+    //       specie: args as Specie,
+    //     ),
+    //   );
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) => AuthenticationWrapper());
@@ -58,7 +62,15 @@ class RouteGenerator {
       case '/excursions':
         return MaterialPageRoute(builder: (context) => ExcursionsScreen());
       case '/excursions/saved':
-        return MaterialPageRoute(builder: (context) => SavedExcursionsScreen());
+        return MaterialPageRoute(
+            builder: (context) => StreamProvider<List<Excursion>>.value(
+                value: context.read<FirestoreService>().getExcursions(),
+                initialData: [],
+                catchError: (context, error) {
+                  print(error);
+                  return [];
+                },
+                child: SavedExcursionsScreen()));
       case '/excursions/search':
         return MaterialPageRoute(
             builder: (context) => ExcursionsSearchScreen());
