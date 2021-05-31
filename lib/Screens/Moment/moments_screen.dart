@@ -2,7 +2,9 @@ import 'package:faunatic_front_end/Screens/Moment/moment_map_screen.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:provider/provider.dart';
 
+import '../../note_model.dart';
 import 'custom_note.dart';
 
 extension StringExtension on String {
@@ -20,17 +22,15 @@ class MomentsScreen extends StatefulWidget {
 
 class _MomentsScreenState extends State<MomentsScreen> {
   var _visibleFAB = true;
-  final list = [];
   int markerCounter = 0;
+  var list;
 
   @override
   Widget build(BuildContext context) {
+    list = context.read<List>();
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        actions: [],
-        title: Text('Hem'),
-      ),
+      appBar: AppBar(),
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
@@ -40,10 +40,11 @@ class _MomentsScreenState extends State<MomentsScreen> {
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Container(
-                    color: Colors.blue,
-                    height: 40,
                     alignment: Alignment.center,
-                    child: Text('Detta är listan !'),
+                    child: Text(
+                      'Utflyktsplanering',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
                   );
                 } else {
                   var noteOrSpecieOrCoordinate = list[index - 1];
@@ -84,7 +85,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
               },
             ),
           ),
-          Container(height: 44, color: Colors.purple)
+          // Container(height: 44, color: Colors.purple)
         ],
       ),
       floatingActionButton: _buildSpeedDial(_visibleFAB),

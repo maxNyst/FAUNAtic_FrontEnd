@@ -21,7 +21,6 @@ import 'Screens/Moment/moments_screen.dart';
 import 'Screens/Sign Up/signup_screen.dart';
 import 'Screens/SpeciesSearch/search_screen.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -58,21 +57,22 @@ class MyApp extends StatelessWidget {
         Provider<FirestoreService>(
           create: (_) => FirestoreService(FirebaseFirestore.instance),
         ),
+        Provider<List>(
+          create: (context) => [],
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Faunatic the fabulous',
         // Here is the color theme and text themes.
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.green,
-          primaryColor: Colors.grey[100],
-          accentColor: Colors.green,
-          primaryIconTheme: IconThemeData(color: Colors.green),
-          iconTheme: IconThemeData(color: Colors.green)
-        ),
+            scaffoldBackgroundColor: Colors.white,
+            primarySwatch: Colors.green,
+            primaryColor: Colors.grey[100],
+            accentColor: Colors.green,
+            primaryIconTheme: IconThemeData(color: Colors.green),
+            iconTheme: IconThemeData(color: Colors.green)),
         initialRoute: '/',
-
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
