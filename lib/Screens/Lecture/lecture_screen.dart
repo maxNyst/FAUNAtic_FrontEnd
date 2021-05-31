@@ -20,6 +20,12 @@ class _LecturesScreenState extends State<LecturesScreen> {
   final _nameController = TextEditingController();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
@@ -82,11 +88,17 @@ class _LecturesScreenState extends State<LecturesScreen> {
                       final momentsList = context.read<List>();
                       await context
                           .read<FirestoreService>()
-                          .addExcursion(name, googleMaps, momentsList.map((e) => e.toJson()).toList()).onError(
-                              (error, stackTrace) =>
-                                  print(error.toString() + ' <= denna?'));
-                      // momentsList.clear();
-                      // await context.read<FirestoreService>().userRef.set(null);
+                          .addExcursion(name, googleMaps,
+                              momentsList.map((e) => e.toJson()).toList())
+                          .onError((error, stackTrace) =>
+                              print(error.toString() + ' <= denna?'));
+                      momentsList.clear();
+                      await context
+                          .read<FirestoreService>()
+                          .userRef
+                          .set({'null': ''});
+                      _nameController.clear();
+                      Navigator.pop(context);
                     },
                     child: Text(
                       'Spara',
