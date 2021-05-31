@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/alert_dialog.dart';
+import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class LecturesScreen extends StatefulWidget {
 }
 
 class _LecturesScreenState extends State<LecturesScreen> {
+  final _nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,7 +34,7 @@ class _LecturesScreenState extends State<LecturesScreen> {
               width: size.width * 0.8,
             ),
             Text(
-              'Planera din exkursion',
+              'Planera din utflykt',
               style: Theme.of(context).textTheme.headline6,
             ),
             Padding(
@@ -42,8 +45,9 @@ class _LecturesScreenState extends State<LecturesScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     child: TextField(
+                      controller: _nameController,
                       decoration: InputDecoration(
-                          hintText: 'Namnge din exkursion',
+                          hintText: 'Namnge din utflykt',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 20),
                           fillColor: Colors.grey.shade300,
@@ -60,25 +64,36 @@ class _LecturesScreenState extends State<LecturesScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(width: 115.0, height: 45.0, child: FaunaticAlert()),
                 SizedBox(
-                    width: 115.0,
-                    height: 45.0,
-                    child: FaunaticAlert()),
-                SizedBox(
-                    width: 115.0,
-                    height: 45.0,
-                    child: ElevatedButton(
-                        style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        )),
-                        onPressed: () {
-                          print('knappen funkar');
-                        },
-                        child: Text(
-                          'Spara',
-                          style: TextStyle(fontSize: 16),
-                        ))),
+                  width: 115.0,
+                  height: 45.0,
+                  child: ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0),
+                    )),
+                    onPressed: () async {
+                      final name = _nameController.text;
+                      final docSnapShot =
+                          await context.read<FirestoreService>().userRef.get();
+                      Map location = docSnapShot.data();
+                      final googleMaps = GoogleMaps.fromJson(location);
+                      final momentsList = context.read<List>();
+                      await context
+                          .read<FirestoreService>()
+                          .addExcursion(name, googleMaps, momentsList.map((e) => e.toJson()).toList()).onError(
+                              (error, stackTrace) =>
+                                  print(error.toString() + ' <= denna?'));
+                      // momentsList.clear();
+                      // await context.read<FirestoreService>().userRef.set(null);
+                    },
+                    child: Text(
+                      'Spara',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
               ],
             )
           ],
@@ -89,15 +104,13 @@ class _LecturesScreenState extends State<LecturesScreen> {
 }
 
 class PlanExcursionButtons extends StatefulWidget {
-  const PlanExcursionButtons({Key key}) :
-        super(key: key);
+  const PlanExcursionButtons({Key key}) : super(key: key);
 
   @override
   _PlanExcursionButtonsState createState() => _PlanExcursionButtonsState();
 }
 
 class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
-
   String place;
   MaterialPageRoute mpr;
 
@@ -109,7 +122,6 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
 
   @override
   Widget build(BuildContext context) {
-
     /*DocumentSnapshot<Map<String, dynamic>> ref;
     Provider.of<FirestoreService>(context).userRef.get().then((value) => {
           ref = value,
@@ -150,9 +162,11 @@ class _PlanExcursionButtonsState extends State<PlanExcursionButtons> {
                       ),
                     );
                     mpr.popped.then((value) => {
-                      place = value.toString().substring(1, value.toString().indexOf(']')),
-                      state(),
-                    });
+                          place = value
+                              .toString()
+                              .substring(1, value.toString().indexOf(']')),
+                          state(),
+                        });
                   },
                   color: Colors.orangeAccent,
                   icon: Icon(

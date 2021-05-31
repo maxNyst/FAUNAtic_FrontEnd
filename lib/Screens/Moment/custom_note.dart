@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../note_model.dart';
+
 class CustomNote extends StatefulWidget {
   CustomNote({Key key}) : super(key: key);
 
@@ -9,7 +11,7 @@ class CustomNote extends StatefulWidget {
 
 class _CustomNoteState extends State<CustomNote> {
   final _formKey = GlobalKey<FormState>();
-  var _title, _body, _image;
+  var _title, _body;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _CustomNoteState extends State<CustomNote> {
               if (formState.validate()) {
                 formState.save();
                 Navigator.pop(context,
-                    NoteModel(title: _title, body: _body, image: _image));
+                    NoteModel(title: _title, body: _body));
               }
             },
             child: Text('SPARA'),
@@ -93,10 +95,3 @@ class _CustomNoteState extends State<CustomNote> {
   }
 }
 
-class NoteModel {
-  String title;
-  String body;
-  Image image;
-
-  NoteModel({this.title, this.body, this.image});
-}
