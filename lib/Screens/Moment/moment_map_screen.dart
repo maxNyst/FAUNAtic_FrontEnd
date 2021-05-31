@@ -187,11 +187,12 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                               'Lat': '${selectedLocation.geometry.location.lat}',
                               'Lng': '${selectedLocation.geometry.location.lng}'
                             });
+                            var markerMap = {};
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return MarkerDescription(placeTitle: placeTitle);
+                                  return MarkerDescription(markerCounter: markerCounter);
                                 },
                               ),
                             );

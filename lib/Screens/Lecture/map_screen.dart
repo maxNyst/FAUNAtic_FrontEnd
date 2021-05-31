@@ -156,7 +156,7 @@ class _MapScreenState extends State<MapScreen> {
                         width: 120.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('About').set({
+                            Provider.of<FirestoreService>(context, listen: false).userRef.set({
                               'Place': '$placeTitle',
                               'Address': '${selectedLocation.name}',
                               'Lat': '${selectedLocation.geometry.location.lat}',

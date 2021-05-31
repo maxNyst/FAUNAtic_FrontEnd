@@ -1,22 +1,24 @@
+import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MarkerDescription extends StatefulWidget {
-  final String placeTitle;
-  MarkerDescription({Key key, String placeTitle}) :
-        placeTitle = placeTitle,
+  final int markerCounter;
+  MarkerDescription({Key key, int markerCounter}) :
+        markerCounter = markerCounter,
         super(key: key);
 
   @override
-  _MarkerDescriptionState createState() => _MarkerDescriptionState(placeTitle);
+  _MarkerDescriptionState createState() => _MarkerDescriptionState(markerCounter);
 }
 
 class _MarkerDescriptionState extends State<MarkerDescription> {
-  String placeTitle;
+  int markerCounter;
   final _formKey = GlobalKey<FormState>();
   var _title, _body, _image;
 
-  _MarkerDescriptionState(String placeTitle) {
-    this.placeTitle = placeTitle;
+  _MarkerDescriptionState(int markerCounter) {
+    this.markerCounter = markerCounter;
   }
 
   @override
@@ -31,11 +33,15 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
         ),*/
         actions: [
           TextButton(
-            style: TextButton.styleFrom(primary: Colors.white),
+            style: TextButton.styleFrom(primary: Colors.green),
             onPressed: () {
               var formState = _formKey.currentState;
               if (formState.validate()) {
                 formState.save();
+                Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').update({
+                  'Name': '$_title',
+                  'Description': '$_body',
+                });
                 Navigator.pop(context,
                     NoteModel(title: _title, body: _body, image: _image));
               }
@@ -55,7 +61,7 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
                 return text.trim().isEmpty ? 'Saknar titel' : null;
               },
               decoration: InputDecoration(
-                hintText: '$placeTitle',
+                hintText: 'Titel',
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 10,
