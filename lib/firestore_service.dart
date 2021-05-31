@@ -52,4 +52,13 @@ class FirestoreService {
         momentsList: momentsList);
     return excursionsRef.doc(name).set(excursion);
   }
+
+  Stream<List<Excursion>> getExcursions() {
+    final stream = excursionsRef.snapshots().map(
+            (list) => list.docs.map((e) => e.data() as Excursion).toList());
+    print(stream);
+    stream.forEach((element) {print(element);});
+
+    return stream;
+  }
 }
