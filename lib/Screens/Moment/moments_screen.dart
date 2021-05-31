@@ -1,4 +1,5 @@
 import 'package:faunatic_front_end/Screens/Moment/moment_map_screen.dart';
+import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -24,6 +25,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
   var _visibleFAB = true;
   int markerCounter = 0;
   var list;
+  MaterialPageRoute mpr;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +81,22 @@ class _MomentsScreenState extends State<MomentsScreen> {
                         ),
                       ),
                     );
+                  } else if (noteOrSpecieOrCoordinate is GoogleMaps) {
+                    final coordinate = noteOrSpecieOrCoordinate;
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          coordinate.name.capitalize(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(),
+                        ),
+                        subtitle: Text(coordinate.description),
+                        leading: SizedBox(
+                          width: 60,
+                          child: SizedBox.shrink()
+                        ),
+                      ),
+                    );
                   }
                   return SizedBox.shrink();
                 }
@@ -114,12 +132,13 @@ class _MomentsScreenState extends State<MomentsScreen> {
                     markerCounter++,
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      mpr = MaterialPageRoute(
                         builder: (context) {
                           return MomentMapScreen(markerCounter: markerCounter);
                         },
                       ),
                     ),
+                    mpr.popped.then((value) => state()),
                   },
                 ),
                 ListTile(
@@ -206,6 +225,13 @@ class _MomentsScreenState extends State<MomentsScreen> {
       });
     }
   }
+
+  void state() {
+    setState(() {
+
+    });
+  }
+
 }
 
 class _CustomBottomSheet extends StatelessWidget {

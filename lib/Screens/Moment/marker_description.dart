@@ -1,6 +1,9 @@
+import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:faunatic_front_end/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../note_model.dart';
 
 class MarkerDescription extends StatefulWidget {
   final Map markerMap;
@@ -27,10 +30,10 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
       appBar: AppBar(
         title: Text('Lägg till beskrivning'),
         centerTitle: true,
-        /*leading: IconButton(
+        leading: IconButton(
           icon: Icon(Icons.clear),
-          onPressed: () => Navigator.pop(context, null),
-        ),*/
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(primary: Colors.green),
@@ -38,12 +41,9 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
               var formState = _formKey.currentState;
               if (formState.validate()) {
                 formState.save();
-                /*Provider.of<FirestoreService>(context, listen: false).userRef.collection('Temp').doc('Marker_$markerCounter').update({
-                  'Name': '$_title',
-                  'Description': '$_body',
-                });*/
-                Navigator.pop(context,
-                    NoteModel(title: _title, body: _body));
+                var gm = GoogleMaps(place: markerMap['place'], lat: markerMap['lat'], lng: markerMap['lng'], address: markerMap['address'], name: _title, description: _body);
+                context.read<List>().add(gm);
+                Navigator.pop(context);
               }
             },
             child: Text('SPARA'),
@@ -106,11 +106,4 @@ class _MarkerDescriptionState extends State<MarkerDescription> {
       resizeToAvoidBottomInset: false,
     );
   }
-}
-
-class NoteModel {
-  String title;
-  String body;
-
-  NoteModel({this.title, this.body});
 }

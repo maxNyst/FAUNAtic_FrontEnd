@@ -159,8 +159,8 @@ class _MapScreenState extends State<MapScreen> {
                             Provider.of<FirestoreService>(context, listen: false).userRef.set({
                               'place': '$placeTitle',
                               'address': '${selectedLocation.name}',
-                              'lat': '${selectedLocation.geometry.location.lat}',
-                              'lng': '${selectedLocation.geometry.location.lng}'
+                              'lat': '${selectedLocation.geometry.location.lat.toString()}',
+                              'lng': '${selectedLocation.geometry.location.lng.toString()}'
                             });
                             Navigator.pop(context, [placeTitle]);
                           },

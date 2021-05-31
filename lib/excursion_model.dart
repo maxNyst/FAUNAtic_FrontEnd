@@ -36,8 +36,8 @@ class Excursion {
 
 class GoogleMaps {
   final String place;
-  final double lat;
-  final double lng;
+  final String lat;
+  final String lng;
   final String address;
   final String name;
   final String description;

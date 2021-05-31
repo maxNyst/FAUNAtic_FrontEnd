@@ -25,6 +25,7 @@ class MomentMapScreen extends StatefulWidget {
 
 class _MomentMapScreenState extends State<MomentMapScreen> {
   int markerCounter;
+  MaterialPageRoute mpr;
 
   Location location = Location();
   LocationData _locationData;
@@ -198,12 +199,13 @@ class _MomentMapScreenState extends State<MomentMapScreen> {
                             };
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              mpr = MaterialPageRoute(
                                 builder: (context) {
                                   return MarkerDescription(markerMap: markerMap);
                                 },
                               ),
                             );
+                            mpr.popped.then((value) => Navigator.pop(context));
                           },
                           child: Text(
                             'Lägg till',

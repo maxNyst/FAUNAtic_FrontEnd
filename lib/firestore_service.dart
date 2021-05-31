@@ -21,7 +21,7 @@ class FirestoreService {
           fromFirestore: (snapshot, _) => Excursion.fromJson(snapshot.data()),
           toFirestore: (excursion, _) => excursion.toJson(),
         );
-    userRef.set({'place': '', 'address': '', 'lat': '', 'lng': ''});
+    //userRef.set({'place': '', 'address': '', 'lat': '', 'lng': ''});
   }
 
   void addNewUser() async {
