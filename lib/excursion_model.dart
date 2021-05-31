@@ -15,7 +15,7 @@ class Excursion {
     return Excursion(
         userId: json['userId'] ?? 'ingen information om användaren',
         name: json['name'] ?? 'inget namn angett',
-        location: json['location'],
+        location: GoogleMaps.fromJson(json['location']),
         momentsList: json['momentsList']);
   }
 
@@ -26,6 +26,11 @@ class Excursion {
       'location': location.toJson(),
       'momentsList': momentsList
     };
+  }
+
+  @override
+  String toString() {
+    return '$name, \n${location.place}';
   }
 }
 
@@ -47,8 +52,8 @@ class GoogleMaps {
   factory GoogleMaps.fromJson(Map<String, dynamic> json) {
     return GoogleMaps(
         place: json['place'],
-        lat: double.parse(json['lat']),
-        lng: double.parse(json['lng']),
+        lat: json['lat'],
+        lng: json['lng'],
         address: json['address'],
         name: json['name'],
         description: json['description']);
@@ -64,4 +69,5 @@ class GoogleMaps {
       'description': description
     };
   }
+
 }
