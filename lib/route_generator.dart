@@ -55,10 +55,13 @@ class RouteGenerator {
       //  with 'Specie here for the details screen.
       case '/search/details':
         return MaterialPageRoute(
-          builder: (context) => SpeciesDetailsScreen(
-            specie: args as Specie,
-          ),
-        );
+            builder: (context) => StreamProvider<List<SpeciesDetail>>.value(
+                  value: context.read<FirestoreService>().getFavorites(),
+                  initialData: null,
+                  child: SpeciesDetailsScreen(
+                    specie: args as Specie,
+                  ),
+                ));
       case '/excursions':
         return MaterialPageRoute(builder: (context) => ExcursionsScreen());
       case '/excursions/saved':

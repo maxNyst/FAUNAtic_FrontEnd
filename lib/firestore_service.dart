@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faunatic_front_end/excursion_model.dart';
+import 'package:faunatic_front_end/species_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
@@ -9,6 +10,7 @@ class FirestoreService {
   String userId;
   DocumentReference userRef;
   CollectionReference excursionsRef;
+  CollectionReference favoritesRef;
 
   FirestoreService(this.firestore);
 
@@ -17,6 +19,11 @@ class FirestoreService {
     userId = user.uid;
     email = user.email;
     userRef = firestore.collection('users').doc(email);
+    favoritesRef = userRef.collection('favorites').withConverter<SpeciesDetail>(
+          fromFirestore: (snapshot, _) =>
+              SpeciesDetail.fromJson(snapshot.data()),
+          toFirestore: (speciesDetail, _) => speciesDetail.toJson(),
+        );
     excursionsRef = userRef.collection('excursions').withConverter<Excursion>(
           fromFirestore: (snapshot, _) => Excursion.fromJson(snapshot.data()),
           toFirestore: (excursion, _) => excursion.toJson(),
@@ -53,11 +60,24 @@ class FirestoreService {
     return excursionsRef.doc(name).set(excursion);
   }
 
+   Future<void> addFavorite(SpeciesDetail speciesDetail) {
+    return favoritesRef.doc(speciesDetail.swedishName).set(speciesDetail);
+  }
+
+  Stream<List<SpeciesDetail>> getFavorites() {
+    final stream = favoritesRef.snapshots().map(
+        (list) => list.docs.map((e) => e.data() as SpeciesDetail).toList());
+    return stream;
+  }
+
   Stream<List<Excursion>> getExcursions() {
-    final stream = excursionsRef.snapshots().map(
-            (list) => list.docs.map((e) => e.data() as Excursion).toList());
+    final stream = excursionsRef
+        .snapshots()
+        .map((list) => list.docs.map((e) => e.data() as Excursion).toList());
     print(stream);
-    stream.forEach((element) {print(element);});
+    stream.forEach((element) {
+      print(element);
+    });
 
     return stream;
   }

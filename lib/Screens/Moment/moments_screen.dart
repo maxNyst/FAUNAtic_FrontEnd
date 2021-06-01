@@ -155,7 +155,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
               onTap: () =>
                   _modalBottomSheet('Lägg till art', Icons.yard_outlined, [
                 ListTile(
-                  title: Text('Sök i artfakta'),
+                  title: Text('Sök i artdatabanken'),
                   onTap: _searchSpeciesInformation,
                 ),
                 ListTile(

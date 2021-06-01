@@ -61,7 +61,6 @@ class MyApp extends StatelessWidget {
         Provider<List>(
           create: (context) => [],
         ),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NewAssignmentScreen extends StatelessWidget {
+class NewAssignmentScreen extends StatefulWidget {
   const NewAssignmentScreen({Key key}) : super(key: key);
+
+  @override
+  _NewAssignmentScreenState createState() => _NewAssignmentScreenState();
+}
+
+class _NewAssignmentScreenState extends State<NewAssignmentScreen> {
+  var assignments = [];
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -9,9 +17,13 @@ class NewAssignmentScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
-      appBar: AppBar(
-      ),
+      appBar: AppBar(actions: [TextButton(
+        style: TextButton.styleFrom(primary: Colors.green),
+        onPressed: () {
+            Navigator.pop(context, assignments);
+          },
+        child: Text('SPARA'),
+      )],),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -19,15 +31,19 @@ class NewAssignmentScreen extends StatelessWidget {
               Image.asset(
                 'assets/Notebook-rafikiV2.png',
               ),
+              Column(
+
+                children: [...assignments],
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: TextField(
+                  controller: _controller,
                   style: TextStyle(color: Colors.black, fontSize: 18),
                   decoration: InputDecoration(
                     hintText: 'Ny uppgift',
                     border: InputBorder.none,
-                    contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
                   ),
                 ),
               ),
@@ -37,31 +53,25 @@ class NewAssignmentScreen extends StatelessWidget {
                 indent: 20,
                 endIndent: 20,
               ),
-              Icon(
-                Icons.add_circle,
-                size: 24,
-                color: Colors.grey,
-              ),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      assignments.add(Card(
+                        child: ListTile(title: Text(_controller.text)),
+                      ));
+                    });
+                    _controller.clear();
+
+                  },
+                  icon: Icon(
+                    Icons.add_circle,
+                    size: 24,
+                    color: Colors.grey,
+                  )),
             ],
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 25.0),
-        child: SizedBox(
-          width: 115.0,
-          height: 45.0,
-          child: FloatingActionButton.extended(
-            backgroundColor: const Color(0xff5ECD9E),
-            foregroundColor: Colors.white,
-            onPressed: () {
-              print('knappen funkar');
-            },
-            label: Text('Spara'),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -91,7 +101,7 @@ class SaveButton extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }

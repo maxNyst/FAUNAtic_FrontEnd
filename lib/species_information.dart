@@ -82,6 +82,19 @@ class SpeciesDetail {
   SpeciesData speciesData;
   String imageURL;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SpeciesDetail &&
+          runtimeType == other.runtimeType &&
+          swedishName == other.swedishName &&
+          scientificName == other.scientificName &&
+          imageURL == other.imageURL;
+
+  @override
+  int get hashCode =>
+      swedishName.hashCode ^ scientificName.hashCode ^ imageURL.hashCode;
+
   SpeciesDetail(
       {this.swedishName, this.scientificName, this.speciesData, this.imageURL});
 
