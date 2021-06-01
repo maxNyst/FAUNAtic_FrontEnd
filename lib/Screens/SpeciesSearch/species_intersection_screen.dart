@@ -68,7 +68,7 @@ class SpeciesButtons extends StatelessWidget {
                   child: FaunaticListTile(
                     text: 'Mina favoriter',
                     color: Colors.greenAccent,
-                    onTap: () => {},
+                    onTap: () => {Navigator.pushNamed(context, '/favorites')},
                   ),
                 ),
               ],

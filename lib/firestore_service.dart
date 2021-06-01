@@ -81,4 +81,8 @@ class FirestoreService {
 
     return stream;
   }
+
+  Future<void> removeFavorite(SpeciesDetail speciesDetail) {
+    return favoritesRef.doc(speciesDetail.swedishName).delete();
+  }
 }
