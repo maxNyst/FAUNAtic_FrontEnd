@@ -135,6 +135,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                       ),
                     ),
                     mpr.popped.then((value) => state()),
+                    Navigator.pop(context)
                   },
                 ),
                 ListTile(
@@ -160,6 +161,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                 ),
                 ListTile(
                   title: Text('Bläddra bland sparade arter'),
+                  onTap: () => Navigator.pushNamed(context, '/favorites'),
                 )
               ]),
               label: 'Art',
@@ -219,6 +221,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
       setState(() {
         list.add(result);
       });
+      Navigator.pop(context);
     }
   }
 

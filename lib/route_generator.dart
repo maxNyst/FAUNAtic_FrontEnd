@@ -1,3 +1,4 @@
+import 'package:faunatic_front_end/Screens/Favorites/favorites.dart';
 import 'package:faunatic_front_end/Screens/SpeciesSearch/species_intersection_screen.dart';
 import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,6 +94,17 @@ class RouteGenerator {
       case '/excursions/search':
         return MaterialPageRoute(
             builder: (context) => ExcursionsSearchScreen());
+      case '/favorites':
+        return MaterialPageRoute(
+            builder: (context) => StreamProvider<List<SpeciesDetail>>.value(
+                  value: context.read<FirestoreService>().getFavorites(),
+                  initialData: [],
+                  catchError: (context, error) {
+                    print(error);
+                    return [];
+                  },
+                  child: FavoritesScreen(),
+                ));
       default:
         return _errorRoute();
     }

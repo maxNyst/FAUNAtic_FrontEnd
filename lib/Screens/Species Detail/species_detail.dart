@@ -9,7 +9,6 @@ class SpeciesDetailsScreen extends StatelessWidget {
   final Specie specie;
   final SpeciesDetail speciesDetail;
 
-
   SpeciesDetailsScreen(
       {Key key, @required this.specie, @required this.speciesDetail})
       : super(key: key);
@@ -17,12 +16,13 @@ class SpeciesDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var favorites = Provider.of<List<SpeciesDetail>>(context);
-    void _test(){
+    void _test() {
       print('detta är ett test');
       print(favorites);
       print(speciesDetail);
       assert(favorites != null);
     }
+
     _test();
     return Scaffold(
       appBar: AppBar(
@@ -30,50 +30,14 @@ class SpeciesDetailsScreen extends StatelessWidget {
         actions: [
           if (favorites.contains(speciesDetail)) ...[
             IconButton(
-                onPressed: () async {
-                  var result = context
-                      .read<FirestoreService>()
-                      .addFavorite(speciesDetail);
-                  FutureBuilder(
-                    future: result,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        print(snapshot.error);
-                      }
-                      if (snapshot.hasData) {
-                        print(snapshot.data);
-                      }
-                      if (ConnectionState.done == snapshot.connectionState) {
-                        print(snapshot.connectionState);
-                        print(result);
-                      }
-                      return Text('');
-                    },
-                  );
+                onPressed: () {
+                  context.read<FirestoreService>().removeFavorite(speciesDetail);
                 },
                 icon: Icon(Icons.favorite, color: Colors.red))
           ] else ...[
             IconButton(
-                onPressed: () async {
-                  var result = context
-                      .read<FirestoreService>()
-                      .addFavorite(speciesDetail);
-                  FutureBuilder(
-                    future: result,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        print(snapshot.error);
-                      }
-                      if (snapshot.hasData) {
-                        print(snapshot.data);
-                      }
-                      if (ConnectionState.done == snapshot.connectionState) {
-                        print(snapshot.connectionState);
-                        print(result);
-                      }
-                      return Text('');
-                    },
-                  );
+                onPressed: () {
+                  context.read<FirestoreService>().addFavorite(speciesDetail);
                 },
                 icon: Icon(Icons.favorite_border, color: Colors.red))
           ]
@@ -103,8 +67,8 @@ class SpeciesDetailsScreen extends StatelessWidget {
                     )),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Icon(Icons.article,
-                      color: Theme.of(context).accentColor),
+                  child:
+                      Icon(Icons.article, color: Theme.of(context).accentColor),
                 ),
               ],
             ),
