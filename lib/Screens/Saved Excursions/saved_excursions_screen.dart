@@ -1,7 +1,6 @@
 import 'package:faunatic_front_end/excursion_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../firestore_service.dart';
 
 class SavedExcursionsScreen extends StatefulWidget {
   const SavedExcursionsScreen({Key key}) : super(key: key);
@@ -118,6 +117,7 @@ class _SavedExcursionsScreenState extends State<SavedExcursionsScreen> {
                   itemBuilder: (context, index) {
 
                     return ListTile(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LectureDetailsScreen(excursion: excursions[index],),)),
                       title: Text(excursions[index].toString()),
                     );
                   }),
@@ -128,5 +128,16 @@ class _SavedExcursionsScreenState extends State<SavedExcursionsScreen> {
     );
   }
 }
+
+class LectureDetailsScreen extends StatelessWidget {
+  final excursion;
+  const LectureDetailsScreen({Key key,@required this.excursion}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 
 enum CreatedBy { Mig, Andra }

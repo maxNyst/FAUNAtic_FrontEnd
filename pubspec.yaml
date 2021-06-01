@@ -50,7 +50,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-
+    - assets/Art_placeholder.gif
     - assets/images/Forest-panaV2.png
     - assets/Teacher-pana.png
     - assets/Teacher-panaV2.png

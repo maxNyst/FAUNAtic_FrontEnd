@@ -11,9 +11,6 @@ class NewAssignmentScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
 
       appBar: AppBar(
-        actions: [
-        ],
-        title: Text('Hem'),
       ),
       body: SingleChildScrollView(
         child: Center(

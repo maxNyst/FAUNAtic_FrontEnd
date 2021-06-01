@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../species_information.dart';
+import '../../string_extension.dart';
 
 class SpeciesSearchScreen extends StatelessWidget {
   const SpeciesSearchScreen({
@@ -74,25 +75,27 @@ class SpeciesListViewBuilder extends StatelessWidget {
             return ListView.builder(
               itemCount: speciesList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(speciesList[index].swedishName),
-                  subtitle: Text(speciesList[index].scientificName),
-                  trailing: IconButton(
-                    onPressed: () async {
-                      final futureSpeciesDetail = await context
-                          .read<SpeciesList>()
-                          .getSpeciesDetail(speciesList[index].taxonId);
-                      Navigator.pop(context, futureSpeciesDetail);
-                    },
-                    icon: Icon(
-                      Icons.favorite_border,
-                      color: Colors.red,
+                return Card(
+                  child: ListTile(
+                    title: Text(speciesList[index].swedishName.capitalize()),
+                    subtitle: Text(speciesList[index].scientificName),
+                    trailing: IconButton(
+                      onPressed: () async {
+                        final futureSpeciesDetail = await context
+                            .read<SpeciesList>()
+                            .getSpeciesDetail(speciesList[index].taxonId);
+                        Navigator.pop(context, futureSpeciesDetail);
+                      },
+                      icon: Icon(
+                        Icons.add_circle_outline,
+                        color: Colors.green,
+                      ),
                     ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/search/details',
+                          arguments: speciesList[index]);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/search/details',
-                        arguments: speciesList[index]);
-                  },
                 );
               },
             );

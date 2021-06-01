@@ -18,6 +18,7 @@ class LecturesScreen extends StatefulWidget {
 
 class _LecturesScreenState extends State<LecturesScreen> {
   final _nameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -50,14 +51,24 @@ class _LecturesScreenState extends State<LecturesScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    child: TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                          hintText: 'Namnge din utflykt',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                          fillColor: Colors.grey.shade300,
-                          filled: true),
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        controller: _nameController,
+                        validator: (text) {
+                          if (text.trim().isEmpty) {
+                            return 'Utflykten saknar namn';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                            hintText: 'Namnge din utflykt',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                            fillColor: Colors.grey.shade300,
+                            filled: true),
+                      ),
                     ),
                   ),
                 ],
@@ -80,25 +91,30 @@ class _LecturesScreenState extends State<LecturesScreen> {
                       borderRadius: BorderRadius.circular(40.0),
                     )),
                     onPressed: () async {
-                      final name = _nameController.text;
-                      final docSnapShot =
-                          await context.read<FirestoreService>().userRef.get();
-                      Map location = docSnapShot.data();
-                      final googleMaps = GoogleMaps.fromJson(location);
-                      final momentsList = context.read<List>();
-                      await context
-                          .read<FirestoreService>()
-                          .addExcursion(name, googleMaps,
-                              momentsList.map((e) => e.toJson()).toList())
-                          .onError((error, stackTrace) =>
-                              print(error.toString() + ' <= denna?'));
-                      momentsList.clear();
-                      await context
-                          .read<FirestoreService>()
-                          .userRef
-                          .set({'null': ''});
-                      _nameController.clear();
-                      Navigator.pop(context);
+                      if (_formKey.currentState.validate()) {
+                        final name = _nameController.text;
+
+                        final docSnapShot = await context
+                            .read<FirestoreService>()
+                            .userRef
+                            .get();
+                        Map location = docSnapShot.data();
+                        final googleMaps = GoogleMaps.fromJson(location);
+                        final momentsList = context.read<List>();
+                        await context
+                            .read<FirestoreService>()
+                            .addExcursion(name, googleMaps,
+                                momentsList.map((e) => e.toJson()).toList())
+                            .onError((error, stackTrace) =>
+                                print(error.toString() + ' <= denna?'));
+                        momentsList.clear();
+                        await context
+                            .read<FirestoreService>()
+                            .userRef
+                            .set({'null': ''});
+                        _nameController.clear();
+                        Navigator.pop(context);
+                      }
                     },
                     child: Text(
                       'Spara',

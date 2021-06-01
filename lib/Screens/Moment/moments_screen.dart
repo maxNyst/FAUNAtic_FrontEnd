@@ -4,15 +4,10 @@ import 'package:faunatic_front_end/species_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-
+import '../../string_extension.dart';
 import '../../note_model.dart';
 import 'custom_note.dart';
 
-extension StringExtension on String {
-  String capitalize() {
-    return '${this[0].toUpperCase()}${substring(1)}';
-  }
-}
 
 class MomentsScreen extends StatefulWidget {
   MomentsScreen({Key key}) : super(key: key);
@@ -42,6 +37,8 @@ class _MomentsScreenState extends State<MomentsScreen> {
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Container(
+                    color: Colors.black12,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                     alignment: Alignment.center,
                     child: Text(
                       'Utflyktsplanering',
@@ -56,7 +53,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                     return Card(
                       child: Column(
                         children: [
-                          ListTile(title: Text(note.title)),
+                          ListTile(title: Text(note.title), trailing: Icon(Icons.subtitles, color: Colors.black87),),
                           ListTile(title: Text(note.body)),
                         ],
                       ),
@@ -65,6 +62,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                     final specie = noteOrSpecieOrCoordinate;
                     return Card(
                       child: ListTile(
+                        trailing: Icon(Icons.yard, color: Colors.black87,),
                         title: Text(
                           specie.swedishName.capitalize(),
                           overflow: TextOverflow.ellipsis,
@@ -74,7 +72,7 @@ class _MomentsScreenState extends State<MomentsScreen> {
                         leading: SizedBox(
                           width: 60,
                           child: specie.imageURL.isEmpty
-                              ? SizedBox.shrink()
+                              ? Image.asset('assets/images/logo.png')
                               : Image(
                                   image: NetworkImage(specie.imageURL),
                                 ),
@@ -85,16 +83,14 @@ class _MomentsScreenState extends State<MomentsScreen> {
                     final coordinate = noteOrSpecieOrCoordinate;
                     return Card(
                       child: ListTile(
+                        trailing: Icon(Icons.location_on, color: Colors.black87),
                         title: Text(
-                          coordinate.name.capitalize(),
+                          coordinate.place.capitalize(),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(),
                         ),
-                        subtitle: Text(coordinate.description),
-                        leading: SizedBox(
-                          width: 60,
-                          child: SizedBox.shrink()
-                        ),
+                        subtitle: Text(coordinate.name.capitalize()),
+
                       ),
                     );
                   }
