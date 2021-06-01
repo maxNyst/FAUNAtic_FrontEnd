@@ -135,7 +135,6 @@ class _MomentsScreenState extends State<MomentsScreen> {
                       ),
                     ),
                     mpr.popped.then((value) => state()),
-                    Navigator.pop(context)
                   },
                 ),
                 ListTile(
