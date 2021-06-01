@@ -38,11 +38,9 @@ class SpeciesList extends ChangeNotifier {
         'group7-15.pvt.dsv.su.se', '/texts', {'id': taxonId.toString()}));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
-      print(jsonData);
 
       speciesDetail = SpeciesDetail.fromJson(jsonData);
     }
-    print(speciesDetail);
 
     return speciesDetail;
   }
@@ -116,6 +114,11 @@ class SpeciesDetail {
     }
     data['imageURL'] = imageURL;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'SpeciesDetail{swedishName: $swedishName, scientificName: $scientificName}';
   }
 }
 
