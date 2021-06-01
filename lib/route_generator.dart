@@ -1,5 +1,6 @@
 import 'package:faunatic_front_end/Screens/SpeciesSearch/species_intersection_screen.dart';
 import 'package:faunatic_front_end/species_information.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:faunatic_front_end/Screens/Excursions%20Search/excursions_search_screen.dart';
 import 'package:faunatic_front_end/Screens/Excursions/excursions_screen.dart';
@@ -14,7 +15,6 @@ import 'package:faunatic_front_end/main.dart';
 
 import 'package:faunatic_front_end/Screens/Assignments/new_assignment.dart';
 import 'package:provider/provider.dart';
-
 import 'excursion_model.dart';
 import 'firestore_service.dart';
 
@@ -57,9 +57,25 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => StreamProvider<List<SpeciesDetail>>.value(
                   value: context.read<FirestoreService>().getFavorites(),
-                  initialData: null,
-                  child: SpeciesDetailsScreen(
-                    specie: args as Specie,
+                  initialData: [],
+                  catchError: (context, error) {
+                    print(error);
+                    return [];
+                  },
+                  child: FutureBuilder(
+                    future: context
+                        .read<SpeciesList>()
+                        .getSpeciesDetail((args as Specie).taxonId),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return SpeciesDetailsScreen(
+                          specie: args as Specie,
+                          speciesDetail: snapshot.data as SpeciesDetail,
+                        );
+                      } else {
+                        return Center(child: CupertinoActivityIndicator());
+                      }
+                    },
                   ),
                 ));
       case '/excursions':
