@@ -7,41 +7,46 @@ class SpeciesList extends ChangeNotifier {
   // Another solution if this one gives us trouble:
   // StreamController https://ericwindmill.com/articles/async_dart_flutter/
   Future<List<Specie>> _futureSpecies;
-
   Future<List<Specie>> get getFutureSpecies => _futureSpecies;
 
   void searchForSpecie(String searchTerm) {
-    _futureSpecies = _speciesSearchResult(searchTerm);
+    _futureSpecies = speciesSearchResult(http.Client(), searchTerm);
     notifyListeners();
   }
 
-  Future<List<Specie>> _speciesSearchResult(String searchTerm) async {
+  Future<List<Specie>> speciesSearchResult(http.Client client, String searchTerm) async {
     final species = <Specie>[];
-
-    // notifyListeners();
-
-    final response = await http.get(
+    final response = await client.get(
         Uri.https('group7-15.pvt.dsv.su.se', '/search', {'term': searchTerm}));
+
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
       for (var s in jsonData) {
         var specie = Specie.fromJson(s);
         species.add(specie);
       }
+    } else {
+      throw Exception('Failed to load species search results');
     }
     return species;
   }
 
   Future<SpeciesDetail> getSpeciesDetail(int taxonId) async {
+    return await getSpeciesDetailCall(http.Client(), taxonId);
+  }
+
+  Future<SpeciesDetail> getSpeciesDetailCall(http.Client client, int taxonId) async {
     SpeciesDetail speciesDetail;
-    final response = await http.get(Uri.https(
+    final response = await client.get(Uri.https(
         'group7-15.pvt.dsv.su.se', '/texts', {'id': taxonId.toString()}));
+
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
       speciesDetail = SpeciesDetail.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to load species details');
     }
-
     return speciesDetail;
   }
 }

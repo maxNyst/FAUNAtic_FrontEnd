@@ -16,14 +16,7 @@ class SpeciesDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var favorites = Provider.of<List<SpeciesDetail>>(context);
-    void _test() {
-      print('detta är ett test');
-      print(favorites);
-      print(speciesDetail);
-      assert(favorites != null);
-    }
 
-    _test();
     return Scaffold(
       appBar: AppBar(
         title: Text(specie.swedishName.capitalize()),
@@ -31,7 +24,9 @@ class SpeciesDetailsScreen extends StatelessWidget {
           if (favorites.contains(speciesDetail)) ...[
             IconButton(
                 onPressed: () {
-                  context.read<FirestoreService>().removeFavorite(speciesDetail);
+                  context
+                      .read<FirestoreService>()
+                      .removeFavorite(speciesDetail);
                 },
                 icon: Icon(Icons.favorite, color: Colors.red))
           ] else ...[
