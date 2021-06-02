@@ -5,6 +5,25 @@ import 'package:provider/provider.dart';
 
 import '../../../authentication_service.dart';
 
+class EmailValidate {
+  static String validate(String email) {
+      if (email.contains('@') && email.contains('.')) {
+        return null;
+      } else {
+        return 'Epostadressen har felaktigt format.';
+      }
+    }
+  }
+
+  class PasswordValidate {
+    static String passwordValidate(String password) {
+      if (password.trim().isEmpty) {
+        return 'Lösenord krävs.';
+      }
+      return null;
+    }
+  }
+
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
 
@@ -30,13 +49,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               TextFormField(
                 controller: _emailController,
-                validator: (email) {
-                  if (email.contains('@') && email.contains('.')) {
-                    return null;
-                  } else {
-                    return 'Epostadressen har felaktigt format.';
-                  }
-                },
+                validator: EmailValidate.validate,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(), labelText: 'Epost'),
               ),
@@ -46,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 child: TextFormField(
                   controller: _passwordController,
-                  validator: _passwordValidator,
+                  validator: PasswordValidate.passwordValidate,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -88,10 +101,5 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  String _passwordValidator(String password) {
-    if (password.trim().isEmpty) {
-      return 'Lösenord krävs.';
-    }
-    return null;
-  }
+
 }
