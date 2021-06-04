@@ -61,7 +61,7 @@ class FirestoreService {
   }
 
    Future<void> addFavorite(SpeciesDetail speciesDetail) {
-    return favoritesRef.doc(speciesDetail.swedishName).set(speciesDetail);
+    return favoritesRef.doc(speciesDetail.hashCode.toString()).set(speciesDetail);
   }
 
   Stream<List<SpeciesDetail>> getFavorites() {
